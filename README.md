@@ -195,7 +195,7 @@
 
 ## Datenquellen
 
-### Zweck
+### Zweck
 
 ### Aubau
 
@@ -230,7 +230,7 @@
 
 
 
-### Types
+### Types
 
 Ein `Type`sagt aus, zu welcher "Gruppe" `Modules` oder `Sources` gehören. <br>
 So haben zum Beispiel das `Module` `calendar_week` und die Google Kalender-`Source` beide den `Typ` `calendar`. Über diese Beziehung wird festgelegt, welche `Sources` mit welchen `Modules` funktionieren und kompatibel sind.
