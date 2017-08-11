@@ -163,15 +163,15 @@
 		"assets": [
 			{
 				"url": "https://code.jquery.com/jquery-3.2.1.min.js",
-				"type": "script",
+				"group": "script",
 				"required_in": [
 					"settings/default.html",
 					"template/*"
 				]
-			},	
+			},
 			{
 				"url": "https://opensource.keycdn.com/fontawesome/4.7.0/font-awesome.min.css ",
-				"type": "stylesheet",
+				"group": "stylesheet",
 				"required_in": [
 					"settings/1x1.html",
 					"template/1x1.html"
@@ -230,29 +230,30 @@
 
 
 
-### Types
+### Groups
 
-Ein `Type`sagt aus, zu welcher "Gruppe" `Modules` oder `Sources` gehören. <br>
-So haben zum Beispiel das `Module` `calendar_week` und die Google Kalender-`Source` beide den `Typ` `calendar`. Über diese Beziehung wird festgelegt, welche `Sources` mit welchen `Modules` funktionieren und kompatibel sind.
+`Groups` regeln, welche `Modules` und `Sources` miteinander funktionieren.<br>
+
+So haben zum Beispiel das `Module` `calendar_week` und die `Source` `Google Kalender` beide die `Group` `calendar`. Über diese Beziehung wird die festgelegt, dass `Modules` und `Sources` der gleichen Gruppe miteinander kompatibel sind.
 
 #### Endpunkte
 
-`/api/types`<br>
-`/api/types/{type_name}`
+`/api/groups`<br>
+`/api/groups/{group_name}`
 
 #### Beziehungen
 
 Feld | Model | Identifier | Beschreibung
 ---  | ---   | ---        | ---
-category | `Category` | `Category`.name | Die Kategoriezugehörigkeit dieses Typs
-sources | `Source` | - | Die vom diesem Typ verfügbaren Datequellen
-modules | `Module` | - | Die vom diesem Typ verfügbaren Module
+category | `Category` | `Category`.name | Die Kategoriezugehörigkeit dieser Gruppe
+sources | `Source` | - | Alle Datenquellen die dieser Gruppe angehören
+modules | `Module` | - | Alle Module die dieser Gruppe angehören
 
 
 #### Aufbau des Models
 
 ```json
-{ 
+{
 	"name": String,
 	"model": Model,
 	"category": Category,
@@ -265,9 +266,9 @@ modules | `Module` | - | Die vom diesem Typ verfügbaren Module
 #### Beispiel
 
 ```json
-{ 
+{
 	"name": "calendar",
-	"model": "type",	
+	"model": "group",
 	"source_structure": [...],
 	"category": "producivity",
 	"modules": [...],
@@ -293,7 +294,7 @@ modules | `Module` | - | Die vom diesem Typ verfügbaren Module
 
 Feld | Model | Identifier | Beschreibung
 ---  | ---   | ---        | ---
-type | `Type` | `Type`.name | Der Typ dieses Modules
+group | `Group` | `Group`.name | Die Gruppe dieses Modules
 category | `Category` | `Category`.name | Die Kategorie dieses Modules
 sources | `Source` | - | Die mit diesem Modul kompatiblen Datenquellen
 language | `Language` | - | Die zu verfügbaren stehenden Sprachen dieses Moduls
@@ -302,9 +303,9 @@ language | `Language` | - | Die zu verfügbaren stehenden Sprachen dieses Moduls
 #### Aufbau des Models
 
 ```json
-{ 
+{
 	"name": String,
-	"type": Type,
+	"group": Group,
 	"model": Model,
 	"author": String,
 	"category": Category,
@@ -320,9 +321,9 @@ language | `Language` | - | Die zu verfügbaren stehenden Sprachen dieses Moduls
 #### Beispiel
 
 ```json
-{ 
+{
 	"name": "fuel",
-	"type": "fuel",
+	"group": "fuel",
 	"model": "module",
 	"author": "Marco Roth",
 	"category": "productiviy",
@@ -357,7 +358,7 @@ module | `Module` | `Module`.name | Das übergeordnete Modul dieser Instanz
 #### Aufbau des Models
 
 ```json
-{ 
+{
 	"id": Integer,
 	"module": Module,
 	"model": Model,
@@ -375,7 +376,7 @@ module | `Module` | `Module`.name | Das übergeordnete Modul dieser Instanz
 #### Beispiel
 
 ```json
-{ 
+{
 	"id": 1,
 	"module": "fuel",
 	"model": "module_instance",
@@ -405,10 +406,10 @@ module | `Module` | `Module`.name | Das übergeordnete Modul dieser Instanz
 `/api/sources/{source_name}`<br>
 
 #### Beziehungen
- 
+
 Feld | Model | Identifier | Beschreibung
 ---  | ---   | ---        | ---
-type | `Type` | `Type`.name | Der Typ dieser Datenquelle
+group | `Group` | `Group`.name | Die Gruppe dieser Datenquelle
 category | `Category` | `Category`.name | Die Kategorie dieser Datenquelle
 modules | `Module` | - | Die mit dieser Datenquelle kompatiblen Module
 language | `Language` | - | Die zu verfügbaren stehenden Sprachen dieser Datenquelle
@@ -416,9 +417,9 @@ language | `Language` | - | Die zu verfügbaren stehenden Sprachen dieser Datenq
 #### Aufbau des Models
 
 ```json
-{ 
+{
 	"name": String,
-	"type": Type,
+	"group": Group,
 	"model": Model,
 	"category": Category,
 	"version": String,
@@ -433,9 +434,9 @@ language | `Language` | - | Die zu verfügbaren stehenden Sprachen dieser Datenq
 #### Beispiel
 
 ```json
-{ 
+{
 	"name": "google",
-	"type": "calendar",
+	"group": "calendar",
 	"model": "source",
 	"category": "productivity",
 	"version": "1.0.0",
@@ -473,7 +474,7 @@ modules | `Module` | - | Die vom diesem Typ verfügbaren Module
 #### Aufbau des Models
 
 ```json
-{ 
+{
 	"id": Integer,
 	"source": Source,
 	"model": Model,
@@ -487,7 +488,7 @@ modules | `Module` | - | Die vom diesem Typ verfügbaren Module
 
 
 ```json
-{ 
+{
 	"id": 1,
 	"source": "google",
 	"model": "source_instance",
@@ -520,7 +521,7 @@ modules | `Module` | - | Module, die dieser Kategorie angehören
 
 
 ```json
-{ 
+{
 	"name": String,
 	"model": Model,
 	"path": String,
@@ -533,7 +534,7 @@ modules | `Module` | - | Module, die dieser Kategorie angehören
 #### Beispiel
 
 ```json
-{ 
+{
 	"name": "productivity",
 	"model": "category",
 	"path": "/api/categories/productivity/",
@@ -565,7 +566,7 @@ modules | `Module` | - | Module, die diese Sprache unterstützen
 #### Aufbau des Models
 
 ```json
-{ 
+{
 	"name": String,
 	"code": String,
 	"model": Model,
@@ -578,7 +579,7 @@ modules | `Module` | - | Module, die diese Sprache unterstützen
 #### Beispiel
 
 ```json
-{ 
+{
 	"name": "Deutsch",
 	"code": "de_DE",
 	"model": "language",
@@ -635,14 +636,14 @@ modules | `Module` | - | Module, die diese Sprache unterstützen
 ```
 
 
-### `/api/types`
+### `/api/groups`
 
 ```json
-// Example: /api/types
+// Example: /api/groups
 
-{	
-	"types": [
-		{ 
+{
+	"groups": [
+		{
 			"name": "calendar",
 			"modules": [
 				{ "name": "calendar_week", ... },
@@ -655,7 +656,7 @@ modules | `Module` | - | Module, die diese Sprache unterstützen
 				{ "name": "ical", ... }
 			]
 		},
-		{ 
+		{
 			"name": "fuel",
 			"modules": [
 				{ "name": "fuel", ... }
@@ -671,11 +672,11 @@ modules | `Module` | - | Module, die diese Sprache unterstützen
 ```
 
 
-### `/api/types/{type_name}`
+### `/api/groups/{group_name}`
 
 ```json
 
-// Example: /api/types/calendar
+// Example: /api/groups/calendar
 
 {
 
@@ -691,17 +692,17 @@ modules | `Module` | - | Module, die diese Sprache unterstützen
 
 {
 	"sources": [
-		{ 
+		{
 			"name": "google",
-			"type": "calendar",
+			"group": "calendar",
 			"version": "1.0.0",
 			"author": "Mattes Angelus",
 			"path": "/api/sources/calendar/google",
 			"website": "https://google.com"  
 		},
-		{ 
+		{
 			"name": "tankerkoenig",
-			"type": "fuel",
+			"group": "fuel",
 			"version": "1.0.0",
 			"path": "/api/sources/fuel/tankerkoenig",
 			"website": "https://google.com"  
@@ -718,25 +719,25 @@ modules | `Module` | - | Module, die diese Sprache unterstützen
 // Example: /api/sources/calendar
 
 {
-	"type": "calendar",
+	"group": "calendar",
 	"sources": [
-		{ 
+		{
 			"name": "google",
-			"type": "calendar",
+			"group": "calendar",
 			"version": "1.0.0",
 			"author": "Marco Roth",
 			"path": "/api/sources/calendar/google"  
 		},
-		{ 
+		{
 			"name": "icloud",
-			"type": "calendar",
+			"group": "calendar",
 			"version": "1.0.0",
 			"author": "Marco Roth",
 			"path": "/api/sources/calendar/icloud"  
 		},
-		{ 
+		{
 			"name": "ical",
-			"type": "calendar",
+			"group": "calendar",
 			"version": "1.0.0",
 			"author": "Marco Roth",
 			"path": "/api/sources/calendar/ical"  
@@ -794,16 +795,16 @@ modules | `Module` | - | Module, die diese Sprache unterstützen
 
 {
 	"modules": [
-		{ 
+		{
 			"name": "fuel",
-			"type": "fuel",
+			"group": "fuel",
 			"author": "Marco Roth",
 			"version": "1.0.0",
 			"path": "/api/sources/fuel/fuel"  
 		},
-		{ 
+		{
 			"name": "calendar_week",
-			"type": "calendar",
+			"group": "calendar",
 			"author": "Mattes Angelus",
 			"version": "1.0.0",
 			"path": "/api/sources/calendar/calendar_week"  
@@ -857,7 +858,7 @@ modules | `Module` | - | Module, die diese Sprache unterstützen
 {
 	"categories": [
 		{
-			
+
 		}
 	]
 }
@@ -875,11 +876,3 @@ modules | `Module` | - | Module, die diese Sprache unterstützen
 }
 
 ```
-
-
-
-
-
-
-
-
