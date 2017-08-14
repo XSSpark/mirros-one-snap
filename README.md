@@ -62,7 +62,7 @@ Im neuen mirr.OS soll es möglich sein, bestimmte Module bzw. Scripts einzubinde
 
 ### Modulgrössen
 
-```json
+```javascript
 // sizes.json
 
 {
@@ -99,7 +99,7 @@ Im neuen mirr.OS soll es möglich sein, bestimmte Module bzw. Scripts einzubinde
 
 ### Initialisierung bzw. Reset eines Moduls
 
-```json
+```javascript
 // seeds.json
 
 {
@@ -120,7 +120,7 @@ Im neuen mirr.OS soll es möglich sein, bestimmte Module bzw. Scripts einzubinde
 
 ### Sprachen
 
-```json
+```javascript
 // locales.json
 
 {
@@ -137,7 +137,7 @@ Im neuen mirr.OS soll es möglich sein, bestimmte Module bzw. Scripts einzubinde
 
 ### `module.json`
 
-```json
+```javascript
 // module.json
 
 {
@@ -248,7 +248,7 @@ modules | `Module` | - | Alle Module die dieser Gruppe angehören
 
 #### Aufbau des Models
 
-```json
+```javascript
 {
 	"name": String,
 	"model": Model,
@@ -261,7 +261,7 @@ modules | `Module` | - | Alle Module die dieser Gruppe angehören
 
 #### Beispiel
 
-```json
+```javascript
 {
 	"name": "calendar",
 	"model": "group",
@@ -293,12 +293,12 @@ Feld | Model | Identifier | Beschreibung
 group | `Group` | `Group`.name | Die Gruppe dieses Modules
 category | `Category` | `Category`.name | Die Kategorie dieses Modules
 sources | `Source` | - | Die mit diesem Modul kompatiblen Datenquellen
-language | `Language` | - | Die zu verfügbaren stehenden Sprachen dieses Moduls
+languages | `Language` | - | Die zu verfügbaren stehenden Sprachen dieses Moduls
 
 
 #### Aufbau des Models
 
-```json
+```javascript
 {
 	"name": String,
 	"group": Group,
@@ -316,7 +316,7 @@ language | `Language` | - | Die zu verfügbaren stehenden Sprachen dieses Moduls
 
 #### Beispiel
 
-```json
+```javascript
 {
 	"name": "fuel",
 	"group": "fuel",
@@ -353,7 +353,7 @@ module | `Module` | `Module`.name | Das übergeordnete Modul dieser Instanz
 
 #### Aufbau des Models
 
-```json
+```javascript
 {
 	"id": Integer,
 	"module": Module,
@@ -371,7 +371,7 @@ module | `Module` | `Module`.name | Das übergeordnete Modul dieser Instanz
 
 #### Beispiel
 
-```json
+```javascript
 {
 	"id": 1,
 	"module": "fuel",
@@ -408,11 +408,11 @@ Feld | Model | Identifier | Beschreibung
 group | `Group` | `Group`.name | Die Gruppe dieser Datenquelle
 category | `Category` | `Category`.name | Die Kategorie dieser Datenquelle
 modules | `Module` | - | Die mit dieser Datenquelle kompatiblen Module
-language | `Language` | - | Die zu verfügbaren stehenden Sprachen dieser Datenquelle
+languages | `Language` | - | Die zu verfügbaren stehenden Sprachen dieser Datenquelle
 
 #### Aufbau des Models
 
-```json
+```javascript
 {
 	"name": String,
 	"group": Group,
@@ -429,7 +429,7 @@ language | `Language` | - | Die zu verfügbaren stehenden Sprachen dieser Datenq
 
 #### Beispiel
 
-```json
+```javascript
 {
 	"name": "google",
 	"group": "calendar",
@@ -469,7 +469,7 @@ modules | `Module` | - | Die vom diesem Typ verfügbaren Module
 
 #### Aufbau des Models
 
-```json
+```javascript
 {
 	"id": Integer,
 	"source": Source,
@@ -483,7 +483,7 @@ modules | `Module` | - | Die vom diesem Typ verfügbaren Module
 #### Beispiel
 
 
-```json
+```javascript
 {
 	"id": 1,
 	"source": "google",
@@ -516,7 +516,7 @@ modules | `Module` | - | Module, die dieser Kategorie angehören
 #### Aufbau des Models
 
 
-```json
+```javascript
 {
 	"name": String,
 	"model": Model,
@@ -529,7 +529,7 @@ modules | `Module` | - | Module, die dieser Kategorie angehören
 
 #### Beispiel
 
-```json
+```javascript
 {
 	"name": "productivity",
 	"model": "category",
@@ -561,7 +561,7 @@ modules | `Module` | - | Module, die diese Sprache unterstützen
 
 #### Aufbau des Models
 
-```json
+```javascript
 {
 	"name": String,
 	"code": String,
@@ -574,7 +574,7 @@ modules | `Module` | - | Module, die diese Sprache unterstützen
 
 #### Beispiel
 
-```json
+```javascript
 {
 	"name": "Deutsch",
 	"code": "de_DE",
@@ -595,7 +595,7 @@ modules | `Module` | - | Module, die diese Sprache unterstützen
 
 ### `/api`
 
-```json
+```javascript
 // Example: /api
 
 {
@@ -617,7 +617,7 @@ modules | `Module` | - | Module, die diese Sprache unterstützen
 
 ### `/api/user`
 
-```json
+```javascript
 // Example: /api/user
 
 {
@@ -634,7 +634,7 @@ modules | `Module` | - | Module, die diese Sprache unterstützen
 
 ### `/api/groups`
 
-```json
+```javascript
 // Example: /api/groups
 
 {
@@ -670,7 +670,7 @@ modules | `Module` | - | Module, die diese Sprache unterstützen
 
 ### `/api/groups/{group_name}`
 
-```json
+```javascript
 
 // Example: /api/groups/calendar
 
@@ -682,7 +682,7 @@ modules | `Module` | - | Module, die diese Sprache unterstützen
 
 ### `/api/sources`
 
-```json
+```javascript
 
 // Example: /api/sources
 
@@ -710,7 +710,7 @@ modules | `Module` | - | Module, die diese Sprache unterstützen
 
 ### `/api/sources/{source_name}`
 
-```json
+```javascript
 
 // Example: /api/sources/calendar
 
@@ -746,7 +746,7 @@ modules | `Module` | - | Module, die diese Sprache unterstützen
 
 ### `/api/sources/{source_name}/{instance_id}`
 
-```json
+```javascript
 
 // Example: /api/sources/calendar/1/
 
@@ -759,7 +759,7 @@ modules | `Module` | - | Module, die diese Sprache unterstützen
 
 ### `/api/sources/{source_name}/{instance_id}/settings`
 
-```json
+```javascript
 
 // Example: /api/sources/calendar/1/settings
 
@@ -772,7 +772,7 @@ modules | `Module` | - | Module, die diese Sprache unterstützen
 
 ### `/api/sources/{source_name}/{instance_id}/data`
 
-```json
+```javascript
 
 // Example: /api/sources/calendar/1/data
 
@@ -785,7 +785,7 @@ modules | `Module` | - | Module, die diese Sprache unterstützen
 
 ### `/api/modules`
 
-```json
+```javascript
 
 // Example: /api/modules
 
@@ -813,7 +813,7 @@ modules | `Module` | - | Module, die diese Sprache unterstützen
 
 ### `/api/modules/{module_name}`
 
-```json
+```javascript
 // Example: /api/modules/fuel
 
 {
@@ -825,7 +825,7 @@ modules | `Module` | - | Module, die diese Sprache unterstützen
 
 ### `/api/modules/{module_name}/{instance_id}`
 
-```json
+```javascript
 // Example: /api/modules/fuel/1
 
 {
@@ -836,7 +836,7 @@ modules | `Module` | - | Module, die diese Sprache unterstützen
 
 ### `/api/modules/{module_name}/{instance_id}/settings`
 
-```json
+```javascript
 // Example: /api/modules/fuel/1/settings
 
 {
@@ -848,7 +848,7 @@ modules | `Module` | - | Module, die diese Sprache unterstützen
 
 ### `/api/categories`
 
-```json
+```javascript
 // Example: /api/categories
 
 {
@@ -864,7 +864,7 @@ modules | `Module` | - | Module, die diese Sprache unterstützen
 
 ### `/api/categories/{category_name}`
 
-```json
+```javascript
 // Example: /api/modules/categories/productivity
 
 {
