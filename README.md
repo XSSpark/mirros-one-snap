@@ -2,13 +2,9 @@
 
 ## Inhaltsverzeichnis
 
-
 ## Einleitung
 
-
 ## Zweck des Dokuments
-
-
 
 ## Technologien und Frameworks
 
@@ -21,9 +17,6 @@
 ### Layout
 
 ### Localization
-
-
-
 
 ## mirrOS
 
@@ -41,6 +34,9 @@
 
 ### mirrOS Einstellungen
 
+### Background Module (Scripts)
+
+Im neuen mirr.OS soll es möglich sein, bestimmte Module bzw. Scripts einzubinden ohne dafür ein ganzen Modul-Slot belegen zu müssen.
 
 
 ## Module
