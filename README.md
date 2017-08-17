@@ -338,7 +338,6 @@ Quasi spielt die interne API hier eine Zwischenstelle. Mit den zur Verfügung st
 Ein weiterer Vorteil dieser Lösung ist, dass so alles von der Darstellung unabhängig ist. 
 Sei es, wenn jemand sein eigenes Interface für die Steuerung für mirr.OS bauen will, später mal eine mobile native Applikation veröffentlicht werden soll oder es letztendlich nur für die Anzeige im Frontend verwendet wird, die API kann immer als zentraler Kommunkationspunkt genutzt werden.
 
--
 
 ### Groups
 
