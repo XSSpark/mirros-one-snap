@@ -52,6 +52,11 @@ Javascript-Frameworks:<br>
 
 * [Glotpress](https://github.com/GlotPress/GlotPress-WP)
 
+
+<br>
+<hr>
+<br>
+
 ## mirrOS
 
 ### Grid-Layout (Modulanordnung)
