@@ -298,11 +298,13 @@ Quasi spielt die interne API hier eine Zwischenstelle. Mit den zur Verfügung st
 Ein weiterer Vorteil dieser Lösung ist, dass so alles von der Darstellung unabhängig ist. 
 Sei es, wenn jemand sein eigenes Interface für die Steuerung für mirr.OS bauen will, später mal eine mobile native Applikation veröffentlicht werden soll oder es letztendlich nur für die Anzeige im Frontend verwendet wird, die API kann immer als zentraler Kommunkationspunkt genutzt werden.
 
+-
+
 ### Groups
 
 `Groups` regeln, welche `Modules` und `Sources` miteinander funktionieren.<br>
 
-So haben zum Beispiel das `Module` `calendar_week` und die `Source` `Google Kalender` beide die `Group` `calendar`. Über diese Beziehung wird die festgelegt, dass `Modules` und `Sources` der gleichen Gruppe miteinander kompatibel sind.
+So haben zum Beispiel das `Module` `calendar_week` und die `Source` `Google Kalender` beide die `Group` `calendar`. Über diese Beziehung wird festgelegt, dass `Modules` und `Sources` der gleichen Gruppe miteinander kompatibel sind.
 
 #### Endpunkte
 
@@ -313,7 +315,7 @@ So haben zum Beispiel das `Module` `calendar_week` und die `Source` `Google Kale
 
 Feld | Model | Identifier | Beschreibung
 ---  | ---   | ---        | ---
-category | `Category` | `Category`.name | Die Kategoriezugehörigkeit dieser Gruppe
+category | `Category` | `Category.name` | Die Kategoriezugehörigkeit dieser Gruppe
 sources | `Source` | - | Alle Datenquellen die dieser Gruppe angehören
 modules | `Module` | - | Alle Module die dieser Gruppe angehören
 
@@ -325,7 +327,7 @@ modules | `Module` | - | Alle Module die dieser Gruppe angehören
 	"name": String,
 	"model": Model,
 	"category": Category,
-	"source_structure": Array,
+	"source_structure": Object,
 	"modules": [Module],
 	"sources": [Source]
 }
@@ -337,7 +339,7 @@ modules | `Module` | - | Alle Module die dieser Gruppe angehören
 {
 	"name": "calendar",
 	"model": "group",
-	"source_structure": [...],
+	"source_structure": {},
 	"category": "producivity",
 	"modules": [...],
 	"sources": [...]
@@ -362,10 +364,11 @@ modules | `Module` | - | Alle Module die dieser Gruppe angehören
 
 Feld | Model | Identifier | Beschreibung
 ---  | ---   | ---        | ---
-group | `Group` | `Group`.name | Die Gruppe dieses Modules
-category | `Category` | `Category`.name | Die Kategorie dieses Modules
+group | `Group` | `Group.name` | Die Gruppe dieses Modules
+category | `Category` | `Category.name` | Die Kategorie dieses Modules
 sources | `Source` | - | Die mit diesem Modul kompatiblen Datenquellen
 languages | `Language` | - | Die zu verfügbaren stehenden Sprachen dieses Moduls
+instances | `ModuleInstance` | - | Instanzen, die es von diesem Modul gibt
 
 
 #### Aufbau des Models
@@ -380,9 +383,11 @@ languages | `Language` | - | Die zu verfügbaren stehenden Sprachen dieses Modul
 	"version": String,
 	"path": String,
 	"website": String,
+	"repository": String,
 	"sizes": Array,
 	"sources": [Source],
-	"languages": [Language]
+	"languages": [Language],
+	"instances": [ModuleInstance]
 }
 ```
 
@@ -398,9 +403,11 @@ languages | `Language` | - | Die zu verfügbaren stehenden Sprachen dieses Modul
 	"version": "1.0.0",
 	"path": "/api/sources/modules/fuel",
 	"website": "https://glancr.de/modules/productivity/fuel/",
-	"sizes": [...],
+	"repository": "https://github.com/marcoroth/mirrOS_fuel",
+	"sizes": [sizes.json],
 	"sources": [...],
-	"languages": [...]
+	"languages": [...],
+	"instances": [...]
 }
 ```
 
@@ -420,7 +427,7 @@ languages | `Language` | - | Die zu verfügbaren stehenden Sprachen dieses Modul
 
 Feld | Model | Identifier | Beschreibung
 ---  | ---   | ---        | ---
-module | `Module` | `Module`.name | Das übergeordnete Modul dieser Instanz
+module | `Module` | `Module.name` | Das übergeordnete Modul dieser Instanz
 
 
 #### Aufbau des Models
@@ -431,7 +438,7 @@ module | `Module` | `Module`.name | Das übergeordnete Modul dieser Instanz
 	"module": Module,
 	"model": Model,
 	"path": String,
-	"settings": Array,
+	"settings": Object,
 	"config": {
 		"width": Integer,
 		"height": Integer,
@@ -449,7 +456,7 @@ module | `Module` | `Module`.name | Das übergeordnete Modul dieser Instanz
 	"module": "fuel",
 	"model": "module_instance",
 	"path": "/api/modules/fuel/1",
-	"settings": [...],
+	"settings": {},
 	"config": {
 		"width": 6,
 		"height": 3,
@@ -477,10 +484,11 @@ module | `Module` | `Module`.name | Das übergeordnete Modul dieser Instanz
 
 Feld | Model | Identifier | Beschreibung
 ---  | ---   | ---        | ---
-group | `Group` | `Group`.name | Die Gruppe dieser Datenquelle
-category | `Category` | `Category`.name | Die Kategorie dieser Datenquelle
+group | `Group` | `Group.name` | Die Gruppe dieser Datenquelle
+category | `Category` | `Category.name` | Die Kategorie dieser Datenquelle
 modules | `Module` | - | Die mit dieser Datenquelle kompatiblen Module
 languages | `Language` | - | Die zu verfügbaren stehenden Sprachen dieser Datenquelle
+instances | `SourceInstance` | - | Instanzen, die es von diesem Datenquelle gibt
 
 #### Aufbau des Models
 
@@ -495,7 +503,8 @@ languages | `Language` | - | Die zu verfügbaren stehenden Sprachen dieser Daten
 	"path": String,
 	"website": String,
 	"modules": [Module],
-	"languages": [Language]  
+	"languages": [Language],
+	"instances": [SourceInstance]
 }
 ```
 
@@ -512,7 +521,8 @@ languages | `Language` | - | Die zu verfügbaren stehenden Sprachen dieser Daten
 	"path": "/api/sources/calendar/google/",
 	"website": "http://glancr.de/sources/google/",
 	"modules": [...],
-	"languages": [...]  
+	"languages": [...],
+	"instances": [...]
 }
 ```
 
@@ -534,7 +544,7 @@ languages | `Language` | - | Die zu verfügbaren stehenden Sprachen dieser Daten
 
 Feld | Model | Identifier | Beschreibung
 ---  | ---   | ---        | ---
-category | `Category` | `Category`.name | Die Kategoriezugehörigkeit dieses Typs
+category | `Category` | `Category.name` | Die Kategoriezugehörigkeit dieses Typs
 sources | `Source` | - | Die vom diesem Typ verfügbaren Datequellen
 modules | `Module` | - | Die vom diesem Typ verfügbaren Module
 
@@ -547,8 +557,8 @@ modules | `Module` | - | Die vom diesem Typ verfügbaren Module
 	"source": Source,
 	"model": Model,
 	"path": String,
-	"data": Array,
-	"settings": Array
+	"data": Object,
+	"settings": Object
 }
 ```
 
@@ -561,8 +571,8 @@ modules | `Module` | - | Die vom diesem Typ verfügbaren Module
 	"source": "google",
 	"model": "source_instance",
 	"path": "/api/sources/google/1",
-	"data": [],
-	"settings": []
+	"data": {},
+	"settings": {}
 }
 ```
 
@@ -630,6 +640,8 @@ Feld | Model | Identifier | Beschreibung
 ---  | ---   | ---        | ---
 sources | `Source` | - | Datenquellen, die diese Sprache unterstützen
 modules | `Module` | - | Module, die diese Sprache unterstützen
+translations | `Translation` | - | Übersetzungen, die es in dieser Sprache gibt
+
 
 #### Aufbau des Models
 
@@ -640,7 +652,8 @@ modules | `Module` | - | Module, die diese Sprache unterstützen
 	"model": Model,
 	"path": String,
 	"modules": [Module],
-	"sources": [Source]  
+	"sources": [Source],
+	"translations": [Translation]  
 }
 ```
 
@@ -653,9 +666,127 @@ modules | `Module` | - | Module, die diese Sprache unterstützen
 	"model": "language",
 	"path": "/api/languages/de_DE",
 	"modules": [...],
-	"sources": [...]
+	"sources": [...],
+	"translations": [...]
 }
 ```
+
+
+
+<br>
+---
+<br>
+
+### Translation
+
+#### Endpunkte
+
+`/api/translations`<br>
+`/api/translations/system`<br>
+`/api/translations/{module_name}`<br>
+`/api/translations/{source_name}`<br>
+`/api/translations/{language_name}`<br>
+`/api/translations/{language_name}/system`<br>
+`/api/translations/{language_name}/{module_name}`<br>
+`/api/translations/{language_name}/{source_name}`<br>
+
+
+#### Beziehungen
+
+Feld | Model | Identifier | Beschreibung
+---  | ---   | ---        | ---
+source | `Source` | `Source.name` | Datenquelle, für welches diese Übersetzung ist
+module | `Module` | `Module.name` | Modul, für welches diese Übersetzung ist
+language | `Langaue` | `Langaue.code` | Sprache, in welcher diese Übersetzung ist
+
+
+#### Aufbau des Models
+
+```javascript
+{
+	"name": String,
+	"model": Model,
+	"language": Language,
+	"module": Module,
+	"source": Source,
+	"data": Object
+}
+```
+
+#### Beispiel
+
+```javascript
+{
+	"name": "fuel-de_DE",
+	"model": "translation",
+	"langugage": "de_DE"
+	"module": "fuel",
+	"source": null,
+	"data": {
+		"fuel_title": "Tanken",
+		"fuel_description": "Modul zum Anzeigen der billgsten Tankstelle in deiner Nähe"
+	}
+}
+```
+
+<br>
+---
+<br>
+
+### Scripts
+
+#### Endpunkte
+
+`/api/scripts`<br>
+`/api/scripts/{script_name}`<br>
+`/api/scripts/{script_name}/trigger`<br>
+`/api/scripts/{script_name}/toggle`<br>
+`/api/scripts/{script_name}/on`<br>
+`/api/scripts/{script_name}/off`<br>
+
+#### Beziehungen
+
+Feld | Model | Identifier | Beschreibung
+---  | ---   | ---        | ---
+module | `Module` | `Module.name` | Modul, zu welchem dieses Script gehört
+
+#### Aufbau des Models
+
+```javascript
+{
+	"name": String,
+	"model": Model,
+	"module": Module,
+	"button_type": ["toggle", "once"],
+	"path": String,
+	"type": String,
+	"exec": String,
+	"settings": Object
+}
+```
+
+#### Beispiel
+
+```javascript
+{
+	"name": "lamps_on",
+	"model": "script",
+	"module": Module,
+	"button_type": "toggle"
+	"path": "/scripts/hue/lamps.sh",
+	"type": "Shell",
+	"exec": "bash {path}",
+	"settings": {
+		"color": "blue",
+		"brightness": 90,
+		"room": "kitchen"
+	}
+}
+```
+
+<br>
+---
+<br>
 
 
 <br>
