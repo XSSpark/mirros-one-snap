@@ -3,13 +3,13 @@
 ## Inhaltsverzeichnis
 
 1. [Technologien und Frameworks](#technologien-und-frameworks)
-* [mirrOS](#mirros)
-* [Scripts](#scripts)
-* [Module](#module)
-* [Datenquellen](#datenquellen)
-* [Datenbankanbindung](#datenbankanbindung)
-* [Localization](#localization)
-* [API](#api)
+2. [mirrOS](#mirros)
+3. [Scripts](#scripts)
+4. [Module](#module)
+5. [Datenquellen](#datenquellen)
+6. [Datenbankanbindung](#datenbankanbindung)
+7. [Localization](#localization)
+8. [API](#api)
 
 ## Zweck des Dokuments
 Text kommt.
