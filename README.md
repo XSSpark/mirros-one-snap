@@ -10,21 +10,52 @@
 
 ### Frontend
 
+* [Vue.js](https://vuejs.org)
+* [jQuery](https://jquery.com)
+
 ### Backend
 
-### "Datenbank"
+* [Vue.js](https://vuejs.org)
+
+Javascript-Frameworks:<br>
+
+* [jQuery](https://jquery.com)
+* [jQuery UI](https://jqueryui.com)
+* [Gridstack.js](http://troolee.github.io/gridstack.js/)
+* [Horizon Swiper](http://horizon-swiper.sebsauer.de)
+* [Drop](http://github.hubspot.com/drop/)
+* [Tether](http://tether.io)
+* [Vex](http://github.hubspot.com/vex/)
+
+### API
+
+* [Swagger](https://swagger.io)
+* [Lumen](https://lumen.laravel.com)
+
+### Datenbank
+
+* MySQL
 
 ### Layout
 
+* [Bootstrap 4](https://getbootstrap.com)
+* [Fontawesome](https://fontawesome.io)
+
+### Sprachsteuerung (Hotword Detection)
+
+* [Snowboy](https://snowboy.kitt.ai)
+
 ### Localization
+
+* [Glotpress](https://github.com/GlotPress/GlotPress-WP)
 
 ## mirrOS
 
 ### Grid-Layout (Modulanordnung)
 
-### Grössen der Module
+#### Grössen der Module
 
-### Resizing der Module
+#### Resizing der Module
 
 ### Layouteinstellungen
 
@@ -34,31 +65,55 @@
 
 ### mirrOS Einstellungen
 
-### Background Module (Scripts)
+### Zentrales Notification System
 
-Im neuen mirr.OS soll es möglich sein, bestimmte Module bzw. Scripts einzubinden ohne dafür ein ganzen Modul-Slot belegen zu müssen.
+Ein zentrales und einheitliches Notification System soll bestimmte Meldungen an den Benutzer über den Spiegel ausgeben. Ein praktischer Anwendungsfall dafür wäre ein Output aus einem Scripts (siehe nächste Kapitel). 
+
+* `Lampen eingeschaltet`
+* `Sprachbefehl XY erkannt`
+* usw.
+
+## Scripts
+
+Das mirr.OS soll über verschiedene ausfürbare Scripts verfügugen, die auf verschiedene Art und Weise ausgelöst werdenn könnnen. Diese Scripts werden unter anderem mit den Module mitgeliefert können aber auch direkt mit dem Betriebssystem mitgeliefert werden.
+
+Die Scripts können idealerweise Shell, Python, Ruby oder andere ausfürbare Scripts sein.
+
+### Background Module
+
+Es soll möglich sein, bestimmte "Modul-Scripts" einzubinden ohne dafür ein Modul-Slot zu belegen. Das Script wird ebenfalls alle XY Minuten aktualisiert hat aber keine Anzeige im Frontend.
+
+
+### Aktionen über Hardware-Buttons oder Touch
+
+Externe Hardware-Buttons oder Touch-Kapazitive Sensoren sollen ermöglichen, bestimmte Aktionen bzw. Scripts ausführen können. 
+
+### Hotword Detection
+
+Mit [Snowboy](https://snowboy.kitt.ai) soll eine Hotword Detection implementiert werden, mit der bestimmte Aktionen (Scripts) ausgeführt werden können. 
 
 
 ## Module
 
-### Zweck
-
 ### Aufbau
 
 
-`/fuel`<br>
-`/fuel/info.json`<br>
-`/fuel/sizes.json`<br>
-`/fuel/locales.json`<br>
-`/fuel/module.json`<br>
-`/fuel/seeds.json`<br>
-`/fuel/templates/`<br>
-`/fuel/templates/default.html`<br>
-`/fuel/templates/2x1.html`<br>
-`/fuel/settings/default.html`<br>
-`/fuel/settings/2x1.html`<br>
-`/fuel/scripts/default.html`<br>
-`/fuel/scripts/2x1.html`<br>
+`/module`<br>
+`/module/info.json`<br>
+`/module/sizes.json`<br>
+`/module/locales.json`<br>
+`/module/module.json`<br>
+`/module/seeds.json`<br>
+`/module/templates/`<br>
+`/module/templates/default.html`<br>
+`/module/templates/2x1.html`<br>
+`/module/settings/default.html`<br>
+`/module/settings/2x1.html`<br>
+`/module/frontend/default.js`<br>
+`/module/frontend/2x1.js`<br>
+`/module/scripts/lights_off.rb`<br>
+`/module/scripts/lights_blue.sh`<br>
+`/module/scripts/order_taxi.py`<br>
 
 ### Modulgrössen
 
