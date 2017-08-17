@@ -821,10 +821,6 @@ module | `Module` | `Module.name` | Modul, zu welchem dieses Script gehört
 <br>
 
 
-<br>
-<hr>
-<br>
-
 ### Beispiel-Abfragen (vereinfacht)
 
 
