@@ -75,9 +75,9 @@ Ein zentrales und einheitliches Notification System soll bestimmte Meldungen an 
 
 ## Scripts
 
-Das mirr.OS soll über verschiedene ausfürbare Scripts verfügugen, die auf verschiedene Art und Weise ausgelöst werdenn könnnen. Diese Scripts werden unter anderem mit den Module mitgeliefert können aber auch direkt mit dem Betriebssystem mitgeliefert werden.
+Das mirr.OS soll über verschiedene ausführbare Scripts verfügen, die auf verschiedene Art und Weise ausgelöst werden können. Diese Scripts werden unter anderem mit den Modulen mitgeliefert, können aber auch direkt mit dem Betriebssystem mitgeliefert werden (z.B. Basics wie "Spiegel ein", "Spiegel aus").
 
-Die Scripts können idealerweise Shell, Python, Ruby oder andere ausfürbare Scripts sein.
+Die Scripts können idealerweise Shell, Python, Ruby oder andere ausführbare Scripts sein.
 
 ### Background Module
 
