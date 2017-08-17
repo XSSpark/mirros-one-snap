@@ -1,12 +1,15 @@
 # Dokumentation mirrOS 1.0
 
 ## Inhaltsverzeichnis
+Inhaltsverzeichnis kommt
 
-## Einleitung
 
 ## Zweck des Dokuments
+Text kommt.
 
 ## Technologien und Frameworks
+
+Die verwendten Technologien und Frameworks sind unten pro Anwendungsbereich aufgelistet.
 
 ### Frontend
 
@@ -52,18 +55,25 @@ Javascript-Frameworks:<br>
 ## mirrOS
 
 ### Grid-Layout (Modulanordnung)
+Text kommt.
 
 #### Grössen der Module
+Text kommt.
 
 #### Resizing der Module
+Text kommt.
 
 ### Layouteinstellungen
+Text kommt.
 
 ### Moduleinstellungen (Instanzeinstellugnen)
+Text kommt.
 
 ### Navigationbar
+Text kommt.
 
 ### mirrOS Einstellungen
+Text kommt.
 
 ### Zentrales Notification System
 
@@ -238,43 +248,48 @@ Mit [Snowboy](https://snowboy.kitt.ai) soll eine Hotword Detection implementiert
 
 
 ### Modulinstanzen
+Text kommt.
 
 #### Modulinstanzen und Speichern der Daten
-
+Text kommt.
 
 
 
 ## Datenquellen
 
-### Zweck
-
 ### Aubau
+Text kommt.
 
-### Datenquellen-Typ (z.B "Kalender" oder "Tanken")
+### Datenquellen-Typ
+Text kommt.
 
 ### Abhänigkeiten
+Text kommt.
 
 ### Eigenschaften
+Text kommt.
 
 ### Datenquelleninstanz
-
+Text kommt.
 
 
 ## Datenbankanbindung
 
 ### Namespacing
-
+Text kommt.
 
 
 
 ## Localization
 
 ### Platformen
+Text kommt.
 
 ### Update-Prozess
+Text kommt.
 
 ### Update Interval
-
+Text kommt.
 
 
 ## API
