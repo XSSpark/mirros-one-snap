@@ -662,7 +662,7 @@ modules | `Module` | - | Module, die diese Sprache unterstützen
 ---
 <br>
 
-### Endpunkte
+### Beispiel-Abfragen (vereinfacht)
 
 
 ### `/api`
