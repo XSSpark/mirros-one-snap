@@ -347,7 +347,7 @@ modules | `Module` | - | Alle Module die dieser Gruppe angehören
 ```
 
 <br>
----
+<hr>
 <br>
 
 
@@ -413,7 +413,7 @@ instances | `ModuleInstance` | - | Instanzen, die es von diesem Modul gibt
 
 
 <br>
----
+<hr>
 <br>
 
 ### ModuleInstances
@@ -468,9 +468,8 @@ module | `Module` | `Module.name` | Das übergeordnete Modul dieser Instanz
 
 
 <br>
----
+<hr>
 <br>
-
 
 
 ### Sources
@@ -528,7 +527,7 @@ instances | `SourceInstance` | - | Instanzen, die es von diesem Datenquelle gibt
 
 
 <br>
----
+<hr>
 <br>
 
 
@@ -577,7 +576,7 @@ modules | `Module` | - | Die vom diesem Typ verfügbaren Module
 ```
 
 <br>
----
+<hr>
 <br>
 
 
@@ -623,7 +622,7 @@ modules | `Module` | - | Module, die dieser Kategorie angehören
 ```
 
 <br>
----
+<hr>
 <br>
 
 
@@ -674,7 +673,7 @@ translations | `Translation` | - | Übersetzungen, die es in dieser Sprache gibt
 
 
 <br>
----
+<hr>
 <br>
 
 ### Translation
@@ -730,7 +729,7 @@ language | `Langaue` | `Langaue.code` | Sprache, in welcher diese Übersetzung i
 ```
 
 <br>
----
+<hr>
 <br>
 
 ### Scripts
@@ -785,12 +784,12 @@ module | `Module` | `Module.name` | Modul, zu welchem dieses Script gehört
 ```
 
 <br>
----
+<hr>
 <br>
 
 
 <br>
----
+<hr>
 <br>
 
 ### Beispiel-Abfragen (vereinfacht)
