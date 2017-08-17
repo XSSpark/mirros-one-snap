@@ -67,7 +67,7 @@ Javascript-Frameworks:<br>
 
 ### Zentrales Notification System
 
-Ein zentrales und einheitliches Notification System soll bestimmte Meldungen an den Benutzer über den Spiegel ausgeben. Ein praktischer Anwendungsfall dafür wäre ein Output aus einem Scripts (siehe nächste Kapitel). 
+Ein zentrales und einheitliches Notification System soll bestimmte Meldungen an den Benutzer über den Spiegel ausgeben. Ein praktischer Anwendungsfall dafür wäre ein Output aus einem Script (siehe nächste Kapitel). 
 
 * `Lampen eingeschaltet`
 * `Sprachbefehl XY erkannt`
