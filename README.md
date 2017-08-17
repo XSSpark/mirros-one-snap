@@ -52,10 +52,7 @@ Javascript-Frameworks:<br>
 
 * [Glotpress](https://github.com/GlotPress/GlotPress-WP)
 
-
-<br>
-<hr>
-<br>
+<br><hr><br>
 
 ## mirrOS
 
@@ -87,6 +84,8 @@ Ein zentrales und einheitliches Notification System soll bestimmte Meldungen an 
 * `Lampen eingeschaltet`
 * `Sprachbefehl XY erkannt`
 * usw.
+
+<br><hr><br>
 
 ## Scripts
 
