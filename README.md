@@ -107,6 +107,9 @@ Externe Hardware-Buttons oder Touch-Kapazitive Sensoren sollen ermöglichen, bes
 Mit [Snowboy](https://snowboy.kitt.ai) soll eine Hotword Detection implementiert werden, mit der bestimmte Aktionen (Scripts) ausgeführt werden können. 
 
 
+<br><hr><br>
+
+
 ## Module
 
 ### Aufbau
@@ -258,6 +261,8 @@ Text kommt.
 Text kommt.
 
 
+<br><hr><br>
+
 
 ## Datenquellen
 
@@ -277,11 +282,16 @@ Text kommt.
 Text kommt.
 
 
+<br><hr><br>
+
+
 ## Datenbankanbindung
 
 ### Namespacing
 Text kommt.
 
+
+<br><hr><br>
 
 
 ## Localization
@@ -294,6 +304,10 @@ Text kommt.
 
 ### Update Interval
 Text kommt.
+
+
+<br><hr><br>
+
 
 
 ## API
