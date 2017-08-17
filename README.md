@@ -291,9 +291,9 @@ Mit diesem Setup ist es auch möglich, die API quasi als zentralen Hub im eigene
 
 So wird eine  zentrale und einheitliche Abfragemöglichkeit von verschiedenen Datenquellen angeboten, die alle gleich formatiert sind. 
 
-Hier gibt es z.B. das Anwendungbeispiel mit dem Tanken Modul. Es gibt verschiedene Datenquellen für ein bestimmtes Modul, das Tanken Modul. Idealerweise werden dann von der API die Daten dieser Quellen gleich formatiert ausgegeben, so dass nur noch ein Modul für das Tanken benötigt wird und man in den Einstellungen einfach die Datenquelle umstellen kann.
+Hier gibt es z.B. das Anwendungbeispiel mit dem Tanken Modul. Es gibt verschiedene Datenquellen für ein bestimmtes Modul (Tankerkönig.de / Spritpreisrechner.at). Damit nicht zwei verschiedne Moduel entwickelt werden müssen, werden dann idealerweise die Daten dieser Datenquellen von der API einheitlich formatiert und zur Verfügung gestellt. In den Modul(-instanz)einstellungen gibt es dann die Möglichkeit auszuwählen, von welcher Datenquelle diese Instanz die Daten beziehen soll.
 
-Quasi spielt die interne API hier eine Zwischenstelle. Mit den zur Verfügung stehenden Datenquelle und den vom Benutzer eingegeben Einstellungen (wie. z.B. Keys, Tokens oder Accounts) werdend die Daten von der externen API abgefragt (z.B. Tanken) formatiert und dann einheitlich über die interne API z.B. über JSON oder XML zur Verfügung gestellt.
+Quasi spielt die interne API hier eine Zwischenstelle. Mit den zur Verfügung stehenden Datenquelle und den vom Benutzer eingegeben Einstellungen (wie. z.B. Keys, Tokens oder Accounts) werden die Daten von der externen API abgefragt (z.B. Tanken), dann einheitlich formatiert und dann über die interne API (z.B. JSON und/oder XML) zur Verfügung gestellt.
 
 Ein weiterer Vorteil dieser Lösung ist, dass so alles von der Darstellung unabhängig ist. 
 Sei es, wenn jemand sein eigenes Interface für die Steuerung für mirr.OS bauen will, später mal eine mobile native Applikation veröffentlicht werden soll oder es letztendlich nur für die Anzeige im Frontend verwendet wird, die API kann immer als zentraler Kommunkationspunkt genutzt werden.
