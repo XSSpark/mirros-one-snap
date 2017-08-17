@@ -59,7 +59,7 @@ Javascript-Frameworks:<br>
 
 * [Glotpress](https://github.com/GlotPress/GlotPress-WP)
 
-<br><hr><br>
+<br>***<br>
 
 ## mirrOS
 
@@ -92,7 +92,7 @@ Ein zentrales und einheitliches Notification System soll bestimmte Meldungen an 
 * `Sprachbefehl XY erkannt`
 * usw.
 
-<br><hr><br>
+<br>***<br>
 
 ## Scripts
 
@@ -114,7 +114,7 @@ Externe Hardware-Buttons oder Touch-Kapazitive Sensoren sollen ermöglichen, bes
 Mit [Snowboy](https://snowboy.kitt.ai) soll eine Hotword Detection implementiert werden, mit der bestimmte Aktionen (Scripts) ausgeführt werden können. 
 
 
-<br><hr><br>
+<br>***<br>
 
 
 ## Module
@@ -268,7 +268,7 @@ Text kommt.
 Text kommt.
 
 
-<br><hr><br>
+<br>***<br>
 
 
 ## Datenquellen
@@ -289,7 +289,7 @@ Text kommt.
 Text kommt.
 
 
-<br><hr><br>
+<br>***<br>
 
 
 ## Datenbankanbindung
@@ -298,7 +298,7 @@ Text kommt.
 Text kommt.
 
 
-<br><hr><br>
+<br>***<br>
 
 
 ## Localization
@@ -313,7 +313,7 @@ Text kommt.
 Text kommt.
 
 
-<br><hr><br>
+<br>***<br>
 
 
 
@@ -386,7 +386,7 @@ modules | `Module` | - | Alle Module die dieser Gruppe angehören
 ```
 
 <br>
-<hr>
+***
 <br>
 
 
@@ -452,7 +452,7 @@ instances | `ModuleInstance` | - | Instanzen, die es von diesem Modul gibt
 
 
 <br>
-<hr>
+***
 <br>
 
 ### ModuleInstances
@@ -507,7 +507,7 @@ module | `Module` | `Module.name` | Das übergeordnete Modul dieser Instanz
 
 
 <br>
-<hr>
+***
 <br>
 
 
@@ -566,7 +566,7 @@ instances | `SourceInstance` | - | Instanzen, die es von diesem Datenquelle gibt
 
 
 <br>
-<hr>
+***
 <br>
 
 
@@ -615,7 +615,7 @@ modules | `Module` | - | Die vom diesem Typ verfügbaren Module
 ```
 
 <br>
-<hr>
+***
 <br>
 
 
@@ -661,7 +661,7 @@ modules | `Module` | - | Module, die dieser Kategorie angehören
 ```
 
 <br>
-<hr>
+***
 <br>
 
 
@@ -712,7 +712,7 @@ translations | `Translation` | - | Übersetzungen, die es in dieser Sprache gibt
 
 
 <br>
-<hr>
+***
 <br>
 
 ### Translation
@@ -768,7 +768,7 @@ language | `Langaue` | `Langaue.code` | Sprache, in welcher diese Übersetzung i
 ```
 
 <br>
-<hr>
+***
 <br>
 
 ### Scripts
@@ -823,7 +823,7 @@ module | `Module` | `Module.name` | Modul, zu welchem dieses Script gehört
 ```
 
 <br>
-<hr>
+***
 <br>
 
 
