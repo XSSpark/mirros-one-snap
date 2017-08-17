@@ -8,8 +8,8 @@
 4. [Module](#module)
 5. [Datenquellen](#datenquellen)
 6. [Datenbankanbindung](#datenbankanbindung)
-7. [Localization](#localization)
-8. [API](#api)
+7. [Localization](#localization-1)
+8. [API](#api-1)
 
 ## Zweck des Dokuments
 Text kommt.
