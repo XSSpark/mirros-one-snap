@@ -323,6 +323,14 @@ Text kommt.
 
 
 ## API
+### Dokumentation mit Swagger UI
+```bash
+docker pull swaggerapi/swagger-editor
+docker run -p 8080:8080 swaggerapi/swagger-editor
+open http://localhost:8080
+```
+
+Dann die Datei glancr-openapi.yaml aus dem Repository laden.
 
 ### Idee
 
