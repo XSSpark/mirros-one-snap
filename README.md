@@ -8,26 +8,30 @@
 4. [Module](#module)
 5. [Datenquellen](#datenquellen)
 6. [Datenbankanbindung](#datenbankanbindung)
-7. [Localization](#localization-1)
+7. [Lokalisierung](#localization-1)
 8. [API](#api-1)
 
 ## Zweck des Dokuments
 Text kommt.
 
+## Begriffe
+* Anzeige: Grafische Darstellung auf dem Spiegel-Display als Webanwendung.
+* Einstellungen: Grafische Konfigurationsoberfläche, die als Webanwendung vom Mobilgerät/Desktop aufgerufen wird.
+
 ## Technologien und Frameworks
 
 Die verwendten Technologien und Frameworks sind unten pro Anwendungsbereich aufgelistet.
 
-### Frontend
+### Anzeige
 
 * [Vue.js](https://vuejs.org)
 * [jQuery](https://jquery.com)
 
-### Backend
+### Einstellungen
 
-* [Vue.js](https://vuejs.org)
+* Single Page Application mit [Vue.js](https://vuejs.org)
 
-Javascript-Frameworks:<br>
+Weitere Javascript-Frameworks:
 
 * [jQuery](https://jquery.com)
 * [jQuery UI](https://jqueryui.com)
@@ -39,7 +43,7 @@ Javascript-Frameworks:<br>
 
 ### API
 
-* [Swagger](https://swagger.io)
+* Definition als OpenAPI mit [Swagger](https://swagger.io)
 * [Lumen](https://lumen.laravel.com)
 
 ### Datenbank
@@ -75,7 +79,7 @@ Text kommt.
 ### Layouteinstellungen
 Text kommt.
 
-### Moduleinstellungen (Instanzeinstellugnen)
+### Moduleinstellungen (Instanzeinstellungen)
 Text kommt.
 
 ### Navigationbar
@@ -196,7 +200,9 @@ Mit [Snowboy](https://snowboy.kitt.ai) soll eine Hotword Detection implementiert
 
 ```
 
+```javascript
 
+```
 ### Sprachen
 
 ```javascript
@@ -273,13 +279,13 @@ Text kommt.
 
 ## Datenquellen
 
-### Aubau
+### Aufbau
 Text kommt.
 
 ### Datenquellen-Typ
 Text kommt.
 
-### Abhänigkeiten
+### Abhängigkeiten
 Text kommt.
 
 ### Eigenschaften
@@ -292,7 +298,6 @@ Text kommt.
 <br>___<br>
 
 
-## Datenbankanbindung
 
 ### Namespacing
 Text kommt.
@@ -303,7 +308,7 @@ Text kommt.
 
 ## Localization
 
-### Platformen
+### Plattformen
 Text kommt.
 
 ### Update-Prozess
@@ -321,7 +326,7 @@ Text kommt.
 
 ### Idee
 
-Jeder Spiegel besitzt eine eigene API. Das Front- und Backend soll unäbhänig von der eigentlichen Logik funktionieren. So ist die API eigentlich das zentrale Herzstück des Spiegels, über welche die ganze Kommunikation läuft. 
+Jeder Spiegel besitzt eine eigene API. Die GUI der Konfigurationsseite und Anzeige soll unäbhängig von der eigentlichen Logik funktionieren. So ist die API eigentlich das zentrale Herzstück des Spiegels, über welche die ganze Kommunikation läuft. 
 
 Das Frontend bezieht von der API die Daten, welche auf dem Frontend angezeigt werden. Der Benutzer konfiguriert also seine Datenquelle und die Daten werden dann über die API zur Verfügung gestellt, damit das Frontend auf diese Daten zugreifen kann. 
 
@@ -478,7 +483,7 @@ module | `Module` | `Module.name` | Das übergeordnete Modul dieser Instanz
 	"model": Model,
 	"path": String,
 	"settings": Object,
-	"config": {
+	"position": {
 		"width": Integer,
 		"height": Integer,
 		"col": Integer,
@@ -496,7 +501,7 @@ module | `Module` | `Module.name` | Das übergeordnete Modul dieser Instanz
 	"model": "module_instance",
 	"path": "/api/modules/fuel/1",
 	"settings": {},
-	"config": {
+	"position": {
 		"width": 6,
 		"height": 3,
 		"col": 1,
