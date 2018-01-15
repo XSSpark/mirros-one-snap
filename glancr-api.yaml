@@ -1,0 +1,244 @@
+openapi: 3.0.0
+info:
+  version: 0.0.1
+  title: glancr data API
+  description: Local data API for the glancr smart mirror
+  termsOfService: terms
+  contact:
+    name: Tobias Grasse
+    url: 'https://glancr.de'
+    email: tg@glancr.de
+  license:
+    name: MIT
+    url: 'http://opensource.org/licenses/MIT'
+servers:
+  - url: 'http://localhost/api/v1'
+    description: Local API host
+paths:
+  /modules:
+    get:
+      summary: Returns a list of installed modules.
+      tags:
+        - Modules
+      responses:
+        '200':
+          description: A JSON array of modules
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Module'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+  '/modules/{moduleId}':
+    get:
+      summary: Get a module by its ID
+      tags:
+        - Modules
+      responses:
+        '200':
+          description: A single module.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Module'
+  /instances:
+    get:
+      summary: Returns a list of active instances.
+      tags:
+        - Instances
+      responses:
+        '200':
+          description: A JSON array of active instances.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Instance'
+    post:
+      summary: Creates a new instance with default settings.
+      tags:
+        - Instances
+      requestBody:
+        description: The ID of the module for which a new instance should be created.
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Module'
+      responses:
+        '201':
+          description: The newly created instance with default settings.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Instance'
+  '/instances/{instanceId}':
+    get:
+      summary: Get an instance by its ID.
+      tags:
+        - Instances
+      responses:
+        '200':
+          description: A JSON object of this instance's configuration.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Instance'
+components:
+  responses:
+    BadRequest:
+      description: fluff
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/JSONApiErrorObject'
+  schemas:
+    JSONApiResourceIdentifierObject:
+      type: object
+      properties:
+        id:
+          type: string
+        type:
+          type: string
+          enum:
+            - module
+            - instance
+            - source
+    JSONApiResourceObject:
+      allOf:
+        - $ref: '#/components/schemas/JSONApiResourceIdentifierObject'
+      type: object
+      properties:
+        attributes:
+          type: object
+        relationships:
+          type: object
+    JSONApiErrorObject:
+      type: object
+      properties:
+        status:
+          type: string
+        title:
+          type: string
+          description: >-
+            a short, human-readable summary of the problem that SHOULD NOT
+            change from occurrence to occurrence of the problem, except for
+            purposes of localization.
+    ModuleIdentifier:
+      allOf:
+        - $ref: '#/components/schemas/JSONApiResourceIdentifierObject'
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+            - module
+    Module:
+      allOf:
+        - $ref: '#/components/schemas/JSONApiResourceObject'
+        - $ref: '#/components/schemas/ModuleIdentifier'
+        - type: object
+          properties:
+            attributes:
+              type: object
+              properties:
+                title:
+                  type: string
+                  example: My Module
+                icon:
+                  type: string
+                  example: /icons/my-module/icon.svg
+                version:
+                  type: string
+                  pattern: '^\d{1}.\d{1}.\d{1}$'
+                  example: 1.0.0
+                author:
+                  type: string
+                  example: Mr. Robot
+            relationships:
+              type: object
+              properties:
+                sources:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                        related:
+                          type: string
+                    data:
+                      type: array
+                      items:
+                        $ref: '#/components/schemas/SourceIdentifier'
+    InstanceIdentifier:
+      allOf:
+        - $ref: '#/components/schemas/JSONApiResourceIdentifierObject'
+        - type: object
+          properties:
+            type:
+              type: string
+              enum:
+                - instance
+    Instance:
+      allOf:
+        - $ref: '#/components/schemas/InstanceIdentifier'
+        - type: object
+          properties:
+            attributes:
+              type: object
+              properties:
+                settings:
+                  type: object
+                position:
+                  type: object
+                  properties:
+                    x:
+                      type: integer
+                      example: 4
+                    'y':
+                      type: integer
+                    width:
+                      type: integer
+                      minimum: 1
+                    height:
+                      type: integer
+                      minimum: 1
+            relationships:
+              type: object
+              properties:
+                module:
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      $ref: '#/components/schemas/ModuleIdentifier'
+    SourceIdentifier:
+      allOf:
+        - $ref: '#/components/schemas/JSONApiResourceIdentifierObject'
+        - type: object
+          properties:
+            type:
+              type: string
+              enum:
+                - source
+    Source:
+      allOf:
+        - $ref: '#/components/schemas/SourceIdentifier'
+        - type: object
+          properties:
+            group:
+              type: string
+tags:
+  - name: Modules
+    description: Basic metadata for each unique module that is installed.
+  - name: Instances
+    description: 'Modules can have multiple instances, each with separate settings.'
