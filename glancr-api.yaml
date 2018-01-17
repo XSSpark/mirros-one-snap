@@ -31,6 +31,8 @@ paths:
                   $ref: '#/components/schemas/Module'
         '400':
           $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/NotFound'
   '/modules/{moduleId}':
     get:
       summary: Get a module by its ID
@@ -43,6 +45,41 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Module'
+    post:
+      summary: Install a module
+      tags:
+        - Modules
+      responses:
+        '200':
+          description: Installs a new module in the backend.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ModuleIdentifier'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    put:
+      summary: Update a module in the backend.
+      tags:
+        - Modules
+      responses:
+        '200':
+          description: Update successful.
+        '409':
+          description: Module cannot be updated due to unmet dependencies.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses'
+    delete:
+      summary: Uninstall a module from the backend.
+      tags:
+        - Modules
+      responses:
+        '204':
+          description: Module successfully uninstalled
+        '404':
+          $ref: '#/components/responses/NotFound'
   /instances:
     get:
       summary: Returns a list of active instances.
@@ -67,7 +104,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Module'
+              $ref: '#/components/schemas/ModuleIdentifier'
       responses:
         '201':
           description: The newly created instance with default settings.
@@ -89,10 +126,139 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Instance'
+    put:
+      summary: Updates an instance's setting
+      tags:
+        - Instances
+      requestBody:
+        description: The updated instance.
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Instance'
+      responses:
+        '204':
+          description: Instance was successfully updated.
+    delete:
+      summary: Delete an instance from the backend.
+      tags:
+        - Instances
+      responses:
+        '204':
+          description: Instance successfully deleted
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /sources:
+    get:
+      summary: Returns a list of installed sources.
+      tags:
+        - Sources
+      responses:
+        '200':
+          description: A JSON array of installed sources.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Source'
+    post:
+      summary: Installs a new source.
+      tags:
+        - Sources
+      requestBody:
+        description: The ID of the source which a new instance should be created.
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SourceIdentifier'
+      responses:
+        '201':
+          description: The newly created instance with default settings.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Instance'
+  '/sources/{sourceId}':
+    get:
+      summary: Get a source by its ID.
+      tags:
+        - Sources
+      responses:
+        '200':
+          description: A JSON object of this instance's configuration.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Instance'
+  /groups:
+    get:
+      summary: List all available groups.
+      tags:
+        - Groups
+      responses:
+        '200':
+          description: A list of all available groups.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Group'
+  '/groups/{groupID}':
+    get:
+      summary: Get group info.
+      tags:
+        - Groups
+      responses:
+        '200':
+          description: Group description.
+          content:
+            appliation/json:
+              schema:
+                $ref: '#/components/schemas/Group'
+  /services:
+    get:
+      summary: List all available services.
+      tags:
+        - Services
+      responses:
+        '200':
+          description: A JSON object with all available services.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Service'
+  '/services/{serviceID}':
+    get:
+      summary: Get service info.
+      tags:
+        - Services
+      responses:
+        '200':
+          description: Service description.
+          content:
+            appliation/json:
+              schema:
+                $ref: '#/components/schemas/Service'
 components:
   responses:
     BadRequest:
-      description: fluff
+      description: Bad request
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/JSONApiErrorObject'
+    NotFound:
+      description: Not found
       content:
         application/json:
           schema:
@@ -111,6 +277,7 @@ components:
             - module
             - instance
             - source
+            - service
     JSONApiResourceObject:
       allOf:
         - $ref: '#/components/schemas/JSONApiResourceIdentifierObject'
@@ -127,6 +294,7 @@ components:
           type: string
         title:
           type: string
+          example: An error occured.
           description: >-
             a short, human-readable summary of the problem that SHOULD NOT
             change from occurrence to occurrence of the problem, except for
@@ -237,8 +405,66 @@ components:
           properties:
             group:
               type: string
+    ServiceIdentifier:
+      allOf:
+        - $ref: '#/components/schemas/JSONApiResourceIdentifierObject'
+        - type: object
+          properties:
+            type:
+              type: string
+              enum:
+                - service
+    Service:
+      allOf:
+        - $ref: '#/components/schemas/ServiceIdentifier'
+        - type: object
+          properties:
+            relationships:
+              type: object
+              properties:
+                provider:
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      $ref: '#/components/schemas/ModuleIdentifier'
+    GroupIdentifier:
+      allOf:
+        - $ref: '#/components/schemas/JSONApiResourceIdentifierObject'
+        - type: object
+          properties:
+            type:
+              type: string
+              enum:
+                - group
+    Group:
+      allOf:
+        - $ref: '#/components/schemas/GroupIdentifier'
+        - type: object
+          properties:
+            module-members:
+              type: array
+              items:
+                $ref: '#/components/schemas/ModuleIdentifier'
+            source-members:
+              type: array
+              items:
+                $ref: '#/components/schemas/SourceIdentifier'
 tags:
   - name: Modules
     description: Basic metadata for each unique module that is installed.
   - name: Instances
     description: 'Modules can have multiple instances, each with separate settings.'
+  - name: Sources
+    description: >-
+      Sources define how data is retrieved from a single provider, possibly with
+      authentication. Modules and sources are `n-to-n` relation.
+  - name: Services
+    description: >-
+      Services are called on the backend server, e. g. to run additional
+      scripts, do maintenance or similar tasks.
+  - name: Groups
+    description: >-
+      Groups describe the possible combinations of modules and data sources.
+      Each source-type member of a group is expected to expose functionality to
+      all module-type members of the same group.
