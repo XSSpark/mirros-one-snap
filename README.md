@@ -1,50 +1,63 @@
 # Dokumentation mirrOS 1.0.0
 
+Im Folgenden werden die Architektur und technische Umsetzung von mirr.OS one dokumentiert.
+
 ## Inhaltsverzeichnis
 
+1. [Begriffe](#begriffe)
 1. [Technologien und Frameworks](#technologien-und-frameworks)
 2. [mirrOS](#mirros)
 3. [Scripts](#scripts)
 4. [Module](#module)
 5. [Datenquellen](#datenquellen)
 6. [Datenbankanbindung](#datenbankanbindung)
-7. [Lokalisierung](#localization-1)
+7. [Lokalisierung](#lokalisierung)
 8. [API](#api-1)
 
-## Zweck des Dokuments
-Text kommt.
-
 ## Begriffe
-* Anzeige: Grafische Darstellung auf dem Spiegel-Display als Webanwendung.
-* Einstellungen: Grafische Konfigurationsoberfläche, die als Webanwendung vom Mobilgerät/Desktop aufgerufen wird.
+* *Anzeige*: Grafische Darstellung auf dem Spiegel-Display als Webanwendung.
+* *Einstellungen*: Grafische Konfigurationsoberfläche, die als Webanwendung vom Mobilgerät/Desktop aufgerufen wird.
+* *Frontend*: Beide grafischen Benutzeroberflächen.
+* *Backend*: Modul-Logik und API.
 
 ## Technologien und Frameworks
 
 Die verwendten Technologien und Frameworks sind unten pro Anwendungsbereich aufgelistet.
 
 ### Anzeige
+Single Page Application, die auf dem Spiegel über `localhost` im Midori-Browser läuft und die von der API gelieferten Daten anzeigt. Die Logik in den einzelnen Komponenten sollte sich dabei auf die Darstellung beschränken, d. h. keine externen Requests u. Ä. absetzen.
+
+Verwendete Bibliotheken:
 
 * [Vue.js](https://vuejs.org)
 * [jQuery](https://jquery.com)
 
 ### Einstellungen
 
-* Single Page Application mit [Vue.js](https://vuejs.org)
+Single Page Application zur Konfiguration von mirr.OS und Modulinstanzen. Wird auf dem jeweiligen Endgerät ausgeführt, von dem der Nutzer im lokalen Netzwerk auf den glancr zugreift. Sie muss daher responsiv sein und sowohl Touch als auch Maus-Bedienung ermöglichen.
 
-Weitere Javascript-Frameworks:
+Verwendete Bibliotheken:
 
-* [jQuery](https://jquery.com)
-* [jQuery UI](https://jqueryui.com)
-* [Gridstack.js](http://troolee.github.io/gridstack.js/)
-* [Horizon Swiper](http://horizon-swiper.sebsauer.de)
-* [Drop](http://github.hubspot.com/drop/)
-* [Tether](http://tether.io)
-* [Vex](http://github.hubspot.com/vex/)
+* [Vue.js](https://vuejs.org): App-Framework
+* [Gridstack.js](http://troolee.github.io/gridstack.js/): Anordnen der Modulinstanzen, inkl. Abhängigkeiten
+** [jQuery](https://jquery.com)
+** [jQuery UI](https://jqueryui.com)
+* [Horizon Swiper](http://horizon-swiper.sebsauer.de): Swipe-Gesten für Modulauswahl usw.
+* [Drop](http://github.hubspot.com/drop/): Schönere Dropdown-Menüs
+* [Tether](http://tether.io): Absolute Positionierung für responsive Apps
+* [Vex](http://github.hubspot.com/vex/): Dialoge
 
 ### API
 
 * Definition als OpenAPI mit [Swagger](https://swagger.io)
-* [Lumen](https://lumen.laravel.com)
+* Umsetzung als Rails-App mit:
+	* Rails 5
+	* Rails Background Jobs
+	* Rails Websocket Server
+
+Alternativen:
+
+* [Laravel Lumen](https://lumen.laravel.com): Sprache: PHP. Symfony-Scheduler für Refresh-Jobs, Model-
 
 ### Datenbank
 
@@ -52,22 +65,20 @@ Weitere Javascript-Frameworks:
 
 ### Layout
 
-* [Bootstrap 4](https://getbootstrap.com)
-* [Fontawesome](https://fontawesome.io)
+* Komponenten: [Bootstrap 4](https://getbootstrap.com) oder [Foundation](https://foundation.zurb.com)
+* [Fontawesome](https://fontawesome.io) für Icons
 
 ### Sprachsteuerung (Hotword Detection)
 
 * [Snowboy](https://snowboy.kitt.ai)
 
-### Localization
+### Lokalisierung
 
-* [Glotpress](https://github.com/GlotPress/GlotPress-WP)
-
-<br>___<br>
+* Crowdsourcing [Glotpress](https://github.com/GlotPress/GlotPress-WP)
 
 ## mirrOS
 
-### Grid-Layout (Modulanordnung)
+### Modulanordnung (Grid-Layout)
 Text kommt.
 
 #### Grössen der Module
@@ -90,13 +101,12 @@ Text kommt.
 
 ### Zentrales Notification System
 
-Ein zentrales und einheitliches Notification System soll bestimmte Meldungen an den Benutzer über den Spiegel ausgeben. Ein praktischer Anwendungsfall dafür wäre ein Output aus einem Script (siehe nächste Kapitel). 
+Ein zentrales und einheitliches Notification System soll bestimmte Meldungen an den Benutzer über den Spiegel ausgeben. Ein praktischer Anwendungsfall dafür wäre ein Output aus einem Script (siehe nächste Kapitel).
 
 * `Lampen eingeschaltet`
 * `Sprachbefehl XY erkannt`
 * usw.
 
-<br>___<br>
 
 ## Scripts
 
@@ -111,37 +121,34 @@ Es soll möglich sein, bestimmte "Modul-Scripts" einzubinden ohne dafür ein Mod
 
 ### Aktionen über Hardware-Buttons oder Touch
 
-Externe Hardware-Buttons oder Touch-Kapazitive Sensoren sollen ermöglichen, bestimmte Aktionen bzw. Scripts ausführen können. 
+Externe Hardware-Buttons oder Touch-Kapazitive Sensoren sollen ermöglichen, bestimmte Aktionen bzw. Scripts ausführen können.
 
 ### Hotword Detection
 
-Mit [Snowboy](https://snowboy.kitt.ai) soll eine Hotword Detection implementiert werden, mit der bestimmte Aktionen (Scripts) ausgeführt werden können. 
-
-
-<br>___<br>
+Mit [Snowboy](https://snowboy.kitt.ai) soll eine Hotword Detection implementiert werden, mit der bestimmte Aktionen (Scripts) ausgeführt werden können.
 
 
 ## Module
 
 ### Aufbau
 
-
-`/module`<br>
-`/module/info.json`<br>
-`/module/sizes.json`<br>
-`/module/locales.json`<br>
-`/module/module.json`<br>
-`/module/seeds.json`<br>
-`/module/templates/`<br>
-`/module/templates/default.html`<br>
-`/module/templates/2x1.html`<br>
-`/module/settings/default.html`<br>
-`/module/settings/2x1.html`<br>
-`/module/frontend/default.js`<br>
-`/module/frontend/2x1.js`<br>
-`/module/scripts/lights_off.rb`<br>
-`/module/scripts/lights_blue.sh`<br>
-`/module/scripts/order_taxi.py`<br>
+```
+/module
+/module/info.json
+/module/sizes.json
+/module/locales.json
+/module/module.json
+/module/seeds.json
+/module/templates/
+/module/templates/default.html
+/module/templates/2x1.html
+/module/settings/default.html
+/module/settings/2x1.html
+/module/frontend/default.js
+/module/frontend/2x1.js
+/module/scripts/lights_off.rb
+/module/scripts/lights_blue.sh
+/module/scripts/order_taxi.py
 
 ### Modulgrössen
 
@@ -274,8 +281,6 @@ Text kommt.
 Text kommt.
 
 
-<br>___<br>
-
 
 ## Datenquellen
 
@@ -295,18 +300,14 @@ Text kommt.
 Text kommt.
 
 
-<br>___<br>
-
-
-
 ### Namespacing
 Text kommt.
 
 
-<br>___<br>
+## Lokalisierung
+gettext-Kompatibilität ist wünschenswert, damit die bisherigen MO/PO-Dateien weiterverwendet werden können. POEdit und die Infrastruktur z. B. von Crowdin wären auch sehr praktisch.
 
-
-## Localization
+https://www.i18next.com basiert auf gettext und hat Vue-Integrationen.
 
 ### Plattformen
 Text kommt.
@@ -317,8 +318,6 @@ Text kommt.
 ### Update Interval
 Text kommt.
 
-
-<br>___<br>
 
 
 
@@ -334,21 +333,21 @@ Dann die Datei glancr-openapi.yaml aus dem Repository laden.
 
 ### Idee
 
-Jeder Spiegel besitzt eine eigene API. Die GUI der Konfigurationsseite und Anzeige soll unäbhängig von der eigentlichen Logik funktionieren. So ist die API eigentlich das zentrale Herzstück des Spiegels, über welche die ganze Kommunikation läuft. 
+Jeder Spiegel besitzt eine eigene API. Die GUI der Konfigurationsseite und Anzeige soll unäbhängig von der eigentlichen Logik funktionieren. So ist die API eigentlich das zentrale Herzstück des Spiegels, über welche die ganze Kommunikation läuft.
 
-Das Frontend bezieht von der API die Daten, welche auf dem Frontend angezeigt werden. Der Benutzer konfiguriert also seine Datenquelle und die Daten werden dann über die API zur Verfügung gestellt, damit das Frontend auf diese Daten zugreifen kann. 
+Das Frontend bezieht von der API die Daten, welche auf dem Frontend angezeigt werden. Der Benutzer konfiguriert also seine Datenquelle und die Daten werden dann über die API zur Verfügung gestellt, damit das Frontend auf diese Daten zugreifen kann.
 
 Im Backend: Die Einstellungen von mirr.OS, die Konfiguration von mirr.OS, die Einstellugen der Modulinstanzen sowie die Anordnung der Module kann alles über die API abgefragt werden und anschliessend wieder gespeichert werden.
 
 Mit diesem Setup ist es auch möglich, die API quasi als zentralen Hub im eigenen Netzwerk zu verwenden. So können z.B. aktuelle Daten von Lampenzuständen oder die Temperatur vom Thermostat von ein und der selben Quelle abgefragt werden und die Daten andersweitig verwenden. Die zur Verfügung stehenden Daten hängt von den Konfigurierten Datenquellen ab und wird natürlich auch für die Anzeige im Frontend verwendet.
 
-So wird eine  zentrale und einheitliche Abfragemöglichkeit von verschiedenen Datenquellen angeboten, die alle gleich formatiert sind. 
+So wird eine  zentrale und einheitliche Abfragemöglichkeit von verschiedenen Datenquellen angeboten, die alle gleich formatiert sind.
 
 Hier gibt es z.B. das Anwendungbeispiel mit dem Tanken Modul. Es gibt verschiedene Datenquellen für ein bestimmtes Modul (Tankerkönig.de / Spritpreisrechner.at). Damit nicht zwei verschiedne Moduel entwickelt werden müssen, werden dann idealerweise die Daten dieser Datenquellen von der API einheitlich formatiert und zur Verfügung gestellt. In den Modul(-instanz)einstellungen gibt es dann die Möglichkeit auszuwählen, von welcher Datenquelle diese Instanz die Daten beziehen soll.
 
 Quasi spielt die interne API hier eine Zwischenstelle. Mit den zur Verfügung stehenden Datenquelle und den vom Benutzer eingegeben Einstellungen (wie. z.B. Keys, Tokens oder Accounts) werden die Daten von der externen API abgefragt (z.B. Tanken), dann einheitlich formatiert und dann über die interne API (z.B. JSON und/oder XML) zur Verfügung gestellt.
 
-Ein weiterer Vorteil dieser Lösung ist, dass so alles von der Darstellung unabhängig ist. 
+Ein weiterer Vorteil dieser Lösung ist, dass so alles von der Darstellung unabhängig ist.
 Sei es, wenn jemand sein eigenes Interface für die Steuerung für mirr.OS bauen will, später mal eine mobile native Applikation veröffentlicht werden soll oder es letztendlich nur für die Anzeige im Frontend verwendet wird, die API kann immer als zentraler Kommunkationspunkt genutzt werden.
 
 
