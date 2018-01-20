@@ -59,17 +59,22 @@ Verwendete Bibliotheken:
 	
 	* Forms:
 		* simple_form
+		* reform
 
 	* HTTP/Auth:
 		* httparty
+		* webmock
+		* addressable
+		* oauth2
 		* oauth-ruby
 	
-	* Parsing
+	* Parsing JSON/XML:
 		* feedparser
 		* happymapper
 		* feedjira
 		* crack
 		* json
+		* json-schema
 		* nokogiri
 	
 	* File-Upload
@@ -77,21 +82,26 @@ Verwendete Bibliotheken:
 		* carrierwave
 		
 	* Settings-Store
-		* behavior
 		* settingslogic
+		* behavior
 		* ledermann-rails-settings
 		
 	* Background processing:
 		* sidekiq
 		* whenever
 		
+	* API
+		* grape
+		* 
+		
 	* Misc:
 		* friendly_id
 		* seed_dump
 		* mjml
-		* dynamic_attributes
+		* (dynamic_attributes)
 		* devise
 		* unread
+		* gon
 		
 Alternativen:
 
