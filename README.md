@@ -54,7 +54,42 @@ Verwendete Bibliotheken:
 	* Rails 5
 	* Rails Background Jobs
 	* Rails Websocket Server
+	
+* Nützliche Gems
+	
+	* Forms:
+		* simple_form
 
+	* HTTP/Auth:
+		* httparty
+		* oauth-ruby
+	
+	* Parsing
+		* feedparser
+		* happymapper
+		* feedjira
+	
+	* File-Upload
+		* paperclip
+		* carrierwave
+		
+	* Settings-Store
+		* behavior
+		* settingslogic
+		* ledermann-rails-settings
+		
+	* Background processing:
+		* sidekiq
+		* whenever
+		
+	* Misc:
+		* friendly_id
+		* seed_dump
+		* mjml
+		* dynamic_attributes
+		* devise
+		* unread
+		
 Alternativen:
 
 * [Laravel Lumen](https://lumen.laravel.com): Sprache: PHP. Symfony-Scheduler für Refresh-Jobs, Model-
