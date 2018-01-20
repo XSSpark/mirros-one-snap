@@ -68,6 +68,9 @@ Verwendete Bibliotheken:
 		* feedparser
 		* happymapper
 		* feedjira
+		* crack
+		* json
+		* nokogiri
 	
 	* File-Upload
 		* paperclip
