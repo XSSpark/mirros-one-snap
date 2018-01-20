@@ -91,8 +91,7 @@ Verwendete Bibliotheken:
 		* whenever
 		
 	* API
-		* grape
-		* 
+		* (grape)
 		
 	* Misc:
 		* friendly_id
