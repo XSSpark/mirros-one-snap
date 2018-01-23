@@ -58,49 +58,59 @@ Verwendete Bibliotheken:
 * Nützliche Gems
 	
 	* Forms:
-		* simple_form
-		* reform
+		* [simple_form]()
+		* [reform]()
 
 	* HTTP/Auth:
-		* httparty
-		* webmock
-		* addressable
-		* oauth2
-		* oauth-ruby
+		* [httparty]()
+		* [webmock]()
+		* [addressable]()
+		* [oauth2]()
+		* [oauth-ruby]()
+		* [fakeweb](https://github.com/chrisk/fakeweb)
 	
 	* Parsing JSON/XML:
-		* feedparser
-		* happymapper
-		* feedjira
-		* crack
-		* json
-		* json-schema
-		* nokogiri
+		* [feedparser]()
+		* [happymapper]()
+		* [feedjira]()
+		* [crack]()
+		* [json]()
+		* [json-schema]()
+		* [nokogiri]()
+		* [oj](https://github.com/ohler55/oj)
 	
 	* File-Upload
-		* paperclip
-		* carrierwave
+		* [paperclip]()
+		* [carrierwave]()
 		
 	* Settings-Store
-		* settingslogic
-		* behavior
-		* ledermann-rails-settings
+		* [settingslogic](https://github.com/binarylogic/settingslogic)
+		* [behavior](https://github.com/paulca/behavior)
+		* [ledermann-rails-settings]()
 		
 	* Background processing:
-		* sidekiq
-		* whenever
+		* [sidekiq](https://github.com/mperham/sidekiq)
+		* [whenever](https://github.com/javan/whenever)
 		
 	* API
-		* (grape)
+		* [(grape)](https://github.com/ruby-grape/grape)
+		
+	* CLI
+		* [thor](https://github.com/erikhuda/thor)
+		* [highline](https://github.com/JEG2/highline)
 		
 	* Misc:
-		* friendly_id
-		* seed_dump
-		* mjml
-		* (dynamic_attributes)
-		* devise
-		* unread
-		* gon
+		* [friendly_id](https://github.com/norman/friendly_id)
+		* [seed_dump](https://github.com/rroblak/seed_dump)
+		* [seed-fu](https://github.com/mbleigh/seed-fu)
+		* [mjml](https://github.com/MQuy/mjml)
+		* [(dynamicattributes)](https://github.com/moiristo/dynamic_attributes)
+		* [devise](https://github.com/plataformatec/devise)
+		* [unread](https://github.com/ledermann/unread)
+		* [gon](https://github.com/gazay/gon)
+		* [byebug](https://github.com/deivid-rodriguez/byebug)
+		* [listen](https://github.com/guard/listen)
+		* [bootsnap](https://github.com/Shopify/bootsnap)
 		
 Alternativen:
 
