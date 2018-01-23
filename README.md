@@ -58,30 +58,31 @@ Verwendete Bibliotheken:
 * Nützliche Gems
 	
 	* Forms:
-		* [simple_form]()
-		* [reform]()
+		* [simple_form](https://github.com/plataformatec/simple_form)
+		* [reform](https://github.com/trailblazer/reform)
 
 	* HTTP/Auth:
-		* [httparty]()
-		* [webmock]()
-		* [addressable]()
-		* [oauth2]()
-		* [oauth-ruby]()
+		* [httparty](https://github.com/jnunemaker/httparty)
+		* [webmock](https://github.com/bblimke/webmock)
+		* [addressable](https://github.com/sporkmonger/addressable)
+		* [oauth2](https://github.com/oauth-xx/oauth2)
+		* [oauth-ruby](https://github.com/oauth-xx/oauth-ruby)
 		* [fakeweb](https://github.com/chrisk/fakeweb)
 	
 	* Parsing JSON/XML:
-		* [feedparser]()
-		* [happymapper]()
-		* [feedjira]()
-		* [crack]()
+		* [feedparser](https://github.com/feedparser/feedparser)
+		* [happymapper](https://github.com/jnunemaker/happymapper)
+		* [feedjira](https://github.com/feedjira/feedjira)
+		* [crack](https://github.com/jnunemaker/crack)
 		* [json]()
-		* [json-schema]()
-		* [nokogiri]()
+		* [json-schema](https://github.com/ruby-json-schema/json-schema)
+		* [nokogiri](https://github.com/sparklemotion/nokogiri)
 		* [oj](https://github.com/ohler55/oj)
+		* [multi_json](https://github.com/intridea/multi_json)
 	
 	* File-Upload
-		* [paperclip]()
-		* [carrierwave]()
+		* [paperclip](https://github.com/thoughtbot/paperclip)
+		* [carrierwave](https://github.com/carrierwaveuploader/carrierwave)
 		
 	* Settings-Store
 		* [settingslogic](https://github.com/binarylogic/settingslogic)
