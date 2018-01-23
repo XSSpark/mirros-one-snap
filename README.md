@@ -62,6 +62,7 @@ Verwendete Bibliotheken:
 		* [reform](https://github.com/trailblazer/reform)
 
 	* HTTP/Auth:
+		* [activeresource](https://github.com/rails/activeresource)
 		* [httparty](https://github.com/jnunemaker/httparty)
 		* [webmock](https://github.com/bblimke/webmock)
 		* [addressable](https://github.com/sporkmonger/addressable)
@@ -100,6 +101,9 @@ Verwendete Bibliotheken:
 		* [thor](https://github.com/erikhuda/thor)
 		* [highline](https://github.com/JEG2/highline)
 		
+	* Debugging:
+		* [byebug](https://github.com/deivid-rodriguez/byebug)
+		* [better_errors](https://github.com/charliesome/better_errors)
 	* Misc:
 		* [friendly_id](https://github.com/norman/friendly_id)
 		* [seed_dump](https://github.com/rroblak/seed_dump)
@@ -109,9 +113,9 @@ Verwendete Bibliotheken:
 		* [devise](https://github.com/plataformatec/devise)
 		* [unread](https://github.com/ledermann/unread)
 		* [gon](https://github.com/gazay/gon)
-		* [byebug](https://github.com/deivid-rodriguez/byebug)
 		* [listen](https://github.com/guard/listen)
 		* [bootsnap](https://github.com/Shopify/bootsnap)
+		* [rails-observers](https://github.com/rails/rails-observers)
 		
 Alternativen:
 
