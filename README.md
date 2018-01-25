@@ -116,6 +116,7 @@ Verwendete Bibliotheken:
 		* [listen](https://github.com/guard/listen)
 		* [bootsnap](https://github.com/Shopify/bootsnap)
 		* [rails-observers](https://github.com/rails/rails-observers)
+		* [state_machines](https://github.com/state-machines/state_machines)
 		
 Alternativen:
 
