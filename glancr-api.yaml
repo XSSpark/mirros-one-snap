@@ -1,115 +1,181 @@
 openapi: 3.0.0
 info:
-  version: 0.0.1
-  title: glancr data API
-  description: Local data API for the glancr smart mirror
-  termsOfService: terms
+  version: 0.0.2
+  title: mirr.OS ReST API
+  description: >
+    Documentation of the mirr.OS ReST API, the operating system of the [glancr
+    Smart Mirror](https://glancr.de).
+
+
+    Conforms to [JSON:API](http://jsonapi.org/format/) specification, so each
+    endpoint [wraps resources in a
+    top-level](http://jsonapi.org/format/#document-top-level) `data` member on
+    2xx responses or `errors` member on 4xx/5xx responses.
   contact:
-    name: Tobias Grasse
+    name: glancr Team
     url: 'https://glancr.de'
-    email: tg@glancr.de
-  license:
-    name: MIT
-    url: 'http://opensource.org/licenses/MIT'
+    email: kontakt@glancr.de
 servers:
   - url: 'http://localhost/api/v1'
     description: Local API host
 paths:
-  /modules:
+  /widgets:
     get:
-      summary: Returns a list of installed modules.
+      summary: Returns a list of installed widgets.
       tags:
-        - Modules
+        - Widgets
+      parameters:
+        - in: query
+          name: include-available
+          schema:
+            type: boolean
+          example: false
+          description: Optional inclusion of widgets that are available for installation.
       responses:
         '200':
-          description: A JSON array of modules
+          description: A JSON array of widgets
           content:
-            application/json:
+            application/vnd.api+json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Module'
+                allOf:
+                  - type: object
+                    properties:
+                      data:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/Widget'
+                  - $ref: '#/components/schemas/JSONApiMember'
         '400':
           $ref: '#/components/responses/BadRequest'
         '404':
           $ref: '#/components/responses/NotFound'
-  '/modules/{moduleId}':
-    get:
-      summary: Get a module by its ID
-      tags:
-        - Modules
-      responses:
-        '200':
-          description: A single module.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Module'
     post:
-      summary: Install a module
+      summary: Install a widget
       tags:
-        - Modules
+        - Widgets
+      requestBody:
+        description: The WidgetIdentifier object for the widget to be installed.
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WidgetIdentifier'
       responses:
         '200':
-          description: Installs a new module in the backend.
+          description: Installs a new widget in the backend.
           content:
-            application/json:
+            application/vnd.api+json:
               schema:
-                $ref: '#/components/schemas/ModuleIdentifier'
+                $ref: '#/components/schemas/WidgetIdentifier'
         '404':
           $ref: '#/components/responses/NotFound'
-    put:
-      summary: Update a module in the backend.
+  '/widgets/{widgetId}':
+    get:
+      summary: Get a widget by its ID
       tags:
-        - Modules
+        - Widgets
+      responses:
+        '200':
+          description: A single widget.
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/Widget'
+    patch:
+      summary: Update a widget in the backend.
+      tags:
+        - Widgets
+      requestBody:
+        description: The WidgetIdentifier object for the widget to be updated.
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                data:
+                  type: object
+                  $ref: '#/components/schemas/WidgetIdentifier'
       responses:
         '200':
           description: Update successful.
+        '404':
+          description: Widget is not installed.
         '409':
-          description: Module cannot be updated due to unmet dependencies.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/responses'
+          $ref: '#/components/responses/Conflict'
     delete:
-      summary: Uninstall a module from the backend.
+      summary: Uninstall a widget from the backend.
       tags:
-        - Modules
+        - Widgets
       responses:
         '204':
-          description: Module successfully uninstalled
+          description: Widgets successfully uninstalled
         '404':
           $ref: '#/components/responses/NotFound'
+  '/widgets/{widgetId}/instances':
+    get:
+      summary: Get all instances of a widget.
+      tags:
+        - Widgets
+      responses:
+        '200':
+          description: An array of instances for the widget.
+          content:
+            application/vnd.api+json:
+              schema:
+                allOf:
+                  - type: object
+                    properties:
+                      data:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/InstanceIdentifier'
+                  - $ref: '#/components/schemas/JSONApiMember'
   /instances:
     get:
       summary: Returns a list of active instances.
       tags:
         - Instances
+      parameters:
+        - in: query
+          name: uses-source
+          schema:
+            type: array
+            items:
+              type: string
+          example:
+            - google
+          description: Optional filter by source(s) that are available for installation.
       responses:
         '200':
           description: A JSON array of active instances.
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Instance'
+                allOf:
+                  - type: object
+                    properties:
+                      data:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/Instance'
+                  - $ref: '#/components/schemas/JSONApiMember'
     post:
-      summary: Creates a new instance with default settings.
+      summary: Create a new instance with default settings.
       tags:
         - Instances
       requestBody:
-        description: The ID of the module for which a new instance should be created.
+        description: The ID of the widget for which a new instance should be created.
         required: true
         content:
-          application/json:
+          application/vnd.api+json:
             schema:
-              $ref: '#/components/schemas/ModuleIdentifier'
+              $ref: '#/components/schemas/WidgetIdentifier'
       responses:
         '201':
           description: The newly created instance with default settings.
           content:
-            application/json:
+            application/vnd.api+json:
               schema:
                 $ref: '#/components/schemas/Instance'
   '/instances/{instanceId}':
@@ -121,22 +187,31 @@ paths:
         '200':
           description: A JSON object of this instance's configuration.
           content:
-            application/json:
+            application/vnd.api+json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Instance'
+                allOf:
+                  - type: object
+                    properties:
+                      data:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/Instance'
+                  - $ref: '#/components/schemas/JSONApiMember'
     put:
-      summary: Updates an instance's setting
+      summary: Updates settings for an instance.
       tags:
         - Instances
       requestBody:
         description: The updated instance.
         required: true
         content:
-          application/json:
+          application/vnd.api+json:
             schema:
-              $ref: '#/components/schemas/Instance'
+              type: object
+              properties:
+                data:
+                  type: object
+                  $ref: '#/components/schemas/Instance'
       responses:
         '204':
           description: Instance was successfully updated.
@@ -149,6 +224,24 @@ paths:
           description: Instance successfully deleted
         '404':
           $ref: '#/components/responses/NotFound'
+  '/instances/{instanceId}/widget':
+    get:
+      summary: Get the base widget for a given instance ID.
+      tags:
+        - Instances
+      responses:
+        '200':
+          description: A widget identifier for the instance's base widget.
+          content:
+            application/vnd.api+json:
+              schema:
+                allOf:
+                  - type: object
+                    properties:
+                      data:
+                        type: object
+                        $ref: '#/components/schemas/Widget'
+                  - $ref: '#/components/schemas/JSONApiMember'
   /sources:
     get:
       summary: Returns a list of installed sources.
@@ -158,7 +251,7 @@ paths:
         '200':
           description: A JSON array of installed sources.
           content:
-            application/json:
+            application/vnd.api+json:
               schema:
                 type: array
                 items:
@@ -171,14 +264,14 @@ paths:
         description: The ID of the source which a new instance should be created.
         required: true
         content:
-          application/json:
+          application/vnd.api+json:
             schema:
               $ref: '#/components/schemas/SourceIdentifier'
       responses:
         '201':
           description: The newly created instance with default settings.
           content:
-            application/json:
+            application/vnd.api+json:
               schema:
                 $ref: '#/components/schemas/Instance'
   '/sources/{sourceId}':
@@ -190,7 +283,7 @@ paths:
         '200':
           description: A JSON object of this instance's configuration.
           content:
-            application/json:
+            application/vnd.api+json:
               schema:
                 type: array
                 items:
@@ -204,12 +297,12 @@ paths:
         '200':
           description: A list of all available groups.
           content:
-            application/json:
+            application/vnd.api+json:
               schema:
                 type: array
                 items:
                   $ref: '#/components/schemas/Group'
-  '/groups/{groupID}':
+  '/groups/{groupId}':
     get:
       summary: Get group info.
       tags:
@@ -218,7 +311,7 @@ paths:
         '200':
           description: Group description.
           content:
-            appliation/json:
+            application/vnd.api+json:
               schema:
                 $ref: '#/components/schemas/Group'
   /services:
@@ -230,12 +323,12 @@ paths:
         '200':
           description: A JSON object with all available services.
           content:
-            application/json:
+            application/vnd.api+json:
               schema:
                 type: array
                 items:
                   $ref: '#/components/schemas/Service'
-  '/services/{serviceID}':
+  '/services/{serviceId}':
     get:
       summary: Get service info.
       tags:
@@ -244,28 +337,98 @@ paths:
         '200':
           description: Service description.
           content:
-            appliation/json:
+            application/vnd.api+json:
               schema:
                 $ref: '#/components/schemas/Service'
+    patch:
+      tags:
+        - Services
+      summary: Change the state of a service (with optional parameters).
+      requestBody:
+        content:
+          application/vnd.api+json:
+            schema:
+              type: object
+              properties:
+                data:
+                  type: object
+                  $ref: '#/components/schemas/Service'
+      responses:
+        '200':
+          description: Description of available run parameters.
+  /system:
+    get:
+      tags:
+        - System
+      summary: TODO mirr.OS basic information.
+      responses:
+        '200':
+          description: meh
+    patch:
+      tags:
+        - System
+      summary: Update mirr.OS to the specified version.
+      responses:
+        '200':
+          description: Update successful.
+  /system/settings:
+    get:
+      tags:
+        - System
+      summary: TODO Get the current system settings.
+      responses:
+        '200':
+          description: meh
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/Setting'
+    patch:
+      tags:
+        - System
+      summary: Change the current system settings
+      responses:
+        '204':
+          description: Setting successfully changed.
 components:
   responses:
     BadRequest:
       description: Bad request
       content:
-        application/json:
+        application/vnd.api+json:
           schema:
-            type: array
-            items:
-              $ref: '#/components/schemas/JSONApiErrorObject'
+            $ref: '#/components/schemas/JSONApiErrorResponse'
     NotFound:
       description: Not found
       content:
-        application/json:
+        application/vnd.api+json:
           schema:
-            type: array
-            items:
-              $ref: '#/components/schemas/JSONApiErrorObject'
+            $ref: '#/components/schemas/JSONApiErrorResponse'
+    Conflict:
+      description: Conflict
+      content:
+        application/vnd.api+json:
+          schema:
+            $ref: '#/components/schemas/JSONApiErrorResponse'
   schemas:
+    JSONApiErrorResponse:
+      allOf:
+        - type: object
+          properties:
+            errors:
+              type: array
+              items:
+                $ref: '#/components/schemas/JSONApiErrorObject'
+        - $ref: '#/components/schemas/JSONApiMember'
+    JSONApiMember:
+      type: object
+      properties:
+        jsonapi:
+          type: object
+          properties:
+            version:
+              type: string
+              example: '1.0'
     JSONApiResourceIdentifierObject:
       type: object
       properties:
@@ -274,19 +437,20 @@ components:
         type:
           type: string
           enum:
-            - module
+            - widget
             - instance
             - source
             - service
+            - setting
     JSONApiResourceObject:
       allOf:
         - $ref: '#/components/schemas/JSONApiResourceIdentifierObject'
-      type: object
-      properties:
-        attributes:
-          type: object
-        relationships:
-          type: object
+        - type: object
+          properties:
+            attributes:
+              type: object
+            relationships:
+              type: object
     JSONApiErrorObject:
       type: object
       properties:
@@ -299,41 +463,51 @@ components:
             a short, human-readable summary of the problem that SHOULD NOT
             change from occurrence to occurrence of the problem, except for
             purposes of localization.
-    ModuleIdentifier:
+    WidgetIdentifier:
       allOf:
         - $ref: '#/components/schemas/JSONApiResourceIdentifierObject'
       type: object
       properties:
+        id:
+          example: mywidget
         type:
           type: string
           enum:
-            - module
-    Module:
+            - widget
+    Widget:
       allOf:
         - $ref: '#/components/schemas/JSONApiResourceObject'
-        - $ref: '#/components/schemas/ModuleIdentifier'
+        - $ref: '#/components/schemas/WidgetIdentifier'
         - type: object
           properties:
             attributes:
               type: object
               properties:
-                title:
+                name:
                   type: string
-                  example: My Module
+                  example: MyWidget
                 icon:
                   type: string
-                  example: /icons/my-module/icon.svg
+                  example: /icons/my-widget/icon.svg
                 version:
                   type: string
                   pattern: '^\d{1}.\d{1}.\d{1}$'
                   example: 1.0.0
-                author:
+                creator:
                   type: string
                   example: Mr. Robot
+                website:
+                  type: string
+                  example: 'https://glancr.de/modules/productivity/mywidget'
+                languages:
+                  type: array
+                installed:
+                  type: boolean
+                  example: true
             relationships:
               type: object
               properties:
-                sources:
+                groups:
                   type: object
                   properties:
                     links:
@@ -346,12 +520,28 @@ components:
                     data:
                       type: array
                       items:
-                        $ref: '#/components/schemas/SourceIdentifier'
+                        $ref: '#/components/schemas/GroupIdentifier'
+                instances:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                        related:
+                          type: string
+                    data:
+                      type: array
+                      items:
+                        $ref: '#/components/schemas/InstanceIdentifier'
     InstanceIdentifier:
       allOf:
         - $ref: '#/components/schemas/JSONApiResourceIdentifierObject'
         - type: object
           properties:
+            id:
+              example: mywidget-1
             type:
               type: string
               enum:
@@ -383,12 +573,12 @@ components:
             relationships:
               type: object
               properties:
-                module:
+                widget:
                   type: object
                   properties:
                     data:
                       type: object
-                      $ref: '#/components/schemas/ModuleIdentifier'
+                      $ref: '#/components/schemas/WidgetIdentifier'
     SourceIdentifier:
       allOf:
         - $ref: '#/components/schemas/JSONApiResourceIdentifierObject'
@@ -403,36 +593,29 @@ components:
         - $ref: '#/components/schemas/SourceIdentifier'
         - type: object
           properties:
-            group:
-              type: string
-    ServiceIdentifier:
-      allOf:
-        - $ref: '#/components/schemas/JSONApiResourceIdentifierObject'
-        - type: object
-          properties:
-            type:
-              type: string
-              enum:
-                - service
-    Service:
-      allOf:
-        - $ref: '#/components/schemas/ServiceIdentifier'
-        - type: object
-          properties:
+            attributes:
+              type: object
+              properties:
+                installed:
+                  type: boolean
+                  example: true
             relationships:
               type: object
               properties:
-                provider:
+                groups:
                   type: object
                   properties:
                     data:
-                      type: object
-                      $ref: '#/components/schemas/ModuleIdentifier'
+                      type: array
+                      items:
+                        $ref: '#/components/schemas/GroupIdentifier'
     GroupIdentifier:
       allOf:
         - $ref: '#/components/schemas/JSONApiResourceIdentifierObject'
         - type: object
           properties:
+            id:
+              example: calendar
             type:
               type: string
               enum:
@@ -442,29 +625,103 @@ components:
         - $ref: '#/components/schemas/GroupIdentifier'
         - type: object
           properties:
-            module-members:
-              type: array
-              items:
-                $ref: '#/components/schemas/ModuleIdentifier'
-            source-members:
-              type: array
-              items:
-                $ref: '#/components/schemas/SourceIdentifier'
+            relationships:
+              type: object
+              properties:
+                widgets:
+                  type: object
+                  properties:
+                    data:
+                      type: array
+                      items:
+                        $ref: '#/components/schemas/WidgetIdentifier'
+                sources:
+                  type: object
+                  properties:
+                    data:
+                      type: array
+                      items:
+                        $ref: '#/components/schemas/SourceIdentifier'
+    ServiceIdentifier:
+      allOf:
+        - $ref: '#/components/schemas/JSONApiResourceIdentifierObject'
+        - type: object
+          properties:
+            type:
+              enum:
+                - service
+    Service:
+      allOf:
+        - $ref: '#/components/schemas/ServiceIdentifier'
+        - type: object
+          properties:
+            id:
+              example: display-rotate
+            attributes:
+              type: object
+              properties:
+                status:
+                  type: string
+                  example: toggle
+                parameters:
+                  type: object
+                  example:
+                    orientation: '3'
+            relationships:
+              type: object
+              properties:
+                provider:
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      $ref: '#/components/schemas/WidgetIdentifier'
+    SettingIdentifier:
+      allOf:
+        - $ref: '#/components/schemas/JSONApiResourceIdentifierObject'
+        - type: object
+          properties:
+            id:
+              example: user.mail
+            type:
+              enum:
+                - setting
+    Setting:
+      allOf:
+        - $ref: '#/components/schemas/SettingIdentifier'
+        - type: object
+          properties:
+            attributes:
+              type: object
+              properties:
+                value:
+                  type: string
+                  example: user@example.com
 tags:
-  - name: Modules
-    description: Basic metadata for each unique module that is installed.
+  - name: Widgets
+    description: >-
+      Widgets define which and how data is displayed. A widget implements a
+      settings dialog in the configuration UI, as well as frontend templates to
+      style the output. Widgets can be installed or uninstalled through the
+      configuration UI.
   - name: Instances
-    description: 'Modules can have multiple instances, each with separate settings.'
+    description: >-
+      Widgets can have 1 to n instances, each with separate settings and
+      positioning.
   - name: Sources
     description: >-
       Sources define how data is retrieved from a single provider, possibly with
-      authentication. Modules and sources are `n-to-n` relation.
+      authentication. Widgets and sources are `n-to-n` relation.
+  - name: Groups
+    description: >-
+      Groups describe the possible combinations of widgets and data sources.
+      Each source-type member of a group is expected to expose functionality to
+      all widget-type members of the same group.
   - name: Services
     description: >-
       Services are called on the backend server, e. g. to run additional
       scripts, do maintenance or similar tasks.
-  - name: Groups
+  - name: System
     description: >-
-      Groups describe the possible combinations of modules and data sources.
-      Each source-type member of a group is expected to expose functionality to
-      all module-type members of the same group.
+      Endpoints for mirr.OS settings. Although they are similar to widgets and
+      sources, mirr.OS cannot be instantiated or uninstalled.
