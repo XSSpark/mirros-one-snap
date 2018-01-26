@@ -16,7 +16,7 @@ Im Folgenden werden die Architektur und technische Umsetzung von mirr.OS one dok
 
 ## Begriffe
 * *Anzeige*: Grafische Darstellung auf dem Spiegel-Display als Webanwendung.
-* *Einstellungen*: Grafische Konfigurationsoberfläche, die als Webanwendung vom Mobilgerät/Desktop aufgerufen wird.
+* *Konfiguration*: Grafische Konfigurationsoberfläche, die als Webanwendung vom Mobilgerät/Desktop aufgerufen wird.
 * *Frontend*: Beide grafischen Benutzeroberflächen.
 * *Backend*: Modul-Logik und API.
 
@@ -32,7 +32,7 @@ Verwendete Bibliotheken:
 * [Vue.js](https://vuejs.org)
 * [jQuery](https://jquery.com)
 
-### Einstellungen
+### Konfiguration
 
 Single Page Application zur Konfiguration von mirr.OS und Modulinstanzen. Wird auf dem jeweiligen Endgerät ausgeführt, von dem der Nutzer im lokalen Netzwerk auf den glancr zugreift. Sie muss daher responsiv sein und sowohl Touch als auch Maus-Bedienung ermöglichen.
 
@@ -40,8 +40,8 @@ Verwendete Bibliotheken:
 
 * [Vue.js](https://vuejs.org): App-Framework
 * [Gridstack.js](http://troolee.github.io/gridstack.js/): Anordnen der Modulinstanzen, inkl. Abhängigkeiten
-** [jQuery](https://jquery.com)
-** [jQuery UI](https://jqueryui.com)
+	* [jQuery](https://jquery.com)
+	* [jQuery UI](https://jqueryui.com)
 * [Horizon Swiper](http://horizon-swiper.sebsauer.de): Swipe-Gesten für Modulauswahl usw.
 * [Drop](http://github.hubspot.com/drop/): Schönere Dropdown-Menüs
 * [Tether](http://tether.io): Absolute Positionierung für responsive Apps
@@ -131,10 +131,6 @@ Alternativen:
 * Komponenten: [Bootstrap 4](https://getbootstrap.com) oder [Foundation](https://foundation.zurb.com)
 * [Fontawesome](https://fontawesome.io) für Icons
 
-### Sprachsteuerung (Hotword Detection)
-
-* [Snowboy](https://snowboy.kitt.ai)
-
 ### Lokalisierung
 
 * Crowdsourcing [Glotpress](https://github.com/GlotPress/GlotPress-WP)
@@ -171,20 +167,25 @@ Ein zentrales und einheitliches Notification System soll bestimmte Meldungen an 
 * usw.
 
 
-## Scripts
+## Services
 
-Das mirr.OS soll über verschiedene ausführbare Scripts verfügen, die auf verschiedene Art und Weise ausgelöst werden können. Diese Scripts werden unter anderem mit den Modulen mitgeliefert, können aber auch direkt mit dem Betriebssystem mitgeliefert werden (z.B. Basics wie "Spiegel ein", "Spiegel aus").
+mirr.OS und Widgets können Services bereitstellen, die per API gesteuert werden. Die Scripts können idealerweise Shell, Python, Ruby oder andere ausführbare Scripts sein.
 
-Die Scripts können idealerweise Shell, Python, Ruby oder andere ausführbare Scripts sein.
+Beispiele:
+* Die aktuell angezeigten Schlagzeilen des News-Moduls inkl. Link auf die Quelle an die hinterlegte Mailadresse schicken. So kann man weiterlesen, ohne die Quelle manuell rauszusuchen.
+* Einen Steuerbefehl an eine verbundene SmartHome-API schicken
+* Display manuell an/aus schalten
+
+### Aktionen über Hardware-Buttons oder Touch
+
+Externe Hardware-Buttons oder Touch-Kapazitive Sensoren sollen ermöglichen, bestimmte Aktionen direkt über den glancr auszuführen. Die verfügbaren Bedienelemente (Taster oder Touch-Sensor) lassen sich über die Konfigurationsoberfläche mit Aktionen belegen. Als Aktion stehen [Services](#services) zur Verfügung.
+
+## Weitere Feature-Ideen
+Hier sind einige grobe Ideen für Hard/Software-Features skizziert, die zukünftig in mirr.OS bzw. glancr wünschenswert wären.
 
 ### Background Module
 
 Es soll möglich sein, bestimmte "Modul-Scripts" einzubinden ohne dafür ein Modul-Slot zu belegen. Das Script wird ebenfalls alle XY Minuten aktualisiert hat aber keine Anzeige im Frontend.
-
-
-### Aktionen über Hardware-Buttons oder Touch
-
-Externe Hardware-Buttons oder Touch-Kapazitive Sensoren sollen ermöglichen, bestimmte Aktionen bzw. Scripts ausführen können.
 
 ### Hotword Detection
 
@@ -212,6 +213,7 @@ Mit [Snowboy](https://snowboy.kitt.ai) soll eine Hotword Detection implementiert
 /module/scripts/lights_off.rb
 /module/scripts/lights_blue.sh
 /module/scripts/order_taxi.py
+```
 
 ### Modulgrössen
 
@@ -334,9 +336,6 @@ Mit [Snowboy](https://snowboy.kitt.ai) soll eine Hotword Detection implementiert
 
 ```
 
-
-
-
 ### Modulinstanzen
 Text kommt.
 
@@ -385,7 +384,9 @@ Text kommt.
 
 
 ## API
+
 ### Dokumentation mit Swagger UI
+
 ```bash
 docker pull swaggerapi/swagger-editor
 docker run -p 8080:8080 swaggerapi/swagger-editor
@@ -402,9 +403,9 @@ Das Frontend bezieht von der API die Daten, welche auf dem Frontend angezeigt we
 
 Im Backend: Die Einstellungen von mirr.OS, die Konfiguration von mirr.OS, die Einstellugen der Modulinstanzen sowie die Anordnung der Module kann alles über die API abgefragt werden und anschliessend wieder gespeichert werden.
 
-Mit diesem Setup ist es auch möglich, die API quasi als zentralen Hub im eigenen Netzwerk zu verwenden. So können z.B. aktuelle Daten von Lampenzuständen oder die Temperatur vom Thermostat von ein und der selben Quelle abgefragt werden und die Daten andersweitig verwenden. Die zur Verfügung stehenden Daten hängt von den Konfigurierten Datenquellen ab und wird natürlich auch für die Anzeige im Frontend verwendet.
+Mit diesem Setup ist es auch möglich, die API quasi als zentralen Hub im eigenen Netzwerk zu verwenden. So können z.B. aktuelle Daten von Lampenzuständen oder die Temperatur vom Thermostat von ein und der selben Quelle abgefragt werden und die Daten andersweitig verwenden. Die zur Verfügung stehenden Daten hängt von den konfigurierten Datenquellen ab und wird natürlich auch für die Anzeige im Frontend verwendet.
 
-So wird eine  zentrale und einheitliche Abfragemöglichkeit von verschiedenen Datenquellen angeboten, die alle gleich formatiert sind.
+So wird eine zentrale und einheitliche Abfragemöglichkeit von verschiedenen Datenquellen angeboten, die alle gleich formatiert sind.
 
 Hier gibt es z.B. das Anwendungbeispiel mit dem Tanken Modul. Es gibt verschiedene Datenquellen für ein bestimmtes Modul (Tankerkönig.de / Spritpreisrechner.at). Damit nicht zwei verschiedne Moduel entwickelt werden müssen, werden dann idealerweise die Daten dieser Datenquellen von der API einheitlich formatiert und zur Verfügung gestellt. In den Modul(-instanz)einstellungen gibt es dann die Möglichkeit auszuwählen, von welcher Datenquelle diese Instanz die Daten beziehen soll.
 
@@ -413,17 +414,39 @@ Quasi spielt die interne API hier eine Zwischenstelle. Mit den zur Verfügung st
 Ein weiterer Vorteil dieser Lösung ist, dass so alles von der Darstellung unabhängig ist.
 Sei es, wenn jemand sein eigenes Interface für die Steuerung für mirr.OS bauen will, später mal eine mobile native Applikation veröffentlicht werden soll oder es letztendlich nur für die Anzeige im Frontend verwendet wird, die API kann immer als zentraler Kommunkationspunkt genutzt werden.
 
+### ReST vs. (JSON-)RPC
+Die mirr.OS API soll sowohl Daten liefern als auch Konfigurationsobjekte speichern und Aktionen im Backend steuern. Die meisten dazu benötigten Datenstrukturen lassen sich sinnvoll als Ressourcen modellieren.
+Die gezielte Adressierung z. B. von Systemeinstellungen ist sinnvoll, weil mit Ausnahme der WLAN-Konfiguration jedes Feld ohne gesonderten Klick gespeichert wird.
+
+
+
+http://www.ics.uci.edu/~fielding/pubs/dissertation/top.htm
+https://www.smashingmagazine.com/2016/09/understanding-rest-and-rpc-for-http-apis/#what-are-they-for
+
+### Benötigte Operationen
+
+Widgets:
+* CRUD
+* List
+* [rel] Alle Instanzen eines Widgets
+
+Widget-Instanzen:
+* CRUD
+* List
+* [rel] Widget-Klasse einer Instanz
+
+Datenquellen:
+* Installieren (C)
+* Konfiguration lesen (R)
+* Konfiguration aktualisieren (U)
+* Deinstallieren (D)
 
 ### Groups
 
-`Groups` regeln, welche `Modules` und `Sources` miteinander funktionieren.<br>
+`Groups` regeln, welche `Modules` und `Sources` miteinander funktionieren.
 
 So haben zum Beispiel das `Module` `calendar_week` und die `Source` `Google Kalender` beide die `Group` `calendar`. Über diese Beziehung wird festgelegt, dass `Modules` und `Sources` der gleichen Gruppe miteinander kompatibel sind.
 
-#### Endpunkte
-
-`/api/groups`<br>
-`/api/groups/{group_name}`
 
 #### Beziehungen
 
@@ -459,13 +482,6 @@ modules | `Module` | - | Alle Module die dieser Gruppe angehören
 	"sources": [...]
 }
 ```
-
-<br>
-___
-<br>
-
-
-
 
 ### Modules
 
