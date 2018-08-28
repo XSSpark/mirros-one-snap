@@ -1,0 +1,15 @@
+name: mirros-one
+version: "0.1.0"
+summary: Just a test
+description: Testing snap containers for mirr.OS one.
+grade: stable
+confinement: strict
+
+apps:
+  hello:
+    command: hello
+  
+parts:
+  gnu-hello:
+    plugin: autotools
+    source: http://ftp.gnu.org/gnu/hello/hello-2.10.tar.gz
