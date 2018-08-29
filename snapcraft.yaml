@@ -6,10 +6,19 @@ grade: stable
 confinement: strict
 
 apps:
-  hello:
-    command: hello
+  join-network:
+    command: sh $SNAP/opt/join-network/bin/cmd.sh
+    plugs: [network-manager]
   
 parts:
-  gnu-hello:
-    plugin: autotools
-    source: http://ftp.gnu.org/gnu/hello/hello-2.10.tar.gz
+  cmd:
+    source: .
+    plugin: dump
+    organize:
+      cmd.sh: opt/join-network/bin/cmd.sh
+  nmcli:
+    plugin: nil
+    stage-packages:
+      - network-manager
+    organize:
+      usr/bin/nmcli: bin/nmcli
