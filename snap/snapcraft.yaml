@@ -1,0 +1,119 @@
+name: mirros-one
+version: "0.1.0"
+summary: Just a test
+description: Testing snap containers for mirr.OS one.
+grade: devel
+confinement: devmode
+
+environment:
+  RAILS_DATABASE_LOCATION: "$SNAP_DATA/production.sqlite3"
+  # Specify confined paths so that hooks can access snapped bins/libs.
+  PATH: "$SNAP/usr/sbin:$SNAP/usr/bin:$SNAP/sbin:$SNAP/bin:$PATH"
+  LD_LIBRARY_PATH: "$LD_LIBRARY_PATH:$SNAP/lib:$SNAP/usr/lib:$SNAP/usr/lib/x86_64-linux-gnu"
+  GEM_PATH: "$SNAP/lib/ruby/gems/2.5.0"
+  RUBYLIB: "$SNAP/lib/ruby/2.5.0:$SNAP/lib/ruby/2.5.0/armv7l-linux-eabihf:$SNAP/lib/ruby/2.5.0:$SNAP/lib/ruby/2.5.0/x86_64-linux"
+  GEM_HOME: "$SNAP/lib/ruby/gems/2.5.0"
+  LD_LIBRARY_PATH: "$SNAP_LIBRARY_PATH:$LD_LIBRARY_PATH"
+
+apps:
+  # SERVICES
+  backend:
+    command: sh $SNAP/bin/start-stack.sh
+    daemon: simple
+    plugs: [network, network-bind]
+  nginx:
+    command: usr/sbin/nginx -c $SNAP_DATA/nginx.conf
+    daemon: forking
+    plugs: [network, network-bind]
+
+  # COMMANDS
+  debug:
+    command: sh $SNAP/bin/debug.sh
+
+  manual-install:
+    command: sh $SNAP/bin/manual-install.sh
+
+passthrough: # TODO: Remove once in stable snapd
+  layout:
+    $SNAP/api/tmp:
+      bind: $SNAP_DATA/rails_tmp
+    $SNAP/api/log:
+      bind: $SNAP_DATA/rails_log
+
+parts:
+  nginx:
+    source: src/nginx
+    stage-packages: [nginx]
+    plugin: dump
+
+  mirros-display:
+    source: git@gitlab.com:glancr/mirros_display.git
+    source-branch: master
+    source-depth: 1
+    plugin: nodejs
+    node-packages:
+      - "@vue/cli"
+    node-engine: "10.9.0"
+    node-package-manager: "yarn"
+    npm-run:
+      - "init"
+      - "build"
+    override-build: |
+      snapcraftctl build
+      mkdir $SNAPCRAFT_PART_INSTALL/display
+      cp -a dist/* $SNAPCRAFT_PART_INSTALL/display
+    stage:
+      - display/
+
+  mirros-settings:
+    source: git@gitlab.com:glancr/mirros_settings.git
+    source-branch: master
+    source-depth: 1
+    plugin: nodejs
+    node-packages:
+      - "@vue/cli"
+    node-engine: "10.9.0"
+    node-package-manager: "yarn"
+    npm-run:
+      - "init"
+      - "build"
+    override-build: |
+      snapcraftctl build
+      mkdir $SNAPCRAFT_PART_INSTALL/settings
+      cp -a dist/* $SNAPCRAFT_PART_INSTALL/settings
+    stage:
+      - settings/
+
+  mirros-api:
+    source: git@gitlab.com:glancr/mirros_api.git
+    source-branch: WIP-tobias
+    source-depth: 1
+    build-packages: [libsqlite3-dev]
+    stage-packages: [sqlite3]
+    plugin: ruby
+    ruby-version: "2.5.1"
+    gems: [bundler, rails]
+    #after: [ruby]
+    
+    override-build: |
+      mkdir $SNAPCRAFT_PART_INSTALL/api
+      cp -a * $SNAPCRAFT_PART_INSTALL/api
+      # which ruby
+      # which bundle
+      snapcraftctl build
+      cd $SNAPCRAFT_PART_INSTALL/api
+      bin/bundle install --path vendor/bundle --without development test 
+      rm -rf $SNAPCRAFT_PART_INSTALL/api/tmp $SNAPCRAFT_PART_INSTALL/api/log # TODO: Remove once those are untracked
+
+  # Scripts and wrappers
+  start-stack:
+    source: src/start-stack
+    plugin: dump 
+
+  debug:
+    source: src/debug
+    plugin: dump
+
+  manual-install:
+    source: src/manual-install
+    plugin: dump
