@@ -3,9 +3,10 @@
 # Run any commands needed to setup the snap.
 # This could be downloading a list of dynamic configuration options or creating a database.
 
-# nginx setup
-envsubst < $SNAP/nginx.conf > $SNAP_DATA/nginx.conf
-mkdir $SNAP_DATA/nginx
+# nginx setup. Limit substitution to SNAP and SNAP_COMMON to prevent overwriting nginx variables.
+cat $SNAP/nginx.conf | envsubst '${SNAP} ${SNAP_COMMON}' > $SNAP_COMMON/nginx.conf
+mkdir -p $SNAP_DATA/nginx/tmp
+mkdir -p $SNAP_DATA/nginx/log
 
 # Rails app setup
 cd $SNAP/api
