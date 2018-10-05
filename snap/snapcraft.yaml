@@ -104,7 +104,7 @@ parts:
     source-branch: master
     source-depth: 1
     build-packages: [libsqlite3-dev]
-    stage-packages: [sqlite3]
+    stage-packages: [sqlite3, wireless-tools, network-manager]
     plugin: ruby
     ruby-version: "2.5.1"
     gems: [bundler, rails]
