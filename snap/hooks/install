@@ -6,6 +6,11 @@
 # Disables the DNS service to prevent it from starting automatically.
 # FIXME: Remove once https://github.com/snapcore/snapd/pull/5777 is in stable
 snapctl stop --disable mirros-one.dns
+
+# AP setup
+nmcli c add type wifi ifname '*' con-name glancrsetup ssid "glancr setup" mode ap autoconnect no -- ipv4.method manual ipv4.addresses 192.168.8.1 ipv4.dns 192.168.8.1 ipv4.gateway 192.168.8.1
+
+
 # nginx setup. Limit substitution to SNAP and SNAP_COMMON to prevent overwriting nginx variables.
 cat $SNAP/nginx.conf | envsubst '${SNAP_NAME} ${SNAP_COMMON}' > $SNAP_COMMON/nginx.conf
 mkdir -p $SNAP_DATA/nginx/tmp
