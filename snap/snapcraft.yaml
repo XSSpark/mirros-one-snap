@@ -71,7 +71,7 @@ parts:
       - $binandconf
 
   mirros-display:
-    source: git@gitlab.com:glancr/mirros_display.git
+    source: https://gitlab.com/glancr/mirros_display.git
     source-branch: master
     source-depth: 1
     plugin: nodejs
@@ -90,7 +90,7 @@ parts:
       - display/
 
   mirros-settings:
-    source: git@gitlab.com:glancr/mirros_settings.git
+    source: https://gitlab.com/glancr/mirros_settings.git
     source-branch: master
     source-depth: 1
     plugin: nodejs
@@ -109,7 +109,7 @@ parts:
       - settings/
 
   mirros-api:
-    source: git@gitlab.com:glancr/mirros_api.git
+    source: https://gitlab.com/glancr/mirros_api.git
     source-branch: master
     source-depth: 1
     build-packages: [libsqlite3-dev]
