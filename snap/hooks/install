@@ -4,7 +4,7 @@
 # This could be downloading a list of dynamic configuration options or creating a database.
 
 # nginx setup. Limit substitution to SNAP and SNAP_COMMON to prevent overwriting nginx variables.
-cat $SNAP/nginx.conf | envsubst '${SNAP} ${SNAP_COMMON}' > $SNAP_COMMON/nginx.conf
+cat $SNAP/nginx.conf | envsubst '${SNAP_NAME} ${SNAP_COMMON}' > $SNAP_COMMON/nginx.conf
 mkdir -p $SNAP_DATA/nginx/tmp
 mkdir -p $SNAP_DATA/nginx/log
 
