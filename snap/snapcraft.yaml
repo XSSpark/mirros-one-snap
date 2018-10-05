@@ -45,6 +45,21 @@ parts:
     source: src/nginx
     stage-packages: [nginx]
     plugin: dump
+  
+  dnsmasq:
+    source: src/dnsmasq
+    plugin: dump
+    stage-packages: [dnsmasq]    
+    organize:
+      usr/sbin/dnsmasq: bin/dnsmasq
+    filesets:
+      binandconf:
+        - bin/dnsmasq
+        - dnsmasq.conf
+    stage:
+      - $binandconf
+    prime:
+      - $binandconf
 
   mirros-display:
     source: git@gitlab.com:glancr/mirros_display.git
