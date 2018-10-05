@@ -101,7 +101,7 @@ parts:
 
   mirros-api:
     source: git@gitlab.com:glancr/mirros_api.git
-    source-branch: WIP-tobias
+    source-branch: master
     source-depth: 1
     build-packages: [libsqlite3-dev]
     stage-packages: [sqlite3]
