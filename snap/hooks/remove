@@ -1,0 +1,7 @@
+#!/bin/sh -e
+
+# Run any commands needed to clean up the snap installation.
+# This could be sending metrics, or gracefully stopping a service.
+
+# Be a good citizen and remove all AP connections.
+nmcli c delete glancrsetup
