@@ -46,6 +46,8 @@ passthrough: # TODO: Remove once in stable snapd
       bind: $SNAP_DATA/rails_tmp
     $SNAP/api/log:
       bind: $SNAP_DATA/rails_log
+    $SNAP/api/vendor:
+      bind: $SNAP_DATA/rails_vendor
 
 parts:
   nginx:
@@ -121,8 +123,14 @@ parts:
       cp -a * $SNAPCRAFT_PART_INSTALL/api
       snapcraftctl build
       cd $SNAPCRAFT_PART_INSTALL/api
-      bin/bundle install --path vendor/bundle --without development test 
-      rm -rf $SNAPCRAFT_PART_INSTALL/api/tmp $SNAPCRAFT_PART_INSTALL/api/log # TODO: Remove once those are untracked
+      bin/bundle install --path vendor/bundle --without development test
+      
+      # To allow installing new gems in the snap, they have to be in $SNAP_DATA. Layouts above maps a bind-mount.
+      mv vendor vendor_installed
+      rm -rf $SNAPCRAFT_PART_INSTALL/api/vendor
+
+      # TODO: Remove once those are untracked
+      rm -rf $SNAPCRAFT_PART_INSTALL/api/tmp $SNAPCRAFT_PART_INSTALL/api/log
 
   # Scripts and wrappers
   start-stack:

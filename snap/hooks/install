@@ -18,6 +18,7 @@ mkdir -p $SNAP_DATA/nginx/log
 
 # Rails app setup
 cd $SNAP/api
+cp vendor_installed $SNAP_DATA/rails_vendor
 
 # Generates an individual secret for each snap installation. Environment variables set here might not be present at all times across revisions, so we store it in a file. TODO: Check if we can leverage snap configuration.
 $SNAP/bin/rails secret > $SNAP_DATA/secret
