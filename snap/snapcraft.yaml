@@ -107,14 +107,11 @@ parts:
     stage-packages: [sqlite3, wireless-tools, network-manager]
     plugin: ruby
     ruby-version: "2.5.1"
-    gems: [bundler, rails]
-    #after: [ruby]
+    gems: [bundler]
     
     override-build: |
       mkdir $SNAPCRAFT_PART_INSTALL/api
       cp -a * $SNAPCRAFT_PART_INSTALL/api
-      # which ruby
-      # which bundle
       snapcraftctl build
       cd $SNAPCRAFT_PART_INSTALL/api
       bin/bundle install --path vendor/bundle --without development test 
