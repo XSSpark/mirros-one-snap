@@ -46,10 +46,10 @@ passthrough: # TODO: Remove once in stable snapd
       bind: $SNAP_DATA/rails/log
     $SNAP/api/vendor:
       bind: $SNAP_DATA/rails/vendor
-      #    $SNAP/api/Gemfile:
-      #bind-file: $SNAP_DATA/rails/Gemfile
-      #$SNAP/api/Gemfile.lock:
-      #bind-file: $SNAP_DATA/rails/Gemfile.lock
+    $SNAP/api/Gemfile:
+      bind-file: $SNAP_DATA/rails/Gemfile
+    $SNAP/api/Gemfile.lock:
+      bind-file: $SNAP_DATA/rails/Gemfile.lock
 
 parts:
   nginx:
