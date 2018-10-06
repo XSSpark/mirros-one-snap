@@ -35,9 +35,8 @@ apps:
   # COMMANDS
   debug:
     command: sh $SNAP/bin/debug.sh
-
-  manual-install:
-    command: sh $SNAP/bin/manual-install.sh
+  setup:
+    command: sh $SNAP/bin/setup.sh
 
 passthrough: # TODO: Remove once in stable snapd
   layout:
@@ -57,11 +56,11 @@ parts:
     source: src/nginx
     stage-packages: [nginx]
     plugin: dump
-  
+
   dnsmasq:
     source: src/dnsmasq
     plugin: dump
-    stage-packages: [dnsmasq]    
+    stage-packages: [dnsmasq]
     organize:
       usr/sbin/dnsmasq: bin/dnsmasq
     filesets:
@@ -120,14 +119,14 @@ parts:
     plugin: ruby
     ruby-version: "2.5.1"
     gems: [bundler]
-    
+
     override-build: |
       mkdir $SNAPCRAFT_PART_INSTALL/api
       cp -a * $SNAPCRAFT_PART_INSTALL/api
       snapcraftctl build
       cd $SNAPCRAFT_PART_INSTALL/api
       bin/bundle install --path vendor/bundle --without development test
-      
+
       # To allow installing new gems in the snap, they have to be in $SNAP_DATA. Layouts above maps a bind-mount.
       mv vendor vendor_installed
       mv Gemfile Gemfile_installed
@@ -139,12 +138,11 @@ parts:
   # Scripts and wrappers
   start-stack:
     source: src/start-stack
-    plugin: dump 
+    plugin: dump
+  setup:
+    source: src/setup
+    plugin: dump
 
   debug:
     source: src/debug
-    plugin: dump
-
-  manual-install:
-    source: src/manual-install
     plugin: dump

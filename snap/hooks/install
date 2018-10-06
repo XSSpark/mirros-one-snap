@@ -7,9 +7,7 @@
 # FIXME: Remove once https://github.com/snapcore/snapd/pull/5777 is in stable
 snapctl stop --disable mirros-one.dns
 
-# AP setup
-nmcli c add type wifi ifname '*' con-name glancrsetup autoconnect no ssid "glancr setup" mode ap -- ipv4.method manual ipv4.addresses 192.168.8.1 ipv4.dns 192.168.8.1 ipv4.gateway 192.168.8.1
-
+# AP setup has to happen in configure hook since we do not have the required interfaces at this point.
 
 # nginx setup. Limit substitution to SNAP and SNAP_COMMON to prevent overwriting nginx variables.
 cat $SNAP/nginx.conf | envsubst '${SNAP_NAME} ${SNAP_COMMON}' > $SNAP_COMMON/nginx.conf
