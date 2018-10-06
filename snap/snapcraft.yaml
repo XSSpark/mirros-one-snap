@@ -13,7 +13,6 @@ environment:
   GEM_PATH: "$SNAP/lib/ruby/gems/2.5.0"
   RUBYLIB: "$SNAP/lib/ruby/2.5.0:$SNAP/lib/ruby/2.5.0/armv7l-linux-eabihf:$SNAP/lib/ruby/2.5.0:$SNAP/lib/ruby/2.5.0/x86_64-linux"
   GEM_HOME: "$SNAP/lib/ruby/gems/2.5.0"
-  LD_LIBRARY_PATH: "$SNAP_LIBRARY_PATH:$LD_LIBRARY_PATH"
 
 apps:
   # SERVICES
@@ -43,15 +42,15 @@ apps:
 passthrough: # TODO: Remove once in stable snapd
   layout:
     $SNAP/api/tmp:
-      bind: $SNAP_DATA/rails_tmp
+      bind: $SNAP_DATA/rails/tmp
     $SNAP/api/log:
-      bind: $SNAP_DATA/rails_log
+      bind: $SNAP_DATA/rails/log
     $SNAP/api/vendor:
-      bind: $SNAP_DATA/rails_vendor
-    $SNAP/api/Gemfile:
-      bind: $SNAP_DATA/rails_Gemfile
-    $SNAP/api/Gemfile.lock:
-      bind: $SNAP_DATA/rails_Gemfile.lock
+      bind: $SNAP_DATA/rails/vendor
+      #    $SNAP/api/Gemfile:
+      #bind-file: $SNAP_DATA/rails/Gemfile
+      #$SNAP/api/Gemfile.lock:
+      #bind-file: $SNAP_DATA/rails/Gemfile.lock
 
 parts:
   nginx:
@@ -131,8 +130,8 @@ parts:
       
       # To allow installing new gems in the snap, they have to be in $SNAP_DATA. Layouts above maps a bind-mount.
       mv vendor vendor_installed
-      mv Gemfile rails_Gemfile
-      mv Gemfile.lock rails_Gemfile.lock
+      mv Gemfile Gemfile_installed
+      mv Gemfile.lock Gemfile.lock_installed
 
       # TODO: Remove once those are untracked
       rm -rf $SNAPCRAFT_PART_INSTALL/api/tmp $SNAPCRAFT_PART_INSTALL/api/log
