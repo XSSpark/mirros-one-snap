@@ -1,7 +1,8 @@
 name: mirros-one
 version: "0.1.0"
-summary: mirr.OS is an operating system tailored for smart mirrors and other display-only devices.
-description: mirr.OS is the operating system for the glancr smart mirror, but can be used for other kiosk/display-only devices. Currently meant to be deployed on a Raspberry Pi (min model 3B). Learn more at https://glancr.de
+summary: An operating system tailored for smart mirrors.
+description: |
+  mirr.OS is the operating system for the glancr smart mirror, but can be used for other kiosk/display-only devices. Currently meant to be deployed on a Raspberry Pi (min model 3B). Learn more at https://glancr.de
 grade: devel
 confinement: devmode # strict
 
