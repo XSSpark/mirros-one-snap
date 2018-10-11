@@ -15,19 +15,11 @@ mkdir -p $SNAP_COMMON/nginx/tmp
 mkdir -p $SNAP_COMMON/nginx/log
 
 # Rails app setup
-mkdir -p $SNAP_DATA/rails/tmp
-mkdir -p $SNAP_DATA/rails/log
-
-cp -r $SNAP/api/vendor_installed $SNAP_DATA/rails/vendor/
+cp -r $SNAP/api/vendor_installed/* $SNAP_DATA/rails/vendor
 cat $SNAP/api/Gemfile_installed > $SNAP_DATA/rails/Gemfile
 cat $SNAP/api/Gemfile.lock_installed > $SNAP_DATA/rails/Gemfile.lock
 
-echo "content of SNAP/api"
-ls $SNAP/api
-
-echo "content of SNAP_DATA"
-ls $SNAP_DATA
-
+cd $SNAP/api
 # Generates an individual secret for each snap installation. Environment variables set here might not be present at all times across revisions, so we store it in a file. TODO: Check if we can leverage snap configuration.
 $SNAP/api/bin/rails secret > $SNAP_DATA/secret
 
