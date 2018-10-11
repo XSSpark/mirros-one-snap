@@ -20,7 +20,6 @@ apps:
     command: sh $SNAP/bin/start-stack.sh
     daemon: simple
     plugs: [network, network-bind, network-manager]
-    after: [nginx]
   nginx:
     command: usr/sbin/nginx -c $SNAP_COMMON/nginx.conf
     daemon: forking
@@ -28,7 +27,6 @@ apps:
   dns:
     command: dnsmasq --pid-file=$SNAP_USER_DATA/dnsmasq.pid -l $SNAP_DATA/dnsmasq.leases -C $SNAP/dnsmasq.conf
     daemon: forking
-    after: [backend]
     plugs:
       - network
       - network-bind
