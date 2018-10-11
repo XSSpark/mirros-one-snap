@@ -21,7 +21,7 @@ apps:
     daemon: simple
     plugs: [network, network-bind]
   nginx:
-    command: usr/sbin/nginx -c $SNAP_DATA/nginx.conf
+    command: usr/sbin/nginx -c $SNAP_COMMON/nginx.conf
     daemon: forking
     plugs: [network, network-bind]
   dns:
