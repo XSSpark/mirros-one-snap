@@ -4,4 +4,4 @@
 # This could be sending metrics, or gracefully stopping a service.
 
 # Be a good citizen and remove all AP connections.
-nmcli c delete glancrsetup
+$SNAP/usr/bin/nmcli c delete glancrsetup
