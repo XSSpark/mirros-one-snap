@@ -28,10 +28,11 @@ apps:
   dns:
     command: dnsmasq --pid-file=$SNAP_USER_DATA/dnsmasq.pid -l $SNAP_DATA/dnsmasq.leases -C $SNAP/dnsmasq.conf
     daemon: forking
+    after: [backend]
     plugs:
       - network
       - network-bind
-#      - network-control
+      - network-control # TODO: is this required for dnsmasq to function?
 
   # COMMANDS
   debug:
