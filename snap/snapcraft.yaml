@@ -25,8 +25,8 @@ apps:
     daemon: forking
     plugs: [network, network-bind]
   dns:
-    command: dnsmasq --pid-file=$SNAP_USER_DATA/dnsmasq.pid -l $SNAP_DATA/dnsmasq.leases -C $SNAP/dnsmasq.conf
-    daemon: forking
+    command: dnsmasq -k -u root -g root --pid-file=$SNAP_USER_DATA/dnsmasq.pid -l $SNAP_DATA/dnsmasq.leases -C $SNAP/dnsmasq.conf
+    daemon: simple
     plugs:
       - network
       - network-bind
