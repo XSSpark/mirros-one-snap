@@ -46,6 +46,8 @@ passthrough: # TODO: Remove once in stable snapd
       bind: $SNAP_DATA/rails/tmp
     $SNAP/api/log:
       bind: $SNAP_DATA/rails/log
+    $SNAP/api/db:
+      bind: $SNAP_DATA/rails/db
     $SNAP/api/vendor:
       bind: $SNAP_DATA/rails/vendor
     $SNAP/api/Gemfile:
@@ -133,6 +135,7 @@ parts:
       mv vendor vendor_installed
       mv Gemfile Gemfile_installed
       mv Gemfile.lock Gemfile.lock_installed
+      mv db db_installed
 
       # TODO: Remove once those are untracked
       rm -rf $SNAPCRAFT_PART_INSTALL/api/tmp $SNAPCRAFT_PART_INSTALL/api/log
