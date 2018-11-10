@@ -30,4 +30,3 @@ SECRET_KEY_BASE=$(cat $SNAP_DATA/secret) RAILS_ENV=production $SNAP/api/bin/rail
 # FIXME: This installs the Openweathermap cities table. Make more generic for other default widgets.
 SECRET_KEY_BASE=$(cat $SNAP_DATA/secret) RAILS_ENV=production  $SNAP/api/bin/rails openweathermap:install:migrations
 SECRET_KEY_BASE=$(cat $SNAP_DATA/secret) RAILS_ENV=production $SNAP/api/bin/rails db:migrate
-SECRET_KEY_BASE=$(cat $SNAP_DATA/secret) RAILS_ENV=production $SNAP/bin/bundle exec $SNAP/api/bin/rails runner "Openweathermap::Engine.load_seed" 
