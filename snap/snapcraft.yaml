@@ -116,9 +116,8 @@ parts:
 
   mirros-api:
     source: https://gitlab.com/glancr/mirros_api.git
-    source-branch: master
+    source-branch: master # source-tag: $SNAPCRAFT_PROJECT_VERSION
     source-depth: 1
-    source-tag: $SNAPCRAFT_PROJECT_VERSION
     build-packages: [libsqlite3-dev]
     stage-packages: [sqlite3, wireless-tools, network-manager]
     plugin: ruby
