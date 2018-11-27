@@ -1,5 +1,5 @@
 name: mirros-one
-version: "0.2.1"
+version: "0.2.2"
 summary: An operating system tailored for smart mirrors.
 description: |
   mirr.OS is the operating system for the glancr smart mirror, but can be used for other kiosk/display-only devices. Currently meant to be deployed on a Raspberry Pi (min model 3B). Learn more at https://glancr.de
