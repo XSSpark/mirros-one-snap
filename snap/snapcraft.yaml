@@ -138,7 +138,7 @@ parts:
       mv db db_installed
 
       # Ensure that snap version and Rails backend version are in sync
-      echo "SNAP_VERSION = '{$SNAPCRAFT_PROJECT_VERSION}'.freeze" > config/version.rb
+      echo "SNAP_VERSION = '$SNAPCRAFT_PROJECT_VERSION'.freeze" > config/version.rb
 
       # TODO: Remove once those are untracked
       rm -rf $SNAPCRAFT_PART_INSTALL/api/tmp $SNAPCRAFT_PART_INSTALL/api/log
