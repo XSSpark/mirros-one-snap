@@ -6,6 +6,9 @@ snap install network-manager
 echo "check if candidate channel is still required for mir-kiosk"
 snap install --candidate mir-kiosk
 
+sudo hostnamectl set-hostname 'glancr'
+snap install avahi
+
 echo "install the modified chromium snap"
 echo "then connect chromium-mir-kiosk:browser-sandbox to core:browser-support"
 # snap install --beta chromium-mir-kiosk
