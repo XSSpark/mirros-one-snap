@@ -18,7 +18,7 @@ network-manager.nmcli d set wlan0 autoconnect yes
 
 # Configure chromium-mir-kiosk
 snap set chromium-mir-kiosk resettime=720 hidecursor=true url="http://localhost/display"
-snap connect mirros-one:browser-sandbox :browser-support
+snap connect chromium-mir-kiosk:browser-sandbox :browser-support
 
 # Connect required interfaces.
 snap connect mirros-one:network-manager network-manager:service
