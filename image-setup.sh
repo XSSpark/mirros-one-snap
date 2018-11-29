@@ -1,5 +1,5 @@
 # Set up system variables.
-# snap set system pi-config.display-rotate=1
+snap set core refresh.timer=03:00-05:00/3
 
 # Install required third-party snaps.
 snap install network-manager
