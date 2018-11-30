@@ -1,10 +1,10 @@
 #!/bin/sh
 # set -e
 
-if [ "$(id -u)" != "0" ]; then
-   echo "Must be run as root since root owns the database" 1>&2
-   exit 1
-fi
+# if [ "$(id -u)" != "0" ]; then
+#    echo "Must be run as root since root owns the database" 1>&2
+#    exit 1
+# fi
 
 # AP setup
 nmcli c add type wifi ifname '*' con-name glancrsetup autoconnect no ssid "glancr setup" mode ap -- ipv4.method manual ipv4.addresses 192.168.8.1 ipv4.dns 192.168.8.1 ipv4.gateway 192.168.8.1
