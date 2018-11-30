@@ -84,7 +84,7 @@ parts:
     plugin: nodejs
     node-packages:
       - "@vue/cli"
-    node-engine: "11.2.0"
+    node-engine: "11.3.0"
     node-package-manager: "yarn"
     npm-run:
       - "init"
@@ -104,7 +104,7 @@ parts:
     plugin: nodejs
     node-packages:
       - "@vue/cli"
-    node-engine: "11.2.0"
+    node-engine: "11.3.0"
     node-package-manager: "yarn"
     npm-run:
       - "init"
