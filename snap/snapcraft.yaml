@@ -40,20 +40,21 @@ apps:
     command: sh $SNAP/bin/setup.sh
     plugs: [network-manager]
 
-# Supported since snapd 2.36
-layout:
-  $SNAP/api/tmp:
-    bind: $SNAP_DATA/rails/tmp
-  $SNAP/api/log:
-    bind: $SNAP_DATA/rails/log
-  $SNAP/api/db:
-    bind: $SNAP_DATA/rails/db
-  $SNAP/api/vendor:
-    bind: $SNAP_DATA/rails/vendor
-  $SNAP/api/Gemfile:
-    bind-file: $SNAP_DATA/rails/Gemfile
-  $SNAP/api/Gemfile.lock:
-    bind-file: $SNAP_DATA/rails/Gemfile.lock
+# Supported since snapd 2.36, but snapcraft on the build farm is not up-to-date
+passthrough:
+  layout:
+    $SNAP/api/tmp:
+      bind: $SNAP_DATA/rails/tmp
+    $SNAP/api/log:
+      bind: $SNAP_DATA/rails/log
+    $SNAP/api/db:
+      bind: $SNAP_DATA/rails/db
+    $SNAP/api/vendor:
+      bind: $SNAP_DATA/rails/vendor
+    $SNAP/api/Gemfile:
+      bind-file: $SNAP_DATA/rails/Gemfile
+    $SNAP/api/Gemfile.lock:
+      bind-file: $SNAP_DATA/rails/Gemfile.lock
 
 parts:
   nginx:
