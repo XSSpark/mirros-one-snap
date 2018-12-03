@@ -1,5 +1,5 @@
 name: mirros-one
-version: "0.2.5"
+version: "0.2.6"
 summary: An operating system tailored for smart mirrors.
 description: |
   mirr.OS is the operating system for the glancr smart mirror, but can be used for other kiosk/display-only devices. Currently meant to be deployed on a Raspberry Pi (min model 3B). Learn more at https://glancr.de
@@ -40,20 +40,20 @@ apps:
     command: sh $SNAP/bin/setup.sh
     plugs: [network-manager]
 
-passthrough: # TODO: Remove once in stable snapd
-  layout:
-    $SNAP/api/tmp:
-      bind: $SNAP_DATA/rails/tmp
-    $SNAP/api/log:
-      bind: $SNAP_DATA/rails/log
-    $SNAP/api/db:
-      bind: $SNAP_DATA/rails/db
-    $SNAP/api/vendor:
-      bind: $SNAP_DATA/rails/vendor
-    $SNAP/api/Gemfile:
-      bind-file: $SNAP_DATA/rails/Gemfile
-    $SNAP/api/Gemfile.lock:
-      bind-file: $SNAP_DATA/rails/Gemfile.lock
+# Supported since snapd 2.36
+layout:
+  $SNAP/api/tmp:
+    bind: $SNAP_DATA/rails/tmp
+  $SNAP/api/log:
+    bind: $SNAP_DATA/rails/log
+  $SNAP/api/db:
+    bind: $SNAP_DATA/rails/db
+  $SNAP/api/vendor:
+    bind: $SNAP_DATA/rails/vendor
+  $SNAP/api/Gemfile:
+    bind-file: $SNAP_DATA/rails/Gemfile
+  $SNAP/api/Gemfile.lock:
+    bind-file: $SNAP_DATA/rails/Gemfile.lock
 
 parts:
   nginx:
