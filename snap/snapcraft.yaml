@@ -4,7 +4,7 @@ summary: An operating system tailored for smart mirrors.
 description: |
   mirr.OS is the operating system for the glancr smart mirror, but can be used for other kiosk/display-only devices. Currently meant to be deployed on a Raspberry Pi (min model 3B). Learn more at https://glancr.de
 grade: devel
-confinement: devmode # strict
+confinement: strict
 
 environment:
   RAILS_DATABASE_LOCATION: "$SNAP_DATA/production.sqlite3"
@@ -14,6 +14,10 @@ environment:
   GEM_PATH: "$SNAP/lib/ruby/gems/2.5.0"
   RUBYLIB: "$SNAP/lib/ruby/2.5.0:$SNAP/lib/ruby/2.5.0/armv7l-linux-eabihf:$SNAP/lib/ruby/2.5.0:$SNAP/lib/ruby/2.5.0/x86_64-linux"
   GEM_HOME: "$SNAP/lib/ruby/gems/2.5.0"
+
+hooks:
+  install:
+    plugs: [network]
 
 apps:
   # SERVICES
@@ -59,7 +63,7 @@ passthrough:
 parts:
   nginx:
     source: src/nginx
-    stage-packages: [nginx]
+    stage-packages: [nginx, gettext-base]
     plugin: dump
 
   dnsmasq:
