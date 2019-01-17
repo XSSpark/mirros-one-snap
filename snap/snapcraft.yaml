@@ -38,8 +38,6 @@ apps:
       - network-control # TODO: is this required for dnsmasq to function?
 
   # COMMANDS
-  debug:
-    command: sh $SNAP/bin/debug.sh
   setup:
     command: sh $SNAP/bin/setup.sh
     plugs: [network-manager]
@@ -156,8 +154,4 @@ parts:
     plugin: dump
   setup:
     source: src/setup
-    plugin: dump
-
-  debug:
-    source: src/debug
     plugin: dump
