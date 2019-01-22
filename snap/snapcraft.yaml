@@ -1,5 +1,5 @@
 name: mirros-one
-version: "0.3.0"
+version: "0.3.1"
 summary: An operating system tailored for smart mirrors.
 description: |
   mirr.OS is the operating system for the glancr smart mirror, but can be used for other kiosk/display-only devices. Currently meant to be deployed on a Raspberry Pi (min model 3B). Learn more at https://glancr.de
@@ -30,12 +30,11 @@ apps:
     daemon: forking
     plugs: [network, network-bind]
   dns:
-    command: dnsmasq -k -u root -g root --pid-file=$SNAP_USER_DATA/dnsmasq.pid -l $SNAP_DATA/dnsmasq.leases -C $SNAP/dnsmasq.conf
+    command: dnsmasq -k -x $SNAP_USER_DATA/dnsmasq.pid -l $SNAP_DATA/dnsmasq.leases -C $SNAP/dnsmasq.conf
     daemon: simple
     plugs:
       - network
       - network-bind
-      - network-control # TODO: is this required for dnsmasq to function?
 
   # COMMANDS
   setup:
