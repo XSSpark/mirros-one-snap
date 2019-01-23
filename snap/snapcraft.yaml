@@ -18,6 +18,8 @@ environment:
 hooks:
   install:
     plugs: [network]
+  connect-plug-network-manager:
+    plugs: [network-manager]
 
 apps:
   # SERVICES
@@ -30,7 +32,7 @@ apps:
     daemon: forking
     plugs: [network, network-bind]
   dns:
-    command: dnsmasq -k -x $SNAP_USER_DATA/dnsmasq.pid -l $SNAP_DATA/dnsmasq.leases -C $SNAP/dnsmasq.conf
+    command: dnsmasq -k -u root -g root -x $SNAP_USER_DATA/dnsmasq.pid -l $SNAP_DATA/dnsmasq.leases -C $SNAP/dnsmasq.conf
     daemon: simple
     plugs:
       - network
