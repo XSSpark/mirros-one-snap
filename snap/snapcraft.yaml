@@ -80,45 +80,19 @@ parts:
     prime:
       - $binandconf
 
-  # TODO: Use pre-built ZIP from GitLab CI to speed things up.
   mirros-display:
-    source: https://gitlab.com/glancr/mirros_display.git
-    source-branch: master
-    source-depth: 1
-    plugin: nodejs
-    node-packages:
-      - "@vue/cli"
-    node-engine: "11.3.0"
-    node-package-manager: "yarn"
-    npm-run:
-      - "init"
-      - "build"
-    override-build: |
-      snapcraftctl build
-      mkdir $SNAPCRAFT_PART_INSTALL/display
-      cp -a dist/* $SNAPCRAFT_PART_INSTALL/display
-    stage:
-      - display/
+    source: https://gitlab.com/glancr/mirros_display/-/jobs/artifacts/0.1.0/download?job=build-tag
+    source-type: zip
+    plugin: dump
+    organize:
+      dist: display
 
-  # TODO: Use pre-built ZIP from GitLab CI to speed things up.
   mirros-settings:
-    source: https://gitlab.com/glancr/mirros_settings.git
-    source-branch: master
-    source-depth: 1
-    plugin: nodejs
-    node-packages:
-      - "@vue/cli"
-    node-engine: "11.3.0"
-    node-package-manager: "yarn"
-    npm-run:
-      - "init"
-      - "build"
-    override-build: |
-      snapcraftctl build
-      mkdir $SNAPCRAFT_PART_INSTALL/settings
-      cp -a dist/* $SNAPCRAFT_PART_INSTALL/settings
-    stage:
-      - settings/
+    source: https://gitlab.com/glancr/mirros_settings/-/jobs/artifacts/0.1.0/download?job=build-tag
+    source-type: zip
+    plugin: dump
+    organize:
+      dist: settings
 
   mirros-api:
     source: https://gitlab.com/glancr/mirros_api.git
