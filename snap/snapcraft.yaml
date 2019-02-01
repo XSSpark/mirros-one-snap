@@ -26,7 +26,7 @@ apps:
   backend:
     command: sh $SNAP/bin/start-stack.sh
     daemon: simple
-    plugs: [network, network-bind, network-manager]
+    plugs: [network, network-bind, network-control, network-manager]
   nginx:
     command: usr/sbin/nginx -c $SNAP_COMMON/nginx.conf
     daemon: forking
