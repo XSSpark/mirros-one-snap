@@ -1,4 +1,5 @@
 name: mirros-one
+base: core18
 version: "0.3.1"
 summary: An operating system tailored for smart mirrors.
 description: |
@@ -13,9 +14,9 @@ environment:
   # Specify confined paths so that hooks can access snapped bins/libs.
   PATH: "$SNAP/usr/sbin:$SNAP/usr/bin:$SNAP/sbin:$SNAP/bin:$PATH"
   LD_LIBRARY_PATH: "$LD_LIBRARY_PATH:$SNAP/lib:$SNAP/usr/lib:$SNAP/usr/lib/x86_64-linux-gnu"
-  GEM_PATH: "$SNAP/lib/ruby/gems/2.5.0"
-  RUBYLIB: "$SNAP/lib/ruby/2.5.0:$SNAP/lib/ruby/2.5.0/armv7l-linux-eabihf:$SNAP/lib/ruby/2.5.0:$SNAP/lib/ruby/2.5.0/x86_64-linux"
-  GEM_HOME: "$SNAP/lib/ruby/gems/2.5.0"
+  RUBYLIB: "$SNAP/usr/lib/ruby/2.5.0:$SNAP/usr/lib/armv7l-linux-eabihf/ruby/2.5.0:$SNAP/usr/lib/x86_64-linux-gnu/ruby/2.5.0"
+  GEM_HOME: "$SNAP/gems"
+  GEM_PATH: "$SNAP"
 
 hooks:
   install:
@@ -64,23 +65,24 @@ passthrough:
 parts:
   nginx:
     source: src/nginx
-    stage-packages: [nginx, gettext-base]
+    stage-packages: [nginx, gettext-base, libatm1, libxtables12]
     plugin: dump
 
   dnsmasq:
     source: src/dnsmasq
     plugin: dump
-    stage-packages: [dnsmasq]
-    organize:
-      usr/sbin/dnsmasq: bin/dnsmasq
-    filesets:
-      binandconf:
-        - bin/dnsmasq
-        - dnsmasq.conf
-    stage:
-      - $binandconf
-    prime:
-      - $binandconf
+    stage-packages: [dnsmasq, libnetfilter-conntrack3]
+    # organize:
+    #   usr/sbin/dnsmasq: bin/dnsmasq
+    # filesets:
+    #  binandconf:
+    #    - bin/dnsmasq
+    #    - dnsmasq.conf
+    # stage:
+    #   - $binandconf
+    # prime:
+    #   - $binandconf
+    #   - usr/lib/
 
   mirros-display:
     source: https://gitlab.com/glancr/mirros_display/-/jobs/artifacts/0.1.0/download?job=build-tag
@@ -98,18 +100,27 @@ parts:
 
   mirros-api:
     source: https://gitlab.com/glancr/mirros_api.git
-    source-branch: master # source-tag: $SNAPCRAFT_PROJECT_VERSION
+    source-branch: master
+    # source-tag: $SNAPCRAFT_PROJECT_VERSION
     source-depth: 1
-    build-packages: [libsqlite3-dev]
-    stage-packages: [sqlite3, wireless-tools, network-manager]
-    plugin: ruby
-    ruby-version: "2.5.1"
-    gems: [bundler]
-
+    build-packages: [ruby-dev, build-essential, zlib1g-dev, libsqlite3-dev]
+    stage-packages:
+      - libatm1
+      - libxtables12
+      - ruby
+      - sqlite3
+      - wireless-tools
+      - network-manager
+    plugin: dump
     override-build: |
+      ruby --version
       mkdir $SNAPCRAFT_PART_INSTALL/api
       cp -a * $SNAPCRAFT_PART_INSTALL/api
+
       snapcraftctl build
+      gem install bundler
+
+      gem environment
       cd $SNAPCRAFT_PART_INSTALL/api
       bin/bundle install --path vendor/bundle --without development test
 
@@ -125,6 +136,13 @@ parts:
 
       # TODO: Remove once those are untracked
       rm -rf $SNAPCRAFT_PART_INSTALL/api/tmp $SNAPCRAFT_PART_INSTALL/api/log
+    stage:
+      - api
+    override-prime: |
+      snapcraftctl prime
+      export GEM_HOME=gems
+      export GEM_PATH=.
+      gem install bundler
 
   # Scripts and wrappers
   start-stack:
