@@ -2,8 +2,10 @@ name: mirros-one
 version: "0.3.1"
 summary: An operating system tailored for smart mirrors.
 description: |
-  mirr.OS is the operating system for the glancr smart mirror, but can be used for other kiosk/display-only devices. Currently meant to be deployed on a Raspberry Pi (min model 3B). Learn more at https://glancr.de
-grade: devel
+  mirr.OS is the operating system for the glancr smart mirror,
+  but can be used for other kiosk/display-only devices.
+  Currently meant to be deployed on a Raspberry Pi (min model 3B).
+  Learn more at https://glancr.de
 confinement: strict
 
 environment:
@@ -111,7 +113,8 @@ parts:
       cd $SNAPCRAFT_PART_INSTALL/api
       bin/bundle install --path vendor/bundle --without development test
 
-      # To allow installing new gems in the snap, they have to be in $SNAP_DATA. Layouts above maps a bind-mount.
+      # To allow installing new gems in the snap, they have to be in $SNAP_DATA.
+      # Layouts above maps a bind-mount.
       mv vendor vendor_installed
       mv Gemfile Gemfile_installed
       mv Gemfile.lock Gemfile.lock_installed
