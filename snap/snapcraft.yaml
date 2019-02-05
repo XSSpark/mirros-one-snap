@@ -118,7 +118,7 @@ parts:
       cp -a * $SNAPCRAFT_PART_INSTALL/api
 
       snapcraftctl build
-      gem install bundler
+      gem install --no-document bundler
 
       gem environment
       cd $SNAPCRAFT_PART_INSTALL/api
@@ -142,7 +142,7 @@ parts:
       snapcraftctl prime
       export GEM_HOME=gems
       export GEM_PATH=.
-      gem install bundler
+      gem install --no-document bundler
 
   # Scripts and wrappers
   start-stack:
