@@ -118,6 +118,8 @@ parts:
       cp -a * $SNAPCRAFT_PART_INSTALL/api
 
       snapcraftctl build
+      export GEM_HOME=gems
+      export GEM_PATH=.
       gem install --no-document bundler
 
       gem environment
@@ -138,11 +140,15 @@ parts:
       rm -rf $SNAPCRAFT_PART_INSTALL/api/tmp $SNAPCRAFT_PART_INSTALL/api/log
     stage:
       - api
-    override-prime: |
-      snapcraftctl prime
-      export GEM_HOME=gems
-      export GEM_PATH=.
-      gem install --no-document bundler
+      - gems
+      - usr/lib/*
+      - usr/bin/*
+
+    # override-prime: |
+    #   snapcraftctl prime
+    #   export GEM_HOME=gems
+    #   export GEM_PATH=.
+    #   gem install --no-document bundler
 
   # Scripts and wrappers
   start-stack:
