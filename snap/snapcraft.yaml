@@ -117,14 +117,14 @@ parts:
       mkdir $SNAPCRAFT_PART_INSTALL/api
       cp -a * $SNAPCRAFT_PART_INSTALL/api
 
-      snapcraftctl build
-      export GEM_HOME=gems
-      export GEM_PATH=.
+      # export GEM_HOME=gems
+      # export GEM_PATH=.
       gem install --no-document bundler
 
+      snapcraftctl build
       gem environment
       cd $SNAPCRAFT_PART_INSTALL/api
-      bundle install --path vendor/bundle --without development test
+      bin/bundle install --path vendor/bundle --without development test
 
       # To allow installing new gems in the snap, they have to be in $SNAP_DATA.
       # Layouts above maps a bind-mount.
@@ -140,15 +140,14 @@ parts:
       rm -rf $SNAPCRAFT_PART_INSTALL/api/tmp $SNAPCRAFT_PART_INSTALL/api/log
     stage:
       - api
-      - gems
       - usr/lib/*
       - usr/bin/*
 
-    # override-prime: |
-    #   snapcraftctl prime
-    #   export GEM_HOME=gems
-    #   export GEM_PATH=.
-    #   gem install --no-document bundler
+    override-prime: |
+      snapcraftctl prime
+      export GEM_HOME=gems
+      export GEM_PATH=.
+      gem install --no-document bundler
 
   # Scripts and wrappers
   start-stack:
