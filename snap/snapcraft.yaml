@@ -124,7 +124,7 @@ parts:
 
       gem environment
       cd $SNAPCRAFT_PART_INSTALL/api
-      bin/bundle install --path vendor/bundle --without development test
+      bundle install --path vendor/bundle --without development test
 
       # To allow installing new gems in the snap, they have to be in $SNAP_DATA.
       # Layouts above maps a bind-mount.
