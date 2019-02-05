@@ -7,6 +7,7 @@ description: |
   but can be used for other kiosk/display-only devices.
   Currently meant to be deployed on a Raspberry Pi (min model 3B).
   Learn more at https://glancr.de
+grade: stable
 confinement: strict
 
 environment:
