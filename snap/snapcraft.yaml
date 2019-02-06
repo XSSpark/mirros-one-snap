@@ -41,6 +41,7 @@ apps:
     plugs:
       - network
       - network-bind
+      - network-control
 
   # COMMANDS
   setup:
