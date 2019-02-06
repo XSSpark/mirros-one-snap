@@ -42,6 +42,8 @@ apps:
       - network
       - network-bind
       - network-control
+      - firewall-control
+      - network-manager
 
   # COMMANDS
   setup:
