@@ -42,8 +42,6 @@ apps:
       - network
       - network-bind
       - network-control
-      - firewall-control
-      - network-manager
 
   # COMMANDS
   setup:
@@ -73,11 +71,22 @@ parts:
     plugin: dump
 
   dnsmasq:
-    source: src/dnsmasq
-    plugin: dump
-    stage-packages: [dnsmasq, libnetfilter-conntrack3]
+    plugin: make
+    source: https://git.launchpad.net/~snappy-hwe-team/snappy-hwe-snaps/+git/wifi-ap
+    source-type: git
+    source-branch: dnsmasq/2.75
+    build-packages:
+      - build-essential
+    # stage-packages: [libnetfilter-conntrack3]
+    make-parameters:
+      - PREFIX=/
     organize:
-      usr/sbin/dnsmasq: bin/dnsmasq
+      sbin/dnsmasq: bin/dnsmasq
+    filesets:
+      binaries:
+        - bin/dnsmasq
+    prime:
+      - $binaries
     # filesets:
     #  binandconf:
     #    - bin/dnsmasq
@@ -87,6 +96,9 @@ parts:
     # prime:
     #   - $binandconf
     #   - usr/lib/
+  dnsmasq-config:
+    source: src/dnsmasq
+    plugin: dump
 
   mirros-display:
     source: https://gitlab.com/glancr/mirros_display/-/jobs/artifacts/0.1.0/download?job=build-tag
