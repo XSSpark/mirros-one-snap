@@ -36,7 +36,7 @@ apps:
     daemon: forking
     plugs: [network, network-bind]
   dns:
-    command: $SNAP/usr/sbin/dnsmasq -k -u root -g root -x $SNAP_USER_DATA/dnsmasq.pid -l $SNAP_DATA/dnsmasq.leases -C $SNAP/dnsmasq.conf
+    command: $SNAP/bin/dnsmasq -k -u root -g root -x $SNAP_USER_DATA/dnsmasq.pid -l $SNAP_DATA/dnsmasq.leases -C $SNAP/dnsmasq.conf
     daemon: simple
     plugs:
       - network
@@ -73,8 +73,8 @@ parts:
     source: src/dnsmasq
     plugin: dump
     stage-packages: [dnsmasq, libnetfilter-conntrack3]
-    # organize:
-    #   usr/sbin/dnsmasq: bin/dnsmasq
+    organize:
+      usr/sbin/dnsmasq: bin/dnsmasq
     # filesets:
     #  binandconf:
     #    - bin/dnsmasq
