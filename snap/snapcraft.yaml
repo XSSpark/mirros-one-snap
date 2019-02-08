@@ -89,7 +89,6 @@ parts:
     source-branch: dnsmasq/2.75
     build-packages:
       - build-essential
-    # stage-packages: [libnetfilter-conntrack3]
     make-parameters:
       - PREFIX=/
     organize:
@@ -99,15 +98,7 @@ parts:
         - bin/dnsmasq
     prime:
       - $binaries
-    # filesets:
-    #  binandconf:
-    #    - bin/dnsmasq
-    #    - dnsmasq.conf
-    # stage:
-    #   - $binandconf
-    # prime:
-    #   - $binandconf
-    #   - usr/lib/
+
   dnsmasq-config:
     source: src/dnsmasq
     plugin: dump
