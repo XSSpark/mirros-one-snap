@@ -133,6 +133,8 @@ parts:
       ruby --version
       gem environment
 
+      snapcraftctl build
+
       gem install --no-document bundler
 
       cd $SNAPCRAFT_PART_INSTALL/api
