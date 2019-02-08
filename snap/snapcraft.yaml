@@ -135,6 +135,8 @@ parts:
 
       snapcraftctl build
 
+      export GEM_HOME=$SNAPCRAFT_PART_INSTALL/gems
+      export GEM_PATH=$SNAPCRAFT_PART_INSTALL
       gem install --no-document bundler
 
       cd $SNAPCRAFT_PART_INSTALL/api
