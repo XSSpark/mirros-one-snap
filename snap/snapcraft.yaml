@@ -118,10 +118,9 @@ parts:
       dist: settings
 
   mirros-api:
-    source: https://gitlab.com/glancr/mirros_api.git
-    source-branch: master
-    # source-tag: $SNAPCRAFT_PROJECT_VERSION
-    source-depth: 1
+    source: https://gitlab.com/glancr/mirros_api/-/jobs/artifacts/master/download?job=zipfile
+    source-type: zip
+    plugin: dump
     build-packages: [ruby-dev, build-essential, zlib1g-dev, libsqlite3-dev]
     stage-packages:
       - libatm1
@@ -130,20 +129,14 @@ parts:
       - sqlite3
       - wireless-tools
       - network-manager
-    plugin: dump
     override-build: |
       ruby --version
-      mkdir $SNAPCRAFT_PART_INSTALL/api
-      cp -a * $SNAPCRAFT_PART_INSTALL/api
+      gem environment
 
-      # export GEM_HOME=gems
-      # export GEM_PATH=.
       gem install --no-document bundler
 
-      snapcraftctl build
-      gem environment
       cd $SNAPCRAFT_PART_INSTALL/api
-      bin/bundle install --path vendor/bundle --without development test
+      bundle install --path vendor/bundle -j $(nproc) --without development test
 
       # To allow installing new gems in the snap, they have to be in $SNAP_DATA.
       # Layouts above maps a bind-mount.
@@ -157,16 +150,6 @@ parts:
 
       # TODO: Remove once those are untracked
       rm -rf $SNAPCRAFT_PART_INSTALL/api/tmp $SNAPCRAFT_PART_INSTALL/api/log
-    stage:
-      - api
-      - usr/lib/*
-      - usr/bin/*
-
-    override-prime: |
-      snapcraftctl prime
-      export GEM_HOME=gems
-      export GEM_PATH=.
-      gem install --no-document bundler
 
   # Scripts and wrappers
   start-stack:
