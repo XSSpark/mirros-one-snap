@@ -1,2 +1,2 @@
 #!/bin/sh
-nmcli -f NAME c show --active | grep glancrsetup
+$SNAP/bin/nmcli -f NAME c show --active | grep glancrsetup

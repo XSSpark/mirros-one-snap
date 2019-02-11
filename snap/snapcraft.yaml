@@ -140,7 +140,7 @@ parts:
       gem install --no-document bundler
 
       cd $SNAPCRAFT_PART_INSTALL/api
-      bundle install --path vendor/bundle -j $(nproc) --without development test
+      bin/bundle install --path vendor/bundle -j $(nproc) --without development test
 
       # To allow installing new gems in the snap, they have to be in $SNAP_DATA.
       # Layouts above maps a bind-mount.
@@ -154,6 +154,8 @@ parts:
 
       # TODO: Remove once those are untracked
       rm -rf $SNAPCRAFT_PART_INSTALL/api/tmp $SNAPCRAFT_PART_INSTALL/api/log
+    organize:
+      usr/bin/nmcli: bin/nmcli
 
   # Scripts and wrappers
   start-stack:
