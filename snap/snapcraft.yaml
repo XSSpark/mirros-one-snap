@@ -48,18 +48,6 @@ apps:
     command: sh $SNAP/bin/setup.sh
     plugs: [network-manager]
 
-  open-ap:
-    command: sh $SNAP/bin/open-ap.sh
-    plugs: [network-manager]
-
-  close-ap:
-    command: sh $SNAP/bin/close-ap.sh
-    plugs: [network-manager]
-
-  ap-status:
-    command: sh $SNAP/bin/ap-status.sh
-    plugs: [network-manager]
-
 # Supported since snapd 2.36, but snapcraft on the build farm is not up-to-date
 passthrough:
   layout:
@@ -163,8 +151,4 @@ parts:
     plugin: dump
   setup:
     source: src/setup
-    plugin: dump
-
-  ap-commands:
-    source: src/ap
     plugin: dump
