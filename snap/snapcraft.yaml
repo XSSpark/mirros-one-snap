@@ -1,5 +1,4 @@
 name: mirros-one
-base: core16
 version: "0.3.1"
 summary: An operating system tailored for smart mirrors.
 description: |
