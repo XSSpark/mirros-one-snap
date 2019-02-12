@@ -1,5 +1,4 @@
 name: mirros-one
-base: core18
 version: "0.3.1"
 summary: An operating system tailored for smart mirrors.
 description: |
@@ -7,17 +6,16 @@ description: |
   but can be used for other kiosk/display-only devices.
   Currently meant to be deployed on a Raspberry Pi (min model 3B).
   Learn more at https://glancr.de
-grade: devel #stable
-confinement: devmode #strict
+confinement: strict
 
 environment:
   RAILS_DATABASE_LOCATION: "$SNAP_DATA/production.sqlite3"
   # Specify confined paths so that hooks can access snapped bins/libs.
-  PATH: "$PATH:$SNAP/bin:$SNAP/usr/bin:$SNAP/sbin:$SNAP/usr/sbin"
-  LD_LIBRARY_PATH: "$LD_LIBRARY_PATH:$SNAP/lib:$SNAP/usr/lib:$SNAP/usr/lib/arm-linux-gnueabihf:$SNAP/usr/lib/x86_64-linux-gnu"
-  RUBYLIB: "$SNAP/usr/lib/ruby/2.5.0:$SNAP/usr/lib/arm-linux-gnueabihf/ruby/2.5.0:$SNAP/usr/lib/x86_64-linux-gnu/ruby/2.5.0"
-  GEM_HOME: "$SNAP/gems"
-  GEM_PATH: "$SNAP"
+  PATH: "$SNAP/usr/sbin:$SNAP/usr/bin:$SNAP/sbin:$SNAP/bin:$PATH"
+  LD_LIBRARY_PATH: "$LD_LIBRARY_PATH:$SNAP/lib:$SNAP/usr/lib:$SNAP/usr/lib/x86_64-linux-gnu"
+  GEM_PATH: "$SNAP/lib/ruby/gems/2.5.0"
+  RUBYLIB: "$SNAP/lib/ruby/2.5.0:$SNAP/lib/ruby/2.5.0/armv7l-linux-eabihf:$SNAP/lib/ruby/2.5.0:$SNAP/lib/ruby/2.5.0/x86_64-linux"
+  GEM_HOME: "$SNAP/lib/ruby/gems/2.5.0"
 
 hooks:
   install:
@@ -67,7 +65,7 @@ passthrough:
 parts:
   nginx:
     source: src/nginx
-    stage-packages: [nginx, gettext-base, libatm1, libxtables12]
+    stage-packages: [nginx, gettext-base]
     plugin: dump
 
   dnsmasq:
@@ -108,25 +106,17 @@ parts:
   mirros-api:
     source: https://gitlab.com/glancr/mirros_api/-/jobs/artifacts/master/download?job=zipfile
     source-type: zip
-    plugin: dump
-    build-packages: [ruby-dev, build-essential, zlib1g-dev, libsqlite3-dev]
-    stage-packages:
-      - libatm1
-      - libxtables12
-      - ruby
-      - sqlite3
-      - wireless-tools
-      - network-manager
+    plugin: ruby
+    ruby-version: "2.5.1"
+    gems: [bundler]
+    build-packages: [libsqlite3-dev]
+    stage-packages: [libatm1, sqlite3, wireless-tools, network-manager]
     override-build: |
-      ruby --version
-      gem environment
-
       snapcraftctl build
-
-      export GEM_HOME=$SNAPCRAFT_PART_INSTALL/gems
-      export GEM_PATH=$SNAPCRAFT_PART_INSTALL
-      gem install --no-document bundler
-
+      # export GEM_HOME=$SNAPCRAFT_PART_INSTALL/gems
+      # export GEM_PATH=$SNAPCRAFT_PART_INSTALL
+      # gem install --no-document bundler
+      cp -a * $SNAPCRAFT_PART_INSTALL
       cd $SNAPCRAFT_PART_INSTALL/api
       bin/bundle install --path vendor/bundle -j $(nproc) --without development test
 
@@ -142,8 +132,6 @@ parts:
 
       # TODO: Remove once those are untracked
       rm -rf $SNAPCRAFT_PART_INSTALL/api/tmp $SNAPCRAFT_PART_INSTALL/api/log
-    organize:
-      usr/bin/nmcli: bin/nmcli
 
   # Scripts and wrappers
   start-stack:
