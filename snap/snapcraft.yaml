@@ -1,4 +1,5 @@
 name: mirros-one
+base: core16
 version: "0.3.1"
 summary: An operating system tailored for smart mirrors.
 description: |
@@ -12,10 +13,6 @@ environment:
   RAILS_DATABASE_LOCATION: "$SNAP_DATA/production.sqlite3"
   # Specify confined paths so that hooks can access snapped bins/libs.
   PATH: "$SNAP/usr/sbin:$SNAP/usr/bin:$SNAP/sbin:$SNAP/bin:$PATH"
-  LD_LIBRARY_PATH: "$LD_LIBRARY_PATH:$SNAP/lib:$SNAP/usr/lib:$SNAP/usr/lib/x86_64-linux-gnu"
-  GEM_PATH: "$SNAP/lib/ruby/gems/2.5.0"
-  RUBYLIB: "$SNAP/lib/ruby/2.5.0:$SNAP/lib/ruby/2.5.0/armv7l-linux-eabihf:$SNAP/lib/ruby/2.5.0:$SNAP/lib/ruby/2.5.0/x86_64-linux"
-  GEM_HOME: "$SNAP/lib/ruby/gems/2.5.0"
 
 hooks:
   install:
@@ -26,7 +23,7 @@ hooks:
 apps:
   # SERVICES
   backend:
-    command: sh $SNAP/bin/start-stack.sh
+    command: wrapper sh $SNAP/bin/start-stack.sh
     daemon: simple
     plugs: [network, network-bind, network-control, network-manager]
   nginx:
@@ -108,14 +105,14 @@ parts:
     source-type: zip
     plugin: ruby
     ruby-version: "2.5.1"
-    gems: [bundler]
+    #gems: [bundler]
     build-packages: [libsqlite3-dev]
     stage-packages: [libatm1, sqlite3, wireless-tools, network-manager]
     override-build: |
       snapcraftctl build
-      # export GEM_HOME=$SNAPCRAFT_PART_INSTALL/gems
-      # export GEM_PATH=$SNAPCRAFT_PART_INSTALL
-      # gem install --no-document bundler
+      #export GEM_HOME=$SNAPCRAFT_PART_INSTALL/gems
+      #export GEM_PATH=$SNAPCRAFT_PART_INSTALL
+      gem install --no-document bundler
       cp -a * $SNAPCRAFT_PART_INSTALL
       cd $SNAPCRAFT_PART_INSTALL/api
       bin/bundle install --path vendor/bundle -j $(nproc) --without development test
@@ -132,6 +129,18 @@ parts:
 
       # TODO: Remove once those are untracked
       rm -rf $SNAPCRAFT_PART_INSTALL/api/tmp $SNAPCRAFT_PART_INSTALL/api/log
+
+      # Write a wrapper that sets our environment (so we can avoid setting this
+      # in the YAML).
+      cat << EOF >> $SNAPCRAFT_PART_INSTALL/wrapper
+      #!/bin/sh
+      export LD_LIBRARY_PATH="\$LD_LIBRARY_PATH:$(echo "$LD_LIBRARY_PATH" | sed "s|$SNAPCRAFT_PART_INSTALL|\$SNAP|g")"
+      export RUBYLIB="$(echo "$RUBYLIB" | sed "s|$SNAPCRAFT_PART_INSTALL|\$SNAP|g")"
+      export GEM_HOME="$(echo "$GEM_HOME" | sed "s|$SNAPCRAFT_PART_INSTALL|\$SNAP|g")"
+      export GEM_PATH="$(echo "$GEM_PATH" | sed "s|$SNAPCRAFT_PART_INSTALL|\$SNAP|g")"
+      exec "\$@"
+      EOF
+      chmod a+x $SNAPCRAFT_PART_INSTALL/wrapper
 
   # Scripts and wrappers
   start-stack:
