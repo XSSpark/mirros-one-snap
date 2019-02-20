@@ -24,7 +24,12 @@ apps:
   backend:
     command: wrapper sh $SNAP/bin/start-stack.sh
     daemon: simple
-    plugs: [network, network-bind, network-control, network-manager]
+    plugs:
+      - network
+      - network-bind
+      - network-control
+      - network-manager
+      - shutdown
   nginx:
     command: usr/sbin/nginx -c $SNAP_COMMON/nginx.conf
     daemon: forking
@@ -106,7 +111,13 @@ parts:
     ruby-version: "2.5.1"
     #gems: [bundler]
     build-packages: [libsqlite3-dev]
-    stage-packages: [libatm1, sqlite3, wireless-tools, network-manager]
+    stage-packages:
+      - libatm1
+      - sqlite3
+      - wireless-tools
+      - network-manager
+      - systemd
+      - systemd-sysv
     override-build: |
       snapcraftctl build
       #export GEM_HOME=$SNAPCRAFT_PART_INSTALL/gems
