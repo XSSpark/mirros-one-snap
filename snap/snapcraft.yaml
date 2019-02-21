@@ -116,8 +116,6 @@ parts:
       - sqlite3
       - wireless-tools
       - network-manager
-      - systemd
-      - systemd-sysv
     override-build: |
       snapcraftctl build
       #export GEM_HOME=$SNAPCRAFT_PART_INSTALL/gems
