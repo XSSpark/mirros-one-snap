@@ -5,8 +5,8 @@ cat $SNAP/nginx.conf | envsubst '${SNAP_NAME} ${SNAP_COMMON}' > $SNAP_COMMON/ngi
 snapctl stop --disable mirros-one.dns
 
 # Copy new migrations and gems from read-only location to writable mount
-cp -r $SNAP/api/vendor_installed/* $SNAP_DATA/rails/vendor
-cp -r $SNAP/api/db_installed/* $SNAP_DATA/rails/db
+cp -rn $SNAP/api/vendor_installed/* $SNAP_DATA/rails/vendor
+cp -rn $SNAP/api/db_installed/* $SNAP_DATA/rails/db
 
 cd $SNAP/api # required for bundler to find the gemfile
 export SECRET_KEY_BASE=$(cat $SNAP_DATA/secret) 
