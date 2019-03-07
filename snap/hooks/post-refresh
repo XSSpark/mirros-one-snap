@@ -1,8 +1,8 @@
 #!/bin/sh -e
-cat $SNAP/nginx.conf | envsubst '${SNAP_NAME} ${SNAP_COMMON}' > $SNAP_COMMON/nginx.conf
+# cat $SNAP/nginx.conf | envsubst '${SNAP_NAME} ${SNAP_COMMON}' > $SNAP_COMMON/nginx.conf
 
 # FIXME: Remove once https://github.com/snapcore/snapd/pull/5777 is in stable
-snapctl stop --disable mirros-one.dns
+#snapctl stop --disable mirros-one.dns
 
 # Copy new migrations and gems from read-only location to writable mount
 cp -rn "$SNAP"/api/vendor_installed/* "$SNAP_DATA"/rails/vendor
