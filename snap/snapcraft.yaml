@@ -108,8 +108,7 @@ parts:
     source: https://gitlab.com/glancr/mirros_api/-/jobs/artifacts/master/download?job=zipfile
     source-type: zip
     plugin: ruby
-    ruby-version: "2.5.1"
-    #gems: [bundler]
+    ruby-version: "2.5.3"
     build-packages: [libsqlite3-dev]
     stage-packages:
       - libatm1
@@ -118,9 +117,9 @@ parts:
       - network-manager
     override-build: |
       snapcraftctl build
-      #export GEM_HOME=$SNAPCRAFT_PART_INSTALL/gems
-      #export GEM_PATH=$SNAPCRAFT_PART_INSTALL
+
       gem install -v "1.17.2" --no-document --env-shebang bundler
+
       cp -a * $SNAPCRAFT_PART_INSTALL
       cd $SNAPCRAFT_PART_INSTALL/api
       bin/bundle install --path vendor/bundle -j $(nproc) --without development test
