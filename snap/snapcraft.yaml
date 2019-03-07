@@ -1,6 +1,7 @@
 name: mirros-one
 version: "0.3.2"
 summary: An operating system tailored for smart mirrors.
+base: core16
 description: |
   mirr.OS is the operating system for the glancr smart mirror,
   but can be used for other kiosk/display-only devices.
