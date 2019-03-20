@@ -117,6 +117,7 @@ parts:
       - sqlite3
       - wireless-tools
       - network-manager
+      - dbus # provides dbus-send
     override-build: |
       snapcraftctl build
 
