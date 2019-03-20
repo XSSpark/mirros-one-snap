@@ -1,4 +1,4 @@
-#!/bin/sh -e
+#!/bin/bash -e
 # cat $SNAP/nginx.conf | envsubst '${SNAP_NAME} ${SNAP_COMMON}' > $SNAP_COMMON/nginx.conf
 
 # FIXME: Remove once https://github.com/snapcore/snapd/pull/5777 is in stable
@@ -12,3 +12,6 @@ cd "$SNAP"/api # required for bundler to find the gemfile
 export SECRET_KEY_BASE=$(cat "$SNAP_DATA"/secret) 
 export RAILS_ENV=production
 "$SNAP"/wrapper "$SNAP"/api/bin/rails db:migrate
+
+# Seed new or changed seed values for running systems.
+"$SNAP"/wrapper "$SNAP"/api/bin/rails db:seed_diff
