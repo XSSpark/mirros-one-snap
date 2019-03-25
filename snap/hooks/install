@@ -10,9 +10,9 @@ snapctl stop --disable mirros-one.dns
 # AP setup has to happen in configure hook since we do not have the required interfaces at this point.
 
 # nginx setup. Limit substitution to SNAP and SNAP_COMMON to prevent overwriting nginx variables.
-cat $SNAP/nginx.conf | envsubst '${SNAP_NAME} ${SNAP_COMMON}' > $SNAP_COMMON/nginx.conf
-mkdir -p $SNAP_COMMON/nginx/tmp
-mkdir -p $SNAP_COMMON/nginx/log
+envsubst '${SNAP} ${SNAP_NAME} ${SNAP_COMMON}' > "$SNAP_COMMON/nginx.conf" < "$SNAP/nginx.conf"
+mkdir -p "$SNAP_COMMON/nginx/tmp"
+mkdir -p "$SNAP_COMMON/nginx/log"
 
 # Rails app setup
 cp -r $SNAP/api/vendor_installed/* $SNAP_DATA/rails/vendor
