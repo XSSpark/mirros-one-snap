@@ -66,6 +66,20 @@ passthrough:
       bind-file: $SNAP_DATA/rails/Gemfile.lock
 
 parts:
+  snap-meta:
+    plugin: nil
+    source: .
+    source-type: git
+    override-build: |
+      SNAP_REVISION=$(git describe --always)
+      snapcraftctl set-version "$SNAP_REVISION"
+      # scriptlets are run with /bin/sh -e – no bash pattern matching
+      if echo "$SNAP_REVISION" | grep -q -E '^[0-9]+.[0-9]+.[0-9]+$'; then
+        snapcraftctl set-grade stable
+      else
+        snapcraftctl set-grade devel
+      fi
+
   nginx:
     source: src/nginx
     stage-packages: [nginx, gettext-base]
@@ -107,6 +121,7 @@ parts:
       dist: settings
 
   mirros-api:
+    after: [snap-meta]
     source: https://gitlab.com/glancr/mirros_api/-/jobs/artifacts/master/download?job=zipfile
     source-type: zip
     plugin: ruby
@@ -159,17 +174,3 @@ parts:
   setup:
     source: src/setup
     plugin: dump
-
-  snap-meta:
-    plugin: nil
-    source: .
-    source-type: git
-    override-build: |
-      SNAP_REVISION=$(git describe --always)
-      snapcraftctl set-version "$SNAP_REVISION"
-      # scriptlets are run with /bin/sh -e – no bash pattern matching
-      if echo "$SNAP_REVISION" | grep -q -E '^[0-9]+.[0-9]+.[0-9]+$'; then
-        snapcraftctl set-grade stable
-      else
-        snapcraftctl set-grade devel
-      fi
