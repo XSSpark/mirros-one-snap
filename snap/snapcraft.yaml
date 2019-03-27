@@ -58,6 +58,8 @@ layout:
     bind: $SNAP_DATA/rails/log
   $SNAP/api/db:
     bind: $SNAP_DATA/rails/db
+  $SNAP/api/.bundle:
+    bind: $SNAP_DATA/rails/.bundle
   $SNAP/api/vendor:
     bind: $SNAP_DATA/rails/vendor
   $SNAP/api/Gemfile:
@@ -144,6 +146,7 @@ parts:
 
       # To allow installing new gems in the snap, they have to be in $SNAP_DATA.
       # Layouts above maps a bind-mount.
+      mv .bundle bundle_installed
       mv vendor vendor_installed
       mv Gemfile Gemfile_installed
       mv Gemfile.lock Gemfile.lock_installed

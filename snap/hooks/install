@@ -15,6 +15,7 @@ mkdir -p "$SNAP_COMMON/nginx/log"
 envsubst '${SNAP} ${SNAP_NAME} ${SNAP_COMMON}' > "$SNAP_COMMON/nginx.conf" < "$SNAP/nginx.conf"
 
 # Rails app setup
+cp -r $SNAP/api/bundle_installed/* $SNAP_DATA/rails/.bundle
 cp -r $SNAP/api/vendor_installed/* $SNAP_DATA/rails/vendor
 cp -r $SNAP/api/db_installed/* $SNAP_DATA/rails/db
 cat $SNAP/api/Gemfile_installed > $SNAP_DATA/rails/Gemfile
