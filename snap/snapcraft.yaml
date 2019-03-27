@@ -31,7 +31,8 @@ apps:
       - network-manager
       - shutdown
       - timezone-control
-      - time-control
+      - timeserver-control # required for SetNTP() method
+      - time-control # Backend sets system time during setup
   nginx:
     command: usr/sbin/nginx -c $SNAP_COMMON/nginx.conf
     daemon: forking
