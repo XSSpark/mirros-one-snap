@@ -117,7 +117,7 @@ parts:
       dist: display
 
   mirros-settings:
-    source: https://gitlab.com/glancr/mirros_settings/-/jobs/artifacts/0.5.3/download?job=build-tag
+    source: https://gitlab.com/glancr/mirros_settings/-/jobs/artifacts/0.5.4/download?job=build-tag
     source-type: zip
     plugin: dump
     organize:
@@ -125,7 +125,7 @@ parts:
 
   mirros-api:
     after: [snap-meta]
-    source: https://gitlab.com/glancr/mirros_api/-/jobs/artifacts/0.5.6/download?job=zipfile
+    source: https://gitlab.com/glancr/mirros_api/-/jobs/artifacts/0.5.8/download?job=zipfile
     source-type: zip
     plugin: ruby
     ruby-version: "2.5.3"
