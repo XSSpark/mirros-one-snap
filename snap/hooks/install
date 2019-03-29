@@ -22,13 +22,14 @@ cat $SNAP/api/Gemfile_installed > $SNAP_DATA/rails/Gemfile
 cat $SNAP/api/Gemfile.lock_installed > $SNAP_DATA/rails/Gemfile.lock
 
 cd $SNAP/api
-# Generates an individual secret for each snap installation. Environment variables set here might not be present at all times across revisions, so we store it in a file. TODO: Check if we can leverage snap configuration.
-$SNAP/wrapper $SNAP/api/bin/rails secret > $SNAP_DATA/secret
-
-# FIXME: This installs the Openweathermap cities table. Make more generic for other default widgets.
-export SECRET_KEY_BASE=$(cat $SNAP_DATA/secret) 
+# Ensure that all commands are run in prod environment.
 export RAILS_ENV=production
 
+# Generates an individual secret for each snap installation. Environment variables set here might not be present at all times across revisions, so we store it in a file. TODO: Check if we can leverage snap configuration.
+$SNAP/wrapper $SNAP/api/bin/rails secret > $SNAP_DATA/secret
+export SECRET_KEY_BASE=$(cat $SNAP_DATA/secret) 
+
+# FIXME: This installs the Openweathermap cities table. Make more generic for other default widgets.
 $SNAP/wrapper $SNAP/api/bin/rails openweathermap:install:migrations
 
 # Set up the API database.
