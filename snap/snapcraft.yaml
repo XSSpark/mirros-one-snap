@@ -16,8 +16,11 @@ environment:
 hooks:
   install:
     plugs: [network]
+  post-refresh:
+    plugs: [network]
   connect-plug-network-manager:
     plugs: [network-manager]
+  # TODO: Maybe just move all plugs to a root-level plugs dict
 
 apps:
   # SERVICES
