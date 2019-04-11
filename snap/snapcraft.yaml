@@ -128,7 +128,7 @@ parts:
 
   mirros-api:
     after: [snap-meta]
-    source: https://gitlab.com/glancr/mirros_api/-/jobs/artifacts/0.6.6/download?job=zipfile
+    source: https://gitlab.com/glancr/mirros_api/-/jobs/artifacts/0.6.8/download?job=zipfile
     source-type: zip
     plugin: ruby
     ruby-version: "2.5.3"
