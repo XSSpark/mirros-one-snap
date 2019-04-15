@@ -6,11 +6,18 @@ envsubst '${SNAP} ${SNAP_NAME} ${SNAP_COMMON}' > "$SNAP_COMMON/nginx.conf" < "$S
 snapctl stop --disable mirros-one.dns
 
 # Copy new migrations and gems from read-only location to writable mount
-cp -rn $SNAP/api/bundle_installed/* $SNAP_DATA/rails/.bundle
+cp -rn "$SNAP"/api/bundle_installed/* "$SNAP_DATA"/rails/.bundle
 cp -rn "$SNAP"/api/vendor_installed/* "$SNAP_DATA"/rails/vendor
 cp -rn "$SNAP"/api/db_installed/* "$SNAP_DATA"/rails/db
 
+# Overwrite lockfile so that default extensions and dependencies are up-to-date
+cat "$SNAP"/api/Gemfile.lock_installed > "$SNAP_DATA"/rails/Gemfile.lock
+
 cd "$SNAP"/api # required for bundler to find the gemfile
+# force lock rewrite to include user-installed extensions
+"$SNAP"/wrapper "$SNAP"/api/bin/bundle lock
+"$SNAP"/wrapper "$SNAP"/api/bin/bundle clean # clean up old gem versions
+
 export SECRET_KEY_BASE=$(cat "$SNAP_DATA"/secret) 
 export RAILS_ENV=production
 "$SNAP"/wrapper "$SNAP"/api/bin/rails db:migrate
