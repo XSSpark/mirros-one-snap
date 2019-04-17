@@ -1,0 +1,71 @@
+#!/bin/sh
+
+set_root_password() {
+  if [ ! -f "${PWFILE}" ]; then
+    return "password file not present"
+  fi
+  mysql --defaults-file="${CONFFILE}" -p"$(cat "${PWFILE}")" --connect-expired-password <<-SQL
+		ALTER USER 'root'@'localhost' IDENTIFIED BY 'glancr';
+		SQL
+}
+
+mysql_test_connection() {
+  "${SNAP}/usr/bin/mysql" --defaults-file="$CONFFILE" -uroot -pglancr 2>/dev/null
+}
+
+wait_for_mysql() {
+  while [ ! -f "${RUNDIR}/mysqld.pid" ] && [ ! -S "${RUNDIR}/mysqld.sock" ]; do
+    echo "sleeping"
+    sleep 1
+  done
+}
+
+verify_permissions() {
+  chmod 750 "${LOGDIR}" "${DATADIR}"
+  chmod 770 "${FILESDIR}"
+  chmod 755 "${RUNDIR}"
+}
+
+init_config() {
+  mkdir "${CONFDIR}"
+  echo "Generating config file in ${CONFFILE}..."
+  touch "${CONFFILE}"
+  {
+    echo "[mysqld]"
+    echo "user=root"
+    echo "skip_networking"
+    echo "pid-file=${RUNDIR}/mysqld.pid"
+    echo "socket=${RUNDIR}/mysqld.sock"
+    echo "datadir=${DATADIR}"
+    echo "log-error=${LOGDIR}/error.log"
+    echo "secure-file-priv=${FILESDIR}"
+    # echo "innodb_use_native_aio=0"
+    echo "[client]"
+    echo "socket=${RUNDIR}/mysqld.sock"
+    echo "user=root"
+  } >> "${CONFFILE}"
+  ls $CONFFILE
+  echo "Done"
+}
+
+init_database() {
+  echo "Initializing new database in ${DATADIR}..."
+  mkdir "${DATADIR}"
+  if mysqld_safe --defaults-file="${CONFFILE}" --basedir="${BASEDIR}" --initialize; then
+    echo "Done"
+  else
+    echo 'could not initialize database, aborting'
+    exit 1
+  fi
+  sed -n -e 's/^.* temporary password is generated for root@localhost: //p' < "${LOGDIR}/error.log" > "${MYSQL_SNAPDIR}/temporary-password"
+}
+
+BASEDIR="${SNAP}/usr"                 # bins, libs etc. from mysql-server
+MYSQL_SNAPDIR="${SNAP_COMMON}/mysql"  # writable base directory
+LOGDIR="${MYSQL_SNAPDIR}/log"
+FILESDIR="${MYSQL_SNAPDIR}/files"
+RUNDIR="${MYSQL_SNAPDIR}/run"
+CONFDIR="${MYSQL_SNAPDIR}/conf"
+CONFFILE="${CONFDIR}/my.cnf"
+DATADIR="${MYSQL_SNAPDIR}/data"
+PWFILE="${MYSQL_SNAPDIR}/temporary-password"
