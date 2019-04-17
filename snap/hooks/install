@@ -1,11 +1,37 @@
 #!/bin/sh -e
 
-# Run any commands needed to setup the snap.
-# This could be downloading a list of dynamic configuration options or creating a database.
+# shellcheck source=src/mysql/scripts/mysql-utilities
+. "$SNAP/scripts/mysql-utilities"
 
-# Disables the DNS service to prevent it from starting automatically.
-# FIXME: Remove once https://github.com/snapcore/snapd/pull/5777 is in stable
-snapctl stop --disable mirros-one.dns
+# Boot DB to ensure it's there
+snapctl start mirros-one.mysql
+
+counter=0
+maxcounter=15
+
+while [ ! -f "${RUNDIR}/mysqld.pid" ] && [ ! -S "${RUNDIR}/mysqld.sock" ]; do
+  echo "waiting for mysqld"
+  sleep 1
+  counter=`expr $counter + 1`
+  if [ $counter -gt $maxcounter ]; then
+    echo "aborting wait after 15 seconds"
+    exit 1
+  fi
+done
+
+if set_root_password; then
+  echo "mysql root password set to 'glancr'"
+else
+  echo "could not set well-known mysql root password, bailing"
+  exit 1
+fi
+
+if mysql_test_connection; then
+  echo "mysql connection test successful"
+else
+  echo "mysql connection test failed, bailing"
+  exit 1
+fi
 
 # AP setup has to happen in configure hook since we do not have the required interfaces at this point.
 
@@ -21,16 +47,21 @@ cp -r $SNAP/api/db_installed/* $SNAP_DATA/rails/db
 cat $SNAP/api/Gemfile_installed > $SNAP_DATA/rails/Gemfile
 cat $SNAP/api/Gemfile.lock_installed > $SNAP_DATA/rails/Gemfile.lock
 
-cd $SNAP/api
+cd "$SNAP/api"
 # Ensure that all commands are run in prod environment.
 export RAILS_ENV=production
 
 # Generates an individual secret for each snap installation. Environment variables set here might not be present at all times across revisions, so we store it in a file. TODO: Check if we can leverage snap configuration.
-$SNAP/wrapper $SNAP/api/bin/rails secret > $SNAP_DATA/secret
-export SECRET_KEY_BASE=$(cat $SNAP_DATA/secret) 
+"$SNAP/wrapper" "$SNAP/api/bin/rails" secret > "$SNAP_DATA/secret"
+SECRET_KEY_BASE=$(cat "${SNAP_DATA}/secret")
+export SECRET_KEY_BASE
 
 # FIXME: This installs the Openweathermap cities table. Make more generic for other default widgets.
-$SNAP/wrapper $SNAP/api/bin/rails openweathermap:install:migrations
+"$SNAP/wrapper" "$SNAP/api/bin/rails" openweathermap:install:migrations
 
 # Set up the API database.
-$SNAP/wrapper $SNAP/api/bin/rails db:create db:migrate db:seed
+"$SNAP/wrapper" "$SNAP/api/bin/rails" db:create db:migrate db:seed
+
+# Disables the DNS service to prevent it from starting automatically.
+# FIXME: Remove once https://github.com/snapcore/snapd/pull/5777 is in stable
+snapctl stop --disable mirros-one.dns
