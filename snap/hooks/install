@@ -7,7 +7,7 @@
 snapctl start mirros-one.mysql
 
 counter=0
-maxcounter=15
+maxcounter=45
 
 while [ ! -f "${RUNDIR}/mysqld.pid" ] && [ ! -S "${RUNDIR}/mysqld.sock" ]; do
   echo "waiting for mysqld"
