@@ -7,15 +7,16 @@ description: |
   Currently meant to be deployed on a Raspberry Pi (min model 3B).
   Learn more at https://glancr.de
 confinement: strict
-
+base: core
 environment:
+  RAILS_DATABASE_SOCKET: "${SNAP_COMMON}/mysql/run/mysqld.sock"
   RAILS_DATABASE_LOCATION: "$SNAP_DATA/production.sqlite3"
   # Specify confined paths so that hooks can access snapped bins/libs.
   PATH: "$SNAP/usr/sbin:$SNAP/usr/bin:$SNAP/sbin:$SNAP/bin:$PATH"
 
 hooks:
   install:
-    plugs: [network]
+    plugs: [network, network-bind]
   post-refresh:
     plugs: [network]
   connect-plug-network-manager:
@@ -24,8 +25,16 @@ hooks:
 
 apps:
   # SERVICES
+  # MySQL daemon
+  mysql:
+    command: start-mysql-server
+    #before: [backend]
+    daemon: simple
+    restart-condition: always
+    plugs: [network, network-bind, process-control]
   backend:
     command: wrapper sh $SNAP/bin/start-stack.sh
+    #after: [mysql, nginx]
     daemon: simple
     plugs:
       - network
@@ -38,6 +47,7 @@ apps:
       - time-control # Backend sets system time during setup
   nginx:
     command: usr/sbin/nginx -c $SNAP_COMMON/nginx.conf
+    #before: [backend]
     daemon: forking
     stop-command: usr/sbin/nginx -s stop
     plugs: [network, network-bind]
@@ -48,11 +58,8 @@ apps:
       - network
       - network-bind
       - network-control
-
-  # COMMANDS
-  setup:
-    command: sh $SNAP/bin/setup.sh
-    plugs: [network-manager]
+  db-console:
+    command: run-mysql-client
 
 passthrough:
   layout:
@@ -86,6 +93,11 @@ parts:
         snapcraftctl set-grade devel
       fi
 
+  mysql:
+    plugin: dump
+    source: src/mysql
+    stage-packages: [mysql-server, libaio1]
+
   nginx:
     source: src/nginx
     stage-packages: [nginx, gettext-base]
@@ -113,14 +125,14 @@ parts:
     plugin: dump
 
   mirros-display:
-    source: https://gitlab.com/glancr/mirros_display/-/jobs/artifacts/0.6.0/download?job=build-tag
+    source: https://gitlab.com/glancr/mirros_display/-/jobs/artifacts/0.6.3/download?job=build-tag
     source-type: zip
     plugin: dump
     organize:
       dist: display
 
   mirros-settings:
-    source: https://gitlab.com/glancr/mirros_settings/-/jobs/artifacts/0.5.9/download?job=build-tag
+    source: https://gitlab.com/glancr/mirros_settings/-/jobs/artifacts/0.5.10/download?job=build-tag
     source-type: zip
     plugin: dump
     organize:
@@ -128,14 +140,14 @@ parts:
 
   mirros-api:
     after: [snap-meta]
-    source: https://gitlab.com/glancr/mirros_api/-/jobs/artifacts/0.6.8/download?job=zipfile
+    source: https://gitlab.com/glancr/mirros_api/-/jobs/artifacts/0.7.1/download?job=zipfile
     source-type: zip
     plugin: ruby
     ruby-version: "2.5.3"
-    build-packages: [libsqlite3-dev]
+    build-packages: [libmysqlclient-dev]
     stage-packages:
       - libatm1
-      - sqlite3
+      - libmysqlclient20
       - wireless-tools
       - network-manager
       - dbus # provides dbus-send
