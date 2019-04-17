@@ -187,6 +187,3 @@ parts:
   start-stack:
     source: src/start-stack
     plugin: dump
-  setup:
-    source: src/setup
-    plugin: dump
