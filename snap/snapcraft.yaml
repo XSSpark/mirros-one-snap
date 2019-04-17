@@ -58,6 +58,10 @@ apps:
       - network
       - network-bind
       - network-control
+  # COMMANDS
+  setup:
+    command: sh $SNAP/bin/setup.sh
+    plugs: [network-manager]
   db-console:
     command: run-mysql-client
 
