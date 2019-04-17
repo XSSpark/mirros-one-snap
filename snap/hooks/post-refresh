@@ -1,9 +1,13 @@
 #!/bin/bash -e
-# Overwrite existing nginx configuration.
-envsubst '${SNAP} ${SNAP_NAME} ${SNAP_COMMON}' > "$SNAP_COMMON/nginx.conf" < "$SNAP/nginx.conf"
 
-# FIXME: Remove once https://github.com/snapcore/snapd/pull/5777 is in stable
-snapctl stop --disable mirros-one.dns
+# shellcheck source=src/mysql/scripts/mysql-utilities
+. "$SNAP/scripts/mysql-utilities"
+snapctl start mirros-one.mysql
+
+while [ ! -f "${RUNDIR}/mysqld.pid" ] && [ ! -S "${RUNDIR}/mysqld.sock" ]; do
+  echo "waiting for mysqld"
+  sleep 1
+done
 
 # Copy new migrations and gems from read-only location to writable mount
 cp -rn "$SNAP"/api/bundle_installed/* "$SNAP_DATA"/rails/.bundle
@@ -25,3 +29,9 @@ export RAILS_ENV=production
 # Seed new or changed seed values for running systems.
 "$SNAP"/wrapper "$SNAP"/api/bin/rails db:seed_diff
 "$SNAP"/wrapper "$SNAP"/api/bin/rails db:update_default_gems
+
+# Overwrite existing nginx configuration.
+envsubst '${SNAP} ${SNAP_NAME} ${SNAP_COMMON}' > "$SNAP_COMMON/nginx.conf" < "$SNAP/nginx.conf"
+
+# FIXME: Remove once https://github.com/snapcore/snapd/pull/5777 is in stable
+snapctl stop --disable mirros-one.dns
