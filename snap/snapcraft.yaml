@@ -198,7 +198,7 @@ parts:
       # TODO: This can be improved, e.g. not fiddling with $PRIME since install dir contents are copied anyway.
       cd $SNAPCRAFT_PART_INSTALL
       RUBYVERSION=$(ruby -v | egrep -o "[0-9]+\.[0-9]+\.[0-9]+")
-      wget https://cache.ruby-lang.org/pub/ruby/{RUBYVERSION:0:3}/ruby-${RUBYVERSION}.tar.gz
+      wget https://cache.ruby-lang.org/pub/ruby/${RUBYVERSION:0:3}/ruby-${RUBYVERSION}.tar.gz
       tar -xf ruby-${RUBYVERSION}.tar.gz
       cp -r "ruby-${RUBYVERSION}/include" "$SNAPCRAFT_PRIME"
       rm ruby-${RUBYVERSION}.tar.gz
