@@ -149,7 +149,9 @@ parts:
     source: https://gitlab.com/glancr/mirros_api/-/jobs/artifacts/0.8.4/download?job=zipfile
     source-type: zip
     plugin: ruby
-    ruby-version: "2.5.3"
+    ruby-version: "2.6.3"
+    #build-snaps: [ruby]
+    #stage-snaps: [ruby]
     build-packages: [libmysqlclient-dev]
     stage-packages:
       - libatm1
@@ -160,11 +162,11 @@ parts:
     override-build: |
       snapcraftctl build
 
-      gem install -v "1.17.3" --no-document --env-shebang bundler
-
-      cp -a * $SNAPCRAFT_PART_INSTALL
+      cp -a * $SNAPCRAFT_PART_INSTALL # TODO: remove once using stage-snaps
       cd $SNAPCRAFT_PART_INSTALL/api
+
       bin/bundle install --path vendor/bundle -j $(nproc) --without development test
+      # TODO: ruby.bundle once using stage-snaps
 
       # To allow installing new gems in the snap, they have to be in $SNAP_DATA.
       # Layouts above maps a bind-mount.
@@ -187,7 +189,20 @@ parts:
       export GEM_PATH="$(echo "$GEM_PATH" | sed "s|$SNAPCRAFT_PART_INSTALL|\$SNAP|g")"
       exec "\$@"
       EOF
+
       chmod a+x $SNAPCRAFT_PART_INSTALL/wrapper
+
+      # Get ruby include files for installed version. Ruby plugin throws them away, 
+      # and copying with relative paths is prone to break on differeny builders.
+
+      # TODO: This can be improved, e.g. not fiddling with $PRIME since install dir contents are copied anyway.
+      cd $SNAPCRAFT_PART_INSTALL
+      RUBYVERSION=$(ruby -v | egrep -o "[0-9]+\.[0-9]+\.[0-9]+")
+      wget https://cache.ruby-lang.org/pub/ruby/2.6/ruby-${RUBYVERSION}.tar.gz
+      tar -xf ruby-${RUBYVERSION}.tar.gz
+      cp -r "ruby-${RUBYVERSION}/include" "$SNAPCRAFT_PRIME"
+      rm ruby-${RUBYVERSION}.tar.gz
+      rm -rf ruby-${RUBYVERSION}
 
   # Scripts and wrappers
   start-stack:
