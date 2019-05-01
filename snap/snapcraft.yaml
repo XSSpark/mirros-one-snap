@@ -67,6 +67,8 @@ apps:
 
 passthrough:
   layout:
+    $SNAP/api/storage:
+      bind: $SNAP_DATA/rails/storage
     $SNAP/api/tmp:
       bind: $SNAP_DATA/rails/tmp
     $SNAP/api/log:

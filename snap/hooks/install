@@ -58,6 +58,7 @@ export SECRET_KEY_BASE
 
 # FIXME: This installs the Openweathermap cities table. Make more generic for other default widgets.
 "$SNAP/wrapper" "$SNAP/api/bin/rails" openweathermap:install:migrations
+"$SNAP/wrapper" "$SNAP/api/bin/rails" active_storage:install
 
 # Set up the API database.
 "$SNAP/wrapper" "$SNAP/api/bin/rails" db:create db:migrate db:seed
