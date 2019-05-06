@@ -2,7 +2,8 @@
 
 set_root_password() {
   if [ ! -f "${PWFILE}" ]; then
-    return "password file not present"
+    echo "password file not present"
+    exit 1
   fi
   mysql --defaults-file="${CONFFILE}" -p"$(cat "${PWFILE}")" --connect-expired-password <<-SQL
 		ALTER USER 'root'@'localhost' IDENTIFIED BY 'glancr';
@@ -43,7 +44,7 @@ init_config() {
     echo "[client]"
     echo "socket=${RUNDIR}/mysqld.sock"
     echo "user=root"
-  } >> "${CONFFILE}"
+  } >>"${CONFFILE}"
   ls $CONFFILE
   echo "Done"
 }
@@ -57,11 +58,11 @@ init_database() {
     echo 'could not initialize database, aborting'
     exit 1
   fi
-  sed -n -e 's/^.* temporary password is generated for root@localhost: //p' < "${LOGDIR}/error.log" > "${MYSQL_SNAPDIR}/temporary-password"
+  sed -n -e 's/^.* temporary password is generated for root@localhost: //p' <"${LOGDIR}/error.log" >"${MYSQL_SNAPDIR}/temporary-password"
 }
 
-BASEDIR="${SNAP}/usr"                 # bins, libs etc. from mysql-server
-MYSQL_SNAPDIR="${SNAP_COMMON}/mysql"  # writable base directory
+BASEDIR="${SNAP}/usr"                # bins, libs etc. from mysql-server
+MYSQL_SNAPDIR="${SNAP_COMMON}/mysql" # writable base directory
 LOGDIR="${MYSQL_SNAPDIR}/log"
 FILESDIR="${MYSQL_SNAPDIR}/files"
 RUNDIR="${MYSQL_SNAPDIR}/run"

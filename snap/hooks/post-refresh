@@ -33,7 +33,7 @@ export RAILS_ENV=production
 "$SNAP"/wrapper "$SNAP"/api/bin/rails db:seed_diff
 "$SNAP"/wrapper "$SNAP"/api/bin/rails db:update_default_gems
 
-# Overwrite existing nginx configuration.
+# Overwrite existing nginx configuration: $SNAP points to a specific revision.
 envsubst '${SNAP} ${SNAP_NAME} ${SNAP_COMMON}' > "$SNAP_COMMON/nginx.conf" < "$SNAP/nginx.conf"
 
 # FIXME: Remove once https://github.com/snapcore/snapd/pull/5777 is in stable
