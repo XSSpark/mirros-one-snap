@@ -131,14 +131,14 @@ parts:
     plugin: dump
 
   mirros-display:
-    source: https://gitlab.com/glancr/mirros_display/-/jobs/artifacts/0.7.1/download?job=build-tag
+    source: https://gitlab.com/glancr/mirros_display/-/jobs/artifacts/0.7.2/download?job=build-tag
     source-type: zip
     plugin: dump
     organize:
       dist: display
 
   mirros-settings:
-    source: https://gitlab.com/glancr/mirros_settings/-/jobs/artifacts/0.7.1/download?job=build-tag
+    source: https://gitlab.com/glancr/mirros_settings/-/jobs/artifacts/0.7.2/download?job=build-tag
     source-type: zip
     plugin: dump
     organize:
