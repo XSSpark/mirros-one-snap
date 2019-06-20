@@ -148,10 +148,10 @@ parts:
     after: [snap-meta]
     source: https://gitlab.com/glancr/mirros_api/-/jobs/artifacts/0.10.1/download?job=zipfile
     source-type: zip
-    plugin: ruby
-    ruby-version: "2.6.3"
-    #build-snaps: [ruby]
-    #stage-snaps: [ruby]
+    plugin: dump
+    # ruby-version: "2.6.3"
+    build-snaps: [ruby]
+    stage-snaps: [ruby]
     build-packages: [libmysqlclient-dev, wget]
     stage-packages:
       - libatm1
@@ -162,8 +162,13 @@ parts:
     override-build: |
       snapcraftctl build
 
-      cp -a * $SNAPCRAFT_PART_INSTALL # TODO: remove once using stage-snaps
+      # cp -a * $SNAPCRAFT_PART_INSTALL # TODO: remove once using stage-snaps
       cd $SNAPCRAFT_PART_INSTALL/api
+
+      which ruby
+      export RUBYLIB=$SNAPCRAFT_PART_INSTALL/lib/ruby/2.6.0:$SNAPCRAFT_PART_INSTALL/lib/ruby/2.6.0/$SNAP_ARCH:$RUBYLIB
+
+      echo $SNAP_ARCH
 
       bin/bundle install --path vendor/bundle -j $(nproc) --without development test
       # TODO: ruby.bundle once using stage-snaps
