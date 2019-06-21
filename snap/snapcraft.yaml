@@ -148,27 +148,29 @@ parts:
     after: [snap-meta]
     source: https://gitlab.com/glancr/mirros_api/-/jobs/artifacts/0.10.1/download?job=zipfile
     source-type: zip
-    plugin: dump
-    # ruby-version: "2.6.3"
-    build-snaps: [ruby]
-    stage-snaps: [ruby]
+    plugin: ruby # dump
+    ruby-version: "2.6.3"
+    # build-snaps: [ruby]
+    # stage-snaps: [ruby]
     build-packages: [libmysqlclient-dev, wget]
     stage-packages:
       - libatm1
       - libmysqlclient20
-      - wireless-tools
-      - network-manager
-      - dbus # provides dbus-send
+      - wireless-tools # iwlist for scanning while AP is active
+      - network-manager # nmcli
+      - dbus # provides dbus-send for shutdown command
     override-build: |
       snapcraftctl build
 
-      # cp -a * $SNAPCRAFT_PART_INSTALL # TODO: remove once using stage-snaps
+      cp -a * $SNAPCRAFT_PART_INSTALL # TODO: remove once using stage-snaps
       cd $SNAPCRAFT_PART_INSTALL/api
 
-      which ruby
-      export RUBYLIB=$SNAPCRAFT_PART_INSTALL/lib/ruby/2.6.0:$SNAPCRAFT_PART_INSTALL/lib/ruby/2.6.0/$SNAP_ARCH:$RUBYLIB
+      # FIXME: work out proper env variables for ruby snap version. RUBYLIB is set by ruby plugin, but not by snap.
+      # export RUBYLIB=$SNAPCRAFT_PART_INSTALL/lib/ruby/2.6.0:$SNAPCRAFT_PART_INSTALL/lib/ruby/2.6.0/$SNAPCRAFT_ARCH_TRIPLET:$RUBYLIB
 
-      echo $SNAP_ARCH
+      #/root/parts/mirros-api/install/lib/ruby/2.6.0/rubygems.rb:9:in `require': cannot load such file -- rbconfig (LoadError)
+
+      # which ruby
 
       bin/bundle install --path vendor/bundle -j $(nproc) --without development test
       # TODO: ruby.bundle once using stage-snaps
@@ -181,7 +183,7 @@ parts:
       mv Gemfile.lock Gemfile.lock_installed
       mv db db_installed
 
-      # TODO: Remove once those are untracked
+      # Ensure directories are removed because they'll be replaced with symlinks
       rm -rf $SNAPCRAFT_PART_INSTALL/api/tmp $SNAPCRAFT_PART_INSTALL/api/log
 
       # Write a wrapper that sets our environment (so we can avoid setting this
@@ -197,8 +199,11 @@ parts:
 
       chmod a+x $SNAPCRAFT_PART_INSTALL/wrapper
 
-      # Get ruby include files for installed version. Ruby plugin throws them away, 
-      # and copying with relative paths is prone to break on differeny builders.
+      # FIXME: Replace hardcoded ruby path with our snap path
+      # find bin/ -type f -exec grep -Iq . {} \; -and -exec sed -i -e 's|^#!/snap/ruby/current/bin/ruby$|#!/snap/mirros-one/current/bin/ruby|' {} \;
+
+      # Get ruby include files for installed version. Ruby plugin throws them away, and copying with relative paths is prone to break on different builders.
+      # TODO: Check if ruby snap brings a usable version of this.
 
       # TODO: This can be improved, e.g. not fiddling with $PRIME since install dir contents are copied anyway.
       cd $SNAPCRAFT_PART_INSTALL
