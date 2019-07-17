@@ -12,7 +12,7 @@ maxcounter=45
 while [ ! -f "${RUNDIR}/mysqld.pid" ] && [ ! -S "${RUNDIR}/mysqld.sock" ]; do
   echo "waiting for mysqld"
   sleep 1
-  counter=`expr $counter + 1`
+  counter=$(expr $counter + 1)
   if [ $counter -gt $maxcounter ]; then
     echo "aborting wait after 45 seconds"
     exit 1
@@ -38,21 +38,21 @@ fi
 # nginx setup. Limit substitution to prevent overwriting nginx variables.
 mkdir -p "$SNAP_COMMON/nginx/tmp"
 mkdir -p "$SNAP_COMMON/nginx/log"
-envsubst '${SNAP} ${SNAP_NAME} ${SNAP_COMMON}' > "$SNAP_COMMON/nginx.conf" < "$SNAP/nginx.conf"
+envsubst '${SNAP} ${SNAP_NAME} ${SNAP_COMMON}' >"$SNAP_COMMON/nginx.conf" <"$SNAP/nginx.conf"
 
 # Rails app setup
-cp -r $SNAP/api/bundle_installed/* $SNAP_DATA/rails/.bundle
-cp -r $SNAP/api/vendor_installed/* $SNAP_DATA/rails/vendor
-cp -r $SNAP/api/db_installed/* $SNAP_DATA/rails/db
-cat $SNAP/api/Gemfile_installed > $SNAP_DATA/rails/Gemfile
-cat $SNAP/api/Gemfile.lock_installed > $SNAP_DATA/rails/Gemfile.lock
+cp -r "$SNAP"/api/bundle_installed/* "$SNAP_DATA"/rails/.bundle
+cp -r "$SNAP"/api/vendor_installed/* "$SNAP_DATA"/rails/vendor
+cp -r "$SNAP"/api/db_installed/* "$SNAP_DATA"/rails/db
+cat "$SNAP"/api/Gemfile_installed >"$SNAP_DATA"/rails/Gemfile
+cat "$SNAP"/api/Gemfile.lock_installed >"$SNAP_DATA"/rails/Gemfile.lock
 
 cd "$SNAP/api"
 # Ensure that all commands are run in prod environment.
 export RAILS_ENV=production
 
 # Generates an individual secret for each snap installation. Environment variables set here might not be present at all times across revisions, so we store it in a file. TODO: Check if we can leverage snap configuration.
-"$SNAP/wrapper" "$SNAP/api/bin/rails" secret > "$SNAP_DATA/secret"
+"$SNAP/wrapper" "$SNAP/api/bin/rails" secret >"$SNAP_DATA/secret"
 SECRET_KEY_BASE=$(cat "${SNAP_DATA}/secret")
 export SECRET_KEY_BASE
 
