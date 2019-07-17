@@ -65,24 +65,23 @@ apps:
   db-console:
     command: run-mysql-client
 
-passthrough:
-  layout:
-    $SNAP/api/storage:
-      bind: $SNAP_DATA/rails/storage
-    $SNAP/api/tmp:
-      bind: $SNAP_DATA/rails/tmp
-    $SNAP/api/log:
-      bind: $SNAP_DATA/rails/log
-    $SNAP/api/db:
-      bind: $SNAP_DATA/rails/db
-    $SNAP/api/.bundle:
-      bind: $SNAP_DATA/rails/.bundle
-    $SNAP/api/vendor:
-      bind: $SNAP_DATA/rails/vendor
-    $SNAP/api/Gemfile:
-      bind-file: $SNAP_DATA/rails/Gemfile
-    $SNAP/api/Gemfile.lock:
-      bind-file: $SNAP_DATA/rails/Gemfile.lock
+layout:
+  $SNAP/api/storage:
+    bind: $SNAP_DATA/rails/storage
+  $SNAP/api/tmp:
+    bind: $SNAP_DATA/rails/tmp
+  $SNAP/api/log:
+    bind: $SNAP_DATA/rails/log
+  $SNAP/api/db:
+    bind: $SNAP_DATA/rails/db
+  $SNAP/api/.bundle:
+    bind: $SNAP_DATA/rails/.bundle
+  $SNAP/api/vendor:
+    bind: $SNAP_DATA/rails/vendor
+  $SNAP/api/Gemfile:
+    bind-file: $SNAP_DATA/rails/Gemfile
+  $SNAP/api/Gemfile.lock:
+    bind-file: $SNAP_DATA/rails/Gemfile.lock
 
 parts:
   snap-meta:
