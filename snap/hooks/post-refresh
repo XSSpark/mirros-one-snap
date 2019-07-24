@@ -15,14 +15,14 @@ cp -rn "$SNAP"/api/vendor_installed/* "$SNAP_DATA"/rails/vendor
 cp -rn "$SNAP"/api/db_installed/* "$SNAP_DATA"/rails/db
 
 # Overwrite lockfile so that default extensions and dependencies are up-to-date
-cat "$SNAP"/api/Gemfile.lock_installed > "$SNAP_DATA"/rails/Gemfile.lock
+cat "$SNAP"/api/Gemfile.lock_installed >"$SNAP_DATA"/rails/Gemfile.lock
 
 cd "$SNAP"/api # required for bundler to find the gemfile
 # force lock rewrite to include user-installed extensions
 "$SNAP"/wrapper "$SNAP"/api/bin/bundle lock
 "$SNAP"/wrapper "$SNAP"/api/bin/bundle clean # clean up old gem versions
 
-SECRET_KEY_BASE=$(cat "$SNAP_DATA"/secret) 
+SECRET_KEY_BASE=$(cat "$SNAP_DATA"/secret)
 export SECRET_KEY_BASE
 export RAILS_ENV=production
 
@@ -34,7 +34,7 @@ export RAILS_ENV=production
 "$SNAP"/wrapper "$SNAP"/api/bin/rails db:update_default_gems
 
 # Overwrite existing nginx configuration: $SNAP points to a specific revision.
-envsubst '${SNAP} ${SNAP_NAME} ${SNAP_COMMON}' > "$SNAP_COMMON/nginx.conf" < "$SNAP/nginx.conf"
+envsubst '${SNAP} ${SNAP_NAME} ${SNAP_COMMON}' >"$SNAP_COMMON/nginx.conf" <"$SNAP/nginx.conf"
 
 # FIXME: Remove once https://github.com/snapcore/snapd/pull/5777 is in stable
 snapctl stop --disable mirros-one.dns
