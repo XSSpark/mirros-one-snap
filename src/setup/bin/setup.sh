@@ -5,5 +5,3 @@ nmcli c add type wifi ifname '*' con-name glancrsetup autoconnect no ssid "glanc
 
 # Persistent and predictable LAN connection name
 nmcli c add type ethernet ifname '*' con-name glancrlan autoconnect yes
-
-nmcli d disconnect eth0
