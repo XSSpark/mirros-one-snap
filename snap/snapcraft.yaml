@@ -31,7 +31,10 @@ apps:
     #before: [backend]
     daemon: simple
     restart-condition: always
-    plugs: [network, network-bind, process-control]
+    plugs:
+      - network
+      - network-bind
+      - process-control
   backend:
     command: wrapper sh $SNAP/bin/start-stack.sh
     #after: [mysql, nginx]
