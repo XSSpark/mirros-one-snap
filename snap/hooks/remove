@@ -2,3 +2,4 @@
 
 # Be a good citizen and remove all AP connections.
 "$SNAP/snap/command-chain/snapcraft-runner" "$SNAP/usr/bin/nmcli" c delete glancrsetup
+"$SNAP/snap/command-chain/snapcraft-runner" "$SNAP/usr/bin/nmcli" c delete glancrlan
