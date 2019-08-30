@@ -67,6 +67,10 @@ apps:
     plugs: [network-manager]
   db-console:
     command: run-mysql-client
+  create-backup:
+    command: create-backup
+  restore-backup:
+    command: restore-backup
 
 layout:
   $SNAP/api/storage:
@@ -223,4 +227,7 @@ parts:
     plugin: dump
   setup:
     source: src/setup
+    plugin: dump
+  cli:
+    source: src/cli
     plugin: dump

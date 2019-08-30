@@ -1,0 +1,16 @@
+#!/bin/sh -e
+FILE=$1
+
+if [ ! -f "${FILE}" ]; then
+    echo "${FILE}: No such file, please check the provided path" && exit 1
+fi
+
+# Clean up any previous restore leftovers
+cd "${SNAP_DATA}" && rm -rf backup-restore && mkdir -p backup-restore
+
+tar -C backup-restore -xf "$FILE"
+cd backup-restore
+restore-production-db backup_mirrOS_api_production_*.sql || echo "error during DB restore" && exit 1
+
+rm -rf "$SNAP_DATA/rails/storage/*"
+cp -r rails/storage/* "$SNAP_DATA/rails/storage"
