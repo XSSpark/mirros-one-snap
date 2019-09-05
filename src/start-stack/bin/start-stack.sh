@@ -3,6 +3,8 @@
 
 cd "$SNAP/api" || return
 
-export SECRET_KEY_BASE=$(cat $SNAP_DATA/secret)
+SECRET_KEY_BASE=$(cat "$SNAP_DATA/secret")
+export SECRET_KEY_BASE
+RAILS_RELATIVE_URL_ROOT=/api
+export RAILS_RELATIVE_URL_ROOT
 bin/rails server -e production -b 127.0.0.1
-
