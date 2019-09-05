@@ -158,7 +158,7 @@ parts:
     ruby-version: "2.6.3"
     # build-snaps: [ruby]
     # stage-snaps: [ruby]
-    build-packages: [libmysqlclient-dev, wget]
+    build-packages: [libmysqlclient-dev, wget, libffi-dev]
     stage-packages:
       - libatm1
       - libmysqlclient20
