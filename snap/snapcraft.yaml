@@ -222,6 +222,15 @@ parts:
       rm ruby-${RUBYVERSION}.tar.gz
       rm -rf ruby-${RUBYVERSION}
 
+    override-prime: |
+      # Create symlinks for imagemagick tools, see https://unix.stackexchange.com/questions/235639/is-there-a-difference-between-convert-and-convert-im6-and-if-yes-what
+      snapcraftctl prime
+      cd usr/bin
+      FILES=$(find -name "*-im6" -exec basename {} \;)
+      for FILE in $FILES; do
+        LINK_NAME=$(echo "${FILE}" | cut -d'-' -f1 )
+        ln -s "${FILE}" "${LINK_NAME}"
+      done
   # Scripts and wrappers
   start-stack:
     source: src/start-stack
