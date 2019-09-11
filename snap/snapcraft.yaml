@@ -89,6 +89,12 @@ layout:
     bind-file: $SNAP_DATA/rails/Gemfile
   $SNAP/api/Gemfile.lock:
     bind-file: $SNAP_DATA/rails/Gemfile.lock
+  /etc/ImageMagick-6:
+    bind: $SNAP/etc/ImageMagick-6
+  /usr/lib/$SNAPCRAFT_ARCH_TRIPLET/ImageMagick-6.8.9:
+    bind: $SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/ImageMagick-6.8.9
+    # FIXME: can this be generalized for 6.x.x releases?
+
 
 parts:
   snap-meta:
