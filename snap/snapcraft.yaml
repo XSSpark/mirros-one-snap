@@ -231,7 +231,7 @@ parts:
       FILES=$(find -name "*-im6" -exec basename {} \;)
       for FILE in $FILES; do
         LINK_NAME=$(echo "${FILE}" | cut -d'-' -f1 )
-        ln -s "${FILE}" "${LINK_NAME}"
+        ln -sf "${FILE}" "${LINK_NAME}" # use -f to overwrite existing links from incremental builds
       done
   # Scripts and wrappers
   start-stack:
