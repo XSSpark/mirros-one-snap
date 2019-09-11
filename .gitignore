@@ -4,3 +4,4 @@ stage
 *.tar.bz2
 *.snap
 snap/.snapcraft
+/.tool-versions
