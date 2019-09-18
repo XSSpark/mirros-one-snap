@@ -23,6 +23,12 @@ hooks:
     plugs: [network-manager]
   # TODO: Maybe just move all plugs to a root-level plugs dict
 
+plugs:
+  dbus-cogctl:
+    interface: dbus
+    bus: system
+    name: com.igalia.Cog
+
 apps:
   # SERVICES
   # MySQL daemon
@@ -48,6 +54,7 @@ apps:
       - timezone-control
       - timeserver-control # required for SetNTP() method
       - time-control # Backend sets system time during setup
+      - dbus-cogctl
   nginx:
     command: usr/sbin/nginx -c $SNAP_COMMON/nginx.conf
     #before: [backend]
@@ -94,7 +101,6 @@ layout:
   /usr/lib/$SNAPCRAFT_ARCH_TRIPLET/ImageMagick-6.8.9:
     bind: $SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/ImageMagick-6.8.9
     # FIXME: can this be generalized for 6.x.x releases?
-
 
 parts:
   snap-meta:
