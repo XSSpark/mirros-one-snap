@@ -117,6 +117,13 @@ parts:
         snapcraftctl set-grade devel
       fi
 
+  # Provides all git patches in $SNAPCRAFT_STAGE, but excludes them from priming
+  patches:
+    plugin: dump
+    source: src/patches
+    prime:
+      - -*
+
   mysql:
     plugin: dump
     source: src/mysql
@@ -128,14 +135,16 @@ parts:
     plugin: dump
 
   dnsmasq:
+    after: [patches]
     plugin: make
-    source: https://git.launchpad.net/~snappy-hwe-team/snappy-hwe-snaps/+git/wifi-ap
-    source-type: git
-    source-branch: dnsmasq/2.75
+    source: http://www.thekelleys.org.uk/dnsmasq/dnsmasq-2.80.tar.gz
     build-packages:
       - build-essential
     make-parameters:
       - PREFIX=/
+    override-pull: |
+      snapcraftctl pull
+      git apply "${SNAPCRAFT_STAGE}/dnsmasq_2.80-remove_setgroups.patch"
     organize:
       sbin/dnsmasq: bin/dnsmasq
     filesets:

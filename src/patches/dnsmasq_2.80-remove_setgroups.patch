@@ -1,0 +1,25 @@
+diff --git a/src/dnsmasq.c b/src/dnsmasq.c
+index 7fd33af..660b6e4 100644
+--- a/src/dnsmasq.c
++++ b/src/dnsmasq.c
+@@ -619,13 +619,13 @@ int main (int argc, char **argv)
+       gid_t dummy;
+       
+       /* remove all supplementary groups */
+-      if (gp && 
+-	  (setgroups(0, &dummy) == -1 ||
+-	   setgid(gp->gr_gid) == -1))
+-	{
+-	  send_event(err_pipe[1], EVENT_GROUP_ERR, errno, daemon->groupname);
+-	  _exit(0);
+-	}
++       // if (gp && 
++	//   (setgroups(0, &dummy) == -1 ||
++	//    setgid(gp->gr_gid) == -1))
++	// {
++	//   send_event(err_pipe[1], EVENT_GROUP_ERR, errno, daemon->groupname);
++	//   _exit(0);
++	// }
+   
+       if (ent_pw && ent_pw->pw_uid != 0)
+ 	{     
