@@ -13,7 +13,7 @@ index 7fd33af..660b6e4 100644
 -	  send_event(err_pipe[1], EVENT_GROUP_ERR, errno, daemon->groupname);
 -	  _exit(0);
 -	}
-+       // if (gp && 
++      // if (gp &&
 +	//   (setgroups(0, &dummy) == -1 ||
 +	//    setgid(gp->gr_gid) == -1))
 +	// {
