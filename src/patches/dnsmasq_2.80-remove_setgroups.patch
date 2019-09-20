@@ -1,7 +1,18 @@
 diff --git a/src/dnsmasq.c b/src/dnsmasq.c
-index 7fd33af..660b6e4 100644
+index 7fd33af..0397ed8 100644
 --- a/src/dnsmasq.c
 +++ b/src/dnsmasq.c
+@@ -569,8 +569,8 @@ int main (int argc, char **argv)
+ 		 of the directory containing the file. That directory will
+ 		 need to by owned by the dnsmasq user, and the ownership of the
+ 		 file has to match, to keep systemd >273 happy. */
+-	      if (getuid() == 0 && ent_pw && ent_pw->pw_uid != 0 && fchown(fd, ent_pw->pw_uid, ent_pw->pw_gid) == -1)
+-		chown_warn = errno;
++	      /* if (getuid() == 0 && ent_pw && ent_pw->pw_uid != 0 && fchown(fd, ent_pw->pw_uid, ent_pw->pw_gid) == -1)
++		chown_warn = errno; */
+ 
+ 	      if (!read_write(fd, (unsigned char *)daemon->namebuff, strlen(daemon->namebuff), 0))
+ 		err = 1;
 @@ -619,13 +619,13 @@ int main (int argc, char **argv)
        gid_t dummy;
        
