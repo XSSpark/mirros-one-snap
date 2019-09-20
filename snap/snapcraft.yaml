@@ -135,16 +135,19 @@ parts:
     plugin: dump
 
   dnsmasq:
-    after: [patches]
+    #after: [patches]
     plugin: make
-    source: http://www.thekelleys.org.uk/dnsmasq/dnsmasq-2.80.tar.gz
+    source: https://git.launchpad.net/~snappy-hwe-team/snappy-hwe-snaps/+git/wifi-ap
+    source-type: git
+    source-branch: dnsmasq/2.75
+    #source: http://www.thekelleys.org.uk/dnsmasq/dnsmasq-2.80.tar.gz
     build-packages:
       - build-essential
     make-parameters:
       - PREFIX=/
-    override-pull: |
-      snapcraftctl pull
-      git apply "${SNAPCRAFT_STAGE}/dnsmasq_2.80-remove_setgroups.patch"
+    #override-pull: |
+    #  snapcraftctl pull
+    #  git apply "${SNAPCRAFT_STAGE}/dnsmasq_2.80-remove_setgroups.patch"
     organize:
       sbin/dnsmasq: bin/dnsmasq
     filesets:
