@@ -5,3 +5,4 @@ stage
 *.snap
 snap/.snapcraft
 /.tool-versions
+/.vscode
