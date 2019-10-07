@@ -26,6 +26,8 @@ SECRET_KEY_BASE=$(cat "$SNAP_DATA"/secret)
 export SECRET_KEY_BASE
 export RAILS_ENV=production
 
+"$SNAP/wrapper" "$SNAP/api/bin/rails" extensions:install_migrations
+# force AS installation if not installed yet
 "$SNAP/wrapper" "$SNAP/api/bin/rails" active_storage:install
 "$SNAP/wrapper" "$SNAP/api/bin/rails" db:migrate
 
