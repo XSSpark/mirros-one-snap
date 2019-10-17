@@ -73,7 +73,7 @@ apps:
     command: sh $SNAP/bin/setup.sh
     plugs: [network-manager]
   db-console:
-    command: run-mysql-client
+    command: run-mysql-client mirrOS_api_production
   create-backup:
     command: create-backup
   restore-backup:
