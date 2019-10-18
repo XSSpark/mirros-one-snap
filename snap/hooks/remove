@@ -1,5 +1,6 @@
 #!/bin/sh -e
 
 # Be a good citizen and remove all AP connections.
+export RAILS_ENV=production
 cd "$SNAP/api"
 "$SNAP/wrapper" "$SNAP/api/bin/rails" mirros:setup:remove_network_connections
