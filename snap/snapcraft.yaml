@@ -18,7 +18,7 @@ hooks:
   install:
     plugs: [network, network-bind]
   post-refresh:
-    plugs: [network]
+    plugs: [network, network-manager]
   connect-plug-network-manager:
     plugs: [network-manager]
   # TODO: Maybe just move all plugs to a root-level plugs dict

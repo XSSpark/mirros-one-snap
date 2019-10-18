@@ -35,6 +35,11 @@ export RAILS_ENV=production
 "$SNAP"/wrapper "$SNAP"/api/bin/rails db:seed_diff
 "$SNAP"/wrapper "$SNAP"/api/bin/rails db:update_default_gems
 
+if test "$SNAP_VERSION" = "1.0.3"; then
+  "$SNAP"/wrapper "$SNAP"/api/bin/rails mirros:setup:delete_connections_without_model
+  "$SNAP"/wrapper "$SNAP"/api/bin/rails mirros:setup:network_connections
+fi
+
 # Overwrite existing nginx configuration: $SNAP points to a specific revision.
 envsubst '${SNAP} ${SNAP_NAME} ${SNAP_COMMON}' >"$SNAP_COMMON/nginx.conf" <"$SNAP/nginx.conf"
 
