@@ -234,7 +234,7 @@ parts:
       # FIXME: Replace hardcoded ruby path with our snap path
       # find bin/ -type f -exec grep -Iq . {} \; -and -exec sed -i -e 's|^#!/snap/ruby/current/bin/ruby$|#!/snap/mirros-one/current/bin/ruby|' {} \;
 
-      # Get ruby include files for installed version. Ruby plugin throws them away, and copying with relative paths is prone to break on different builders.
+      # Get ruby include files for installed version. Ruby plugin throws them away, and copying with relative paths is prone to break on different builders. Required for runtime extension installations that bring native extensions.
       # TODO: Check if ruby snap brings a usable version of this.
 
       # TODO: This can be improved, e.g. not fiddling with $PRIME since install dir contents are copied anyway.
