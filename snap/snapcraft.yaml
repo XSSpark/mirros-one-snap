@@ -42,7 +42,7 @@ apps:
       - network-bind
       - process-control
   backend:
-    command: wrapper sh $SNAP/bin/start-stack.sh
+    command: wrapper $SNAP/bin/start-stack
     #after: [mysql, nginx]
     daemon: simple
     plugs:
@@ -62,7 +62,7 @@ apps:
     stop-command: usr/sbin/nginx -s stop
     plugs: [network, network-bind]
   dns:
-    command: sh $SNAP/bin/start-dns.sh
+    command: $SNAP/bin/start-dns
     daemon: simple
     plugs:
       - network
@@ -76,7 +76,7 @@ apps:
     plugs: [dbus-cogctl]
   # COMMANDS
   setup:
-    command: sh $SNAP/bin/setup.sh
+    command: $SNAP/bin/setup
     plugs: [network-manager]
   db-console:
     command: run-mysql-client mirrOS_api_production
