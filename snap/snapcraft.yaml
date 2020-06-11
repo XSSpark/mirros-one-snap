@@ -68,6 +68,12 @@ apps:
       - network
       - network-bind
       - network-control
+  reload-browser:
+    command: bin/reload-browser
+    daemon: oneshot
+    after:
+      - nginx
+    plugs: [dbus-cogctl]
   # COMMANDS
   setup:
     command: sh $SNAP/bin/setup.sh

@@ -1,0 +1,8 @@
+#!/bin/sh -e
+cd "$SNAP"/api
+
+SECRET_KEY_BASE=$(cat "$SNAP_DATA"/secret)
+export SECRET_KEY_BASE
+export RAILS_ENV=production
+
+"$SNAP"/wrapper "$SNAP"/api/bin/rails mirros:system:reload_browser
