@@ -62,7 +62,7 @@ apps:
     stop-command: usr/sbin/nginx -s stop
     plugs: [network, network-bind]
   dns:
-    command: $SNAP/bin/start-dns
+    command: bin/start-dns
     daemon: simple
     plugs:
       - network
@@ -76,7 +76,7 @@ apps:
     plugs: [dbus-cogctl]
   # COMMANDS
   setup:
-    command: $SNAP/bin/setup
+    command: bin/setup
     plugs: [network-manager]
   db-console:
     command: run-mysql-client mirrOS_api_production
