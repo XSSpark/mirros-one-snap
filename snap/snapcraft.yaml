@@ -72,6 +72,7 @@ apps:
     daemon: oneshot
     after:
       - nginx
+      - backend
     plugs: [dbus-cogctl]
   # COMMANDS
   setup:
