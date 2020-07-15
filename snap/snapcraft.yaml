@@ -10,7 +10,6 @@ confinement: strict
 base: core
 environment:
   RAILS_DATABASE_SOCKET: "${SNAP_COMMON}/mysql/run/mysqld.sock"
-  RAILS_DATABASE_LOCATION: "$SNAP_DATA/production.sqlite3"
   # Specify confined paths so that hooks can access snapped bins/libs.
   PATH: "$SNAP/usr/sbin:$SNAP/usr/bin:$SNAP/sbin:$SNAP/bin:$PATH"
 
