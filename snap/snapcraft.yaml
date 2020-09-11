@@ -182,9 +182,9 @@ parts:
 
   mirros-api:
     after: [snap-meta]
-    source: https://gitlab.com/glancr/mirros_api/-/jobs/artifacts/1.5.2/download?job=zipfile
-    source-type: zip
     plugin: dump
+    source: https://gitlab.com/glancr/mirros_api.git
+    source-tag: "1.5.3"
     build-snaps: [ruby/2.6/stable]
     stage-snaps: [ruby/2.6/stable]
     build-packages: [libmysqlclient-dev, wget, libffi-dev]
