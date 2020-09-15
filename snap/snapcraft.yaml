@@ -190,7 +190,7 @@ parts:
     build-packages: [libmysqlclient-dev, wget, libffi-dev]
     stage-packages:
       - libatm1
-      - libmysqlclient20
+      - libmysqlclient21
       - wireless-tools # iwlist for scanning while AP is active
       - dbus # provides dbus-send for shutdown command
       # Image resizing
