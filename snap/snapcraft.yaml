@@ -182,7 +182,7 @@ parts:
 
   mirros-api:
     after: [snap-meta]
-    plugin: dump
+    plugin: nil
     source: https://gitlab.com/glancr/mirros_api.git
     source-tag: "1.5.3"
     build-snaps: [ruby/2.6/stable]
