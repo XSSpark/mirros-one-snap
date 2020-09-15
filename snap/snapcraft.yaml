@@ -7,7 +7,7 @@ description: |
   Currently meant to be deployed on a Raspberry Pi (min model 3B).
   Learn more at https://glancr.de
 confinement: strict
-base: core
+base: core18
 environment:
   RAILS_DATABASE_SOCKET: "${SNAP_COMMON}/mysql/run/mysqld.sock"
   # Specify confined paths so that hooks can access snapped bins/libs.
@@ -32,7 +32,7 @@ apps:
   # SERVICES
   # MySQL daemon
   mysql:
-    command: start-mysql-server
+    command: bin/start-mysql-server
     #before: [backend]
     daemon: simple
     restart-condition: always
@@ -79,11 +79,11 @@ apps:
     command: bin/setup
     plugs: [network-manager]
   db-console:
-    command: run-mysql-client mirrOS_api_production
+    command: bin/run-mysql-client mirrOS_api_production
   create-backup:
-    command: create-backup
+    command: bin/create-backup
   restore-backup:
-    command: restore-backup
+    command: bin/restore-backup
 
 layout:
   $SNAP/api/storage:
@@ -182,10 +182,10 @@ parts:
 
   mirros-api:
     after: [snap-meta]
-    source: https://gitlab.com/glancr/mirros_api/-/jobs/artifacts/1.5.2/download?job=zipfile
+    source: https://gitlab.com/glancr/mirros_api/-/jobs/artifacts/1.5.3/download?job=zipfile
     source-type: zip
     plugin: ruby # dump
-    ruby-version: "2.6.5"
+    ruby-version: "2.6.6"
     # build-snaps: [ruby]
     # stage-snaps: [ruby]
     build-packages: [libmysqlclient-dev, wget, libffi-dev]
