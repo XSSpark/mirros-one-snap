@@ -32,7 +32,7 @@ apps:
   # SERVICES
   # MySQL daemon
   mysql:
-    command: start-mysql-server
+    command: bin/start-mysql-server
     #before: [backend]
     daemon: simple
     restart-condition: always
@@ -79,11 +79,11 @@ apps:
     command: bin/setup
     plugs: [network-manager]
   db-console:
-    command: run-mysql-client mirrOS_api_production
+    command: bin/run-mysql-client mirrOS_api_production
   create-backup:
-    command: create-backup
+    command: bin/create-backup
   restore-backup:
-    command: restore-backup
+    command: bin/restore-backup
 
 layout:
   $SNAP/api/storage:
