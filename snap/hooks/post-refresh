@@ -2,6 +2,12 @@
 
 # shellcheck source=src/mysql/scripts/mysql-utilities
 . "$SNAP/scripts/mysql-utilities"
+
+# Drop removed configuration option when migrating to MySQL 8
+if grep -q "innodb_large_prefix" "$CONFFILE"; then
+  sed -i "/innodb_large_prefix/d" "$CONFFILE"
+fi
+
 snapctl start mirros-one.mysql
 
 while [ ! -f "${RUNDIR}/mysqld.pid" ] && [ ! -S "${RUNDIR}/mysqld.sock" ]; do

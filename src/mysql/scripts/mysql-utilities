@@ -40,7 +40,6 @@ init_config() {
     echo "datadir=${DATADIR}"
     echo "log-error=${LOGDIR}/error.log"
     echo "secure-file-priv=${FILESDIR}"
-    echo "innodb_large_prefix"
     echo "innodb_file_per_table=1"
     echo "init_connect='SET collation_connection = utf8mb4_unicode_ci'"
     echo "init_connect='SET NAMES utf8mb4'"
