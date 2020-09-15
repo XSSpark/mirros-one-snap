@@ -7,7 +7,7 @@ description: |
   Currently meant to be deployed on a Raspberry Pi (min model 3B).
   Learn more at https://glancr.de
 confinement: strict
-base: core
+base: core18
 environment:
   RAILS_DATABASE_SOCKET: "${SNAP_COMMON}/mysql/run/mysqld.sock"
   # Specify confined paths so that hooks can access snapped bins/libs.
