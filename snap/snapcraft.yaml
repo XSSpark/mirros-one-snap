@@ -195,8 +195,8 @@ parts:
       - wireless-tools # iwlist for scanning while AP is active
       - dbus # provides dbus-send for shutdown command
       # Image resizing
-      - imagemagick
-      - imagemagick-common
+      - graphicsmagick-imagemagick-compat
+      - imagemagick-6-common
     override-build: |
       snapcraftctl build
 
