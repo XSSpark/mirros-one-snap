@@ -195,8 +195,8 @@ parts:
       - wireless-tools # iwlist for scanning while AP is active
       - dbus # provides dbus-send for shutdown command
       # Image resizing
-      - imagemagick
-      - imagemagick-common
+      - graphicsmagick-imagemagick-compat
+      - imagemagick-6-common
     override-build: |
       snapcraftctl build
 
@@ -253,15 +253,6 @@ parts:
       rm ruby-${RUBYVERSION}.tar.gz
       rm -rf ruby-${RUBYVERSION}
 
-    override-prime: |
-      # Create symlinks for imagemagick tools, see https://unix.stackexchange.com/questions/235639/is-there-a-difference-between-convert-and-convert-im6-and-if-yes-what
-      snapcraftctl prime
-      cd usr/bin
-      FILES=$(find -name "*-im6" -exec basename {} \;)
-      for FILE in $FILES; do
-        LINK_NAME=$(echo "${FILE}" | cut -d'-' -f1 )
-        ln -sf "${FILE}" "${LINK_NAME}" # use -f to overwrite existing links from incremental builds
-      done
   # Scripts and wrappers
   start-stack:
     source: src/start-stack
