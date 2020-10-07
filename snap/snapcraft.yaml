@@ -174,7 +174,7 @@ parts:
       dist: display
 
   mirros-settings:
-    source: https://gitlab.com/glancr/mirros_settings/-/jobs/artifacts/v1.5.0/download?job=build-tag
+    source: https://gitlab.com/glancr/mirros_settings/-/jobs/artifacts/v1.6.2/download?job=build-tag
     source-type: zip
     plugin: dump
     organize:
