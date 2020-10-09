@@ -11,7 +11,7 @@ set_root_password() {
 }
 
 mysql_test_connection() {
-  "${SNAP}/usr/bin/mysql" --defaults-file="$CONFFILE" -uroot -pglancr 2>/dev/null
+  "${SNAP}/usr/bin/mysql" --defaults-file="$CONFFILE" 2>/dev/null
 }
 
 wait_for_mysql() {
@@ -50,6 +50,7 @@ init_config() {
     echo "[client]"
     echo "socket=${RUNDIR}/mysqld.sock"
     echo "user=root"
+    echo "password=\"glancr\""
     echo "default-character-set=utf8mb4"
   } >>"${CONFFILE}"
   ls $CONFFILE

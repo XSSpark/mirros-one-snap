@@ -4,4 +4,4 @@ FILE=$1
 # FIXME: Remove password option once install base is $SNAP_VERSION >= 0.15.0
 "$SNAP/usr/bin/mysql" \
     --defaults-file="$SNAP_COMMON/mysql/conf/my.cnf" \
-    -pglancr <"$FILE"
+    mirrOS_api_production <"$FILE"
