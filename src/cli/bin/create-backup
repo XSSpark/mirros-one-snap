@@ -4,7 +4,7 @@ UPLOADS="rails/storage"
 FILENAME="backup_mirrOS_one_$(date +%FT%H-%M-%S).tar.gz"
 
 cd "$SNAP_DATA" # Ensure tar has no permission problems inside the snap
-tar -C "${SNAP_DATA}" -czf "${FILENAME}" "${DB_BACKUP}" "${UPLOADS}"
+tar -czf "${FILENAME}" "${DB_BACKUP}" "${UPLOADS}"
 
 if test -e "${SNAP_DATA}/${FILENAME}"; then
     echo "${FILENAME}"
