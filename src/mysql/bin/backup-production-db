@@ -7,6 +7,7 @@ DUMP_FILE="backup_mirrOS_api_production.sql"
     --add-locks \
     --add-drop-database \
     --single-transaction \
+    --ignore-table=mirrOS_api_production.openweathermap_cities \
     mirrOS_api_production >"${SNAP_DATA}/${DUMP_FILE}"
 
 if test -e "${SNAP_DATA}/${DUMP_FILE}"; then
