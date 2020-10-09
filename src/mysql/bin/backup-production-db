@@ -1,5 +1,5 @@
 #!/bin/sh -e
-DUMP_FILE="${SNAP_DATA}/backup_mirrOS_api_production.sql"
+DUMP_FILE="backup_mirrOS_api_production.sql"
 
 "$SNAP/usr/bin/mysqldump" \
     --defaults-file="$SNAP_COMMON/mysql/conf/my.cnf" \
@@ -7,9 +7,9 @@ DUMP_FILE="${SNAP_DATA}/backup_mirrOS_api_production.sql"
     --add-locks \
     --add-drop-database \
     --single-transaction \
-    mirrOS_api_production >"${DUMP_FILE}"
+    mirrOS_api_production >"${SNAP_DATA}/${DUMP_FILE}"
 
-if test -e "${DUMP_FILE}"; then
+if test -e "${SNAP_DATA}/${DUMP_FILE}"; then
     echo "${DUMP_FILE}"
 else
     exit 1
