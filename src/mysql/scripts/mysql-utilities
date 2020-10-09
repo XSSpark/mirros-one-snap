@@ -50,6 +50,7 @@ init_config() {
     echo "[client]"
     echo "socket=${RUNDIR}/mysqld.sock"
     echo "user=root"
+    echo "password=\"glancr\""
     echo "default-character-set=utf8mb4"
   } >>"${CONFFILE}"
   ls $CONFFILE

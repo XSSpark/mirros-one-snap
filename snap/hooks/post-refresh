@@ -2,6 +2,12 @@
 
 # shellcheck source=src/mysql/scripts/mysql-utilities
 . "$SNAP/scripts/mysql-utilities"
+
+# Add password configuration to avoid password warning for mysql calls
+if ! grep -q "password" "$CONFFILE"; then
+  sed -i '/^\[client\]$/a password="glancr"' "$CONFFILE"
+fi
+
 snapctl start mirros-one.mysql
 
 while [ ! -f "${RUNDIR}/mysqld.pid" ] && [ ! -S "${RUNDIR}/mysqld.sock" ]; do
