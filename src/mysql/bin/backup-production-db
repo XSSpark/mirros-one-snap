@@ -3,7 +3,6 @@ DUMP_FILE="backup_mirrOS_api_production.sql"
 
 "$SNAP/usr/bin/mysqldump" \
     --defaults-file="$SNAP_COMMON/mysql/conf/my.cnf" \
-    -pglancr \
     --add-locks \
     --add-drop-database \
     --single-transaction \

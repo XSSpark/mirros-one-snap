@@ -1,2 +1,2 @@
 #!/bin/sh
-mysql --defaults-file="$SNAP_COMMON/mysql/conf/my.cnf" -pglancr "$@"
+mysql --defaults-file="$SNAP_COMMON/mysql/conf/my.cnf" "$@"
