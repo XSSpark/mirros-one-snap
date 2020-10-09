@@ -5,9 +5,9 @@ if [ ! -f "${FILE}" ]; then
     echo "${FILE}: No such file, please check the provided path" && exit 1
 fi
 
+cd "${SNAP_DATA}"
 # Clean up any previous restore leftovers
-cd "${SNAP_DATA}" && rm -rf backup-restore && mkdir -p backup-restore
-
+rm -rf backup-restore && mkdir -p backup-restore
 tar -C backup-restore -xf "$FILE"
 cd backup-restore
 restore-production-db backup_mirrOS_api_production_*.sql || echo "error during DB restore" && exit 1
