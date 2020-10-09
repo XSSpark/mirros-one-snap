@@ -7,6 +7,7 @@ cd "$SNAP_DATA" # Ensure tar has no permission problems inside the snap
 tar -czf "${FILENAME}" "${DB_BACKUP}" "${UPLOADS}"
 
 if test -e "${SNAP_DATA}/${FILENAME}"; then
+    rm "${DB_BACKUP}"
     echo "${FILENAME}"
 else
     # backup file does not exist
