@@ -75,9 +75,6 @@ apps:
       - backend
     plugs: [dbus-cogctl]
   # COMMANDS
-  setup:
-    command: bin/setup
-    plugs: [network-manager]
   db-console:
     command: bin/run-mysql-client mirrOS_api_production
   create-backup:
@@ -256,9 +253,6 @@ parts:
   # Scripts and wrappers
   start-stack:
     source: src/start-stack
-    plugin: dump
-  setup:
-    source: src/setup
     plugin: dump
   cli:
     source: src/cli
