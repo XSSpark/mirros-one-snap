@@ -15,7 +15,7 @@ environment:
 
 hooks:
   install:
-    plugs: [network, network-bind]
+    plugs: [network, network-bind, network-manager]
   post-refresh:
     plugs: [network, network-manager]
   connect-plug-network-manager:
