@@ -1,5 +1,10 @@
 #!/bin/sh -e
 
+# When seeded via gadget, the interface connections are established before the install hook has run, so we can't set up the connections yet. In that case, we exit this hook, as the install hook will take care of connection setup if the interface is available.
+if [ ! -f "$SNAP_DATA/secret" ]; then
+    exit 0
+fi
+
 # AP + persistent and predictable LAN connection name
 SECRET_KEY_BASE=$(cat "$SNAP_DATA"/secret)
 export SECRET_KEY_BASE

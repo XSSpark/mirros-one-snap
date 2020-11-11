@@ -62,6 +62,12 @@ export SECRET_KEY_BASE
 # Set up the API database.
 "$SNAP/wrapper" "$SNAP/api/bin/rails" db:create db:migrate db:seed
 
+# If the network-manager plug is already connected, we can set up the connections. This is the case when seeding via our gadget.
+if snapctl is-connected network-manager; then
+  # AP + persistent and predictable LAN connection name
+  "$SNAP/wrapper" "$SNAP/api/bin/rails" mirros:setup:network_connections
+fi
+
 # Disables the DNS service to prevent it from starting automatically.
 # FIXME: Remove once https://github.com/snapcore/snapd/pull/5777 is in stable
 snapctl stop --disable mirros-one.dns
