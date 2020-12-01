@@ -164,14 +164,14 @@ parts:
     plugin: dump
 
   mirros-display:
-    source: https://gitlab.com/glancr/mirros_display/-/jobs/artifacts/v1.3.2/download?job=build-tag
+    source: https://gitlab.com/glancr/mirros_display/-/jobs/artifacts/v1.4.0/download?job=build-tag
     source-type: zip
     plugin: dump
     organize:
       dist: display
 
   mirros-settings:
-    source: https://gitlab.com/glancr/mirros_settings/-/jobs/artifacts/v1.6.3/download?job=build-tag
+    source: https://gitlab.com/glancr/mirros_settings/-/jobs/artifacts/v1.7.0/download?job=build-tag
     source-type: zip
     plugin: dump
     organize:
@@ -179,7 +179,7 @@ parts:
 
   mirros-api:
     after: [snap-meta]
-    source: https://gitlab.com/glancr/mirros_api/-/jobs/artifacts/1.6.2/download?job=zipfile
+    source: https://gitlab.com/glancr/mirros_api/-/jobs/artifacts/1.7.2/download?job=zipfile
     source-type: zip
     plugin: ruby # dump
     ruby-version: "2.6.6"
