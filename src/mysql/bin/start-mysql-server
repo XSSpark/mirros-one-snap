@@ -3,8 +3,6 @@
 # shellcheck source=src/mysql/scripts/mysql-utilities
 . "$SNAP/scripts/mysql-utilities"
 
-#mysql_upgrade --defaults-file="${CONFFILE}"
-
 [ -d "${MYSQL_SNAPDIR}" ]		|| mkdir "$MYSQL_SNAPDIR" 
 [ -d "${LOGDIR}" ] 		        || mkdir "${LOGDIR}"
 [ -f "${LOGDIR}/error.log" ] 	|| touch "${LOGDIR}/error.log"
