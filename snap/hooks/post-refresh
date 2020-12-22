@@ -9,11 +9,8 @@ if ! grep -q "password" "$CONFFILE"; then
 fi
 
 snapctl start mirros-one.mysql
+wait_for_mysql
 
-while [ ! -f "${RUNDIR}/mysqld.pid" ] && [ ! -S "${RUNDIR}/mysqld.sock" ]; do
-  echo "waiting for mysqld"
-  sleep 1
-done
 echo "Checking/upgrading mysql tables if necessary..."
 if mysql_upgrade --defaults-file="${CONFFILE}"; then
   echo "Restarting mysql server after upgrade..."
