@@ -14,6 +14,13 @@ while [ ! -f "${RUNDIR}/mysqld.pid" ] && [ ! -S "${RUNDIR}/mysqld.sock" ]; do
   echo "waiting for mysqld"
   sleep 1
 done
+echo "Checking/upgrading mysql tables if necessary..."
+if mysql_upgrade --defaults-file="${CONFFILE}"; then
+  echo "Restarting mysql server after upgrade..."
+  snapctl restart mirros-one.mysql
+
+  wait_for_mysql
+fi
 
 # Copy new migrations and gems from read-only location to writable mount
 cp -rn "$SNAP"/api/bundle_installed/* "$SNAP_DATA"/rails/.bundle
