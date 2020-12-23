@@ -16,7 +16,7 @@ mysql_test_connection() {
 
 wait_for_mysql() {
   while [ ! -f "${RUNDIR}/mysqld.pid" ] && [ ! -S "${RUNDIR}/mysqld.sock" ]; do
-    echo "sleeping"
+    echo "waiting for mysqld"
     sleep 1
   done
 }
