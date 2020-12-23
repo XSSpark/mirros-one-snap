@@ -14,4 +14,10 @@
 # check permissions on each startup in case someone meddled with them
 verify_permissions
 
+# Remove leftover lock files that would prevent startup.
+if [ ! -f "${RUNDIR}/mysqld.pid" ] && [ ! -S "${RUNDIR}/mysqld.sock" ] && [ -f "${RUNDIR}/mysqld.sock.lock" ]; then
+    echo "Removing stale socket lockfile"
+    rm "${RUNDIR}/mysqld.sock.lock"
+fi
+
 "$SNAP/usr/bin/mysqld_safe" --defaults-file="${CONFFILE}" --basedir="${BASEDIR}"
