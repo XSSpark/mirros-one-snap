@@ -77,6 +77,8 @@ apps:
   # COMMANDS
   db-console:
     command: bin/run-mysql-client mirrOS_api_production
+  rails-console:
+    command: bin/rails-console
   create-backup:
     command: bin/create-backup
   restore-backup:
