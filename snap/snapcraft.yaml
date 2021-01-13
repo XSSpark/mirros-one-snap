@@ -42,7 +42,7 @@ apps:
       - process-control
   backend:
     command: wrapper $SNAP/bin/start-stack
-    #after: [mysql, nginx]
+    after: [mysql, nginx]
     daemon: simple
     plugs:
       - network
