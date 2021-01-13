@@ -1,0 +1,15 @@
+#!/bin/sh -e
+
+if [ ! "$(id -u)" -eq 0 ]; then
+    echo "Please run this with sudo, i.e. 'sudo mirros-one.rails-console'. The console requires access to files owned by the backend service, which runs as root."
+    exit 1
+fi
+
+echo "Starting Rails console, hang tight as the Raspberry Pi might take a few seconds to load the app ..."
+
+cd "$SNAP/api" || exit 1
+
+SECRET_KEY_BASE=$(cat "$SNAP_DATA"/secret)
+export RAILS_ENV=production SECRET_KEY_BASE
+
+"$SNAP/wrapper" bin/rails c
