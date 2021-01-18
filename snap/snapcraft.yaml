@@ -40,6 +40,20 @@ apps:
       - network
       - network-bind
       - process-control
+  redis:
+    command: usr/bin/redis-server
+    daemon: simple
+    restart-condition: always
+    plugs:
+      - network
+      - network-bind
+      #- network-observe
+  redis-console:
+    command: usr/bin/redis-cli
+    plugs:
+      - network
+      - network-bind
+      #- network-observe
   backend:
     command: wrapper $SNAP/bin/start-stack
     after: [mysql, nginx]
