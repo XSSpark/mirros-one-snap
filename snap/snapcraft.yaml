@@ -149,6 +149,11 @@ parts:
     stage-packages: [nginx, gettext-base]
     plugin: dump
 
+  redis:
+    plugin: nil
+    stage-packages:
+      - redis-server
+
   dnsmasq:
     #after: [patches]
     plugin: make
