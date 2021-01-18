@@ -56,7 +56,7 @@ apps:
       #- network-observe
   backend:
     command: wrapper $SNAP/bin/start-stack
-    after: [mysql, nginx]
+    after: [mysql, nginx, redis]
     daemon: simple
     plugs:
       - network
