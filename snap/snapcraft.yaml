@@ -79,6 +79,16 @@ apps:
     command: bin/run-mysql-client mirrOS_api_production
   rails-console:
     command: bin/rails-console
+    plugs:
+      - network
+      - network-bind
+      - network-control
+      - network-manager
+      - shutdown
+      - timezone-control
+      - timeserver-control # required for SetNTP() method
+      - time-control # Backend sets system time during setup
+      - dbus-cogctl
   create-backup:
     command: bin/create-backup
   restore-backup:
