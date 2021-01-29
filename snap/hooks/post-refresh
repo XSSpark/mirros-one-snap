@@ -8,6 +8,11 @@ if ! grep -q "password" "$CONFFILE"; then
   sed -i '/^\[client\]$/a password="glancr"' "$CONFFILE"
 fi
 
+# Enable explicit timestamp defaults for MySQL
+if ! grep -q "explicit_defaults_for_timestamp=true" "$CONFFILE"; then
+  sed -i '/^\[mysqld\]$/a explicit_defaults_for_timestamp=true' "$CONFFILE"
+fi
+
 snapctl start mirros-one.mysql
 wait_for_mysql
 
