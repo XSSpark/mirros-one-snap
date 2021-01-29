@@ -33,6 +33,7 @@ init_config() {
   touch "${CONFFILE}"
   {
     echo "[mysqld]"
+    echo "explicit_defaults_for_timestamp=true"
     echo "user=root"
     echo "skip_networking"
     echo "pid-file=${RUNDIR}/mysqld.pid"
