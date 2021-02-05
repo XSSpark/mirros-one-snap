@@ -159,9 +159,9 @@ parts:
     stage-packages: [mysql-server, libaio1]
 
   nginx:
+    plugin: dump
     source: src/nginx
     stage-packages: [nginx, gettext-base]
-    plugin: dump
 
   redis:
     plugin: nil
