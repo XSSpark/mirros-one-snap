@@ -48,12 +48,6 @@ apps:
       - network
       - network-bind
       #- network-observe
-  redis-console:
-    command: usr/bin/redis-cli
-    plugs:
-      - network
-      - network-bind
-      #- network-observe
   backend:
     command: wrapper $SNAP/bin/start-stack
     after: [mysql, nginx, redis]
@@ -103,6 +97,12 @@ apps:
       - timeserver-control # required for SetNTP() method
       - time-control # Backend sets system time during setup
       - dbus-cogctl
+  redis-console:
+    command: usr/bin/redis-cli
+    plugs:
+      - network
+      - network-bind
+      #- network-observe
   create-backup:
     command: bin/create-backup
   restore-backup:
