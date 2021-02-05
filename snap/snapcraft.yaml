@@ -41,7 +41,7 @@ apps:
       - network-bind
       - process-control
   redis:
-    command: usr/bin/redis-server
+    command: usr/bin/redis-server $SNAP/redis.conf
     daemon: simple
     restart-condition: always
     plugs:
