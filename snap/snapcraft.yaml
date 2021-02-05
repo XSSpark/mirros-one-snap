@@ -164,7 +164,8 @@ parts:
     stage-packages: [nginx, gettext-base]
 
   redis:
-    plugin: nil
+    plugin: dump
+    source: src/redis
     stage-packages:
       - redis-server
 
