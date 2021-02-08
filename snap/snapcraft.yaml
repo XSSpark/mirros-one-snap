@@ -211,7 +211,7 @@ parts:
 
   mirros-api:
     after: [snap-meta]
-    source: https://gitlab.com/glancr/mirros_api/-/jobs/1012180520/artifacts/download?file_type=archive
+    source: https://gitlab.com/glancr/mirros_api/-/jobs/1014196565/artifacts/download?file_type=archive
     source-type: zip
     plugin: ruby # dump
     ruby-version: "2.6.6"
