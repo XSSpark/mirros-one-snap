@@ -1,0 +1,9 @@
+#!/bin/sh -e
+
+# Set up Rails environment
+SECRET_KEY_BASE=$(cat "$SNAP_DATA"/secret)
+export SECRET_KEY_BASE
+export RAILS_ENV=production
+
+# Update SystemState.snap_update_status to notify websocket clients that the refresh is starting.
+"$SNAP/wrapper" "$SNAP/api/bin/rails" "system:set_snap_update_status[pre-refresh]"
