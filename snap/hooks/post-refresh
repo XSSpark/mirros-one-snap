@@ -1,5 +1,8 @@
 #!/bin/bash -e
 
+# 1.8.13 adds Redis server for ActionCable, requires writable directory.
+mkdir -p "$SNAP_COMMON/redis/db" || true
+
 # shellcheck source=src/mysql/scripts/mysql-utilities
 . "$SNAP/scripts/mysql-utilities"
 

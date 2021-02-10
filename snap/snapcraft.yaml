@@ -40,9 +40,17 @@ apps:
       - network
       - network-bind
       - process-control
+  redis:
+    command: usr/bin/redis-server $SNAP/redis.conf
+    daemon: simple
+    restart-condition: always
+    plugs:
+      - network
+      - network-bind
+      #- network-observe
   backend:
     command: wrapper $SNAP/bin/start-stack
-    after: [mysql, nginx]
+    after: [mysql, nginx, redis]
     daemon: simple
     plugs:
       - network
@@ -89,6 +97,12 @@ apps:
       - timeserver-control # required for SetNTP() method
       - time-control # Backend sets system time during setup
       - dbus-cogctl
+  redis-console:
+    command: usr/bin/redis-cli
+    plugs:
+      - network
+      - network-bind
+      #- network-observe
   create-backup:
     command: bin/create-backup
   restore-backup:
@@ -145,9 +159,15 @@ parts:
     stage-packages: [mysql-server, libaio1]
 
   nginx:
+    plugin: dump
     source: src/nginx
     stage-packages: [nginx, gettext-base]
+
+  redis:
     plugin: dump
+    source: src/redis
+    stage-packages:
+      - redis-server
 
   dnsmasq:
     #after: [patches]
@@ -191,7 +211,7 @@ parts:
 
   mirros-api:
     after: [snap-meta]
-    source: https://gitlab.com/glancr/mirros_api/-/jobs/artifacts/1.8.6/download?job=zipfile
+    source: https://gitlab.com/glancr/mirros_api/-/jobs/1020116998/artifacts/download?file_type=archive
     source-type: zip
     plugin: ruby # dump
     ruby-version: "2.6.6"

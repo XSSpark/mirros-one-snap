@@ -40,6 +40,9 @@ mkdir -p "$SNAP_COMMON/nginx/tmp"
 mkdir -p "$SNAP_COMMON/nginx/log"
 envsubst '${SNAP} ${SNAP_NAME} ${SNAP_COMMON}' >"$SNAP_COMMON/nginx.conf" <"$SNAP/nginx.conf"
 
+# Create directories for redis in writable area.
+mkdir -p "$SNAP_COMMON/redis/db"
+
 # Rails app setup
 cp -r "$SNAP"/api/bundle_installed/* "$SNAP_DATA"/rails/.bundle
 cp -r "$SNAP"/api/vendor_installed/* "$SNAP_DATA"/rails/vendor
