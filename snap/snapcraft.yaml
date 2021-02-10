@@ -196,7 +196,7 @@ parts:
     plugin: dump
 
   mirros-display:
-    source: https://gitlab.com/glancr/mirros_display/-/jobs/artifacts/v1.5.0/download?job=build-tag
+    source: https://gitlab.com/glancr/mirros_display/-/jobs/artifacts/v1.6.0/download?job=build-tag
     source-type: zip
     plugin: dump
     organize:
