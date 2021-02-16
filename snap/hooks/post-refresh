@@ -59,7 +59,9 @@ envsubst '${SNAP} ${SNAP_NAME} ${SNAP_COMMON}' >"$SNAP_COMMON/nginx.conf" <"$SNA
 # FIXME: Remove once https://github.com/snapcore/snapd/pull/5777 is in stable
 snapctl stop --disable mirros-one.dns
 
-# Start backend and wait 15sec to ensure the display app can connect after the snap_update_status push
+# Start redis + backend and wait 15sec to ensure the display app can connect after the snap_update_status push
+snapctl start mirros-one.redis
+sleep 1
 snapctl start mirros-one.backend
 sleep 15
 
