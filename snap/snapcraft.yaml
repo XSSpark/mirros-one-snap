@@ -14,10 +14,40 @@ environment:
   PATH: "$SNAP/usr/sbin:$SNAP/usr/bin:$SNAP/sbin:$SNAP/bin:$PATH"
 
 hooks:
+  # Hooks need the same plugs as the backend service, to ensure Rake tasks do not face permissions issues.
   install:
-    plugs: [network, network-bind, network-manager]
+    plugs:
+      - network
+      - network-bind
+      - network-control
+      - network-manager
+      - shutdown
+      - timezone-control
+      - timeserver-control
+      - time-control
+      - dbus-cogctl
+  pre-refresh:
+    plugs:
+      - network
+      - network-bind
+      - network-control
+      - network-manager
+      - shutdown
+      - timezone-control
+      - timeserver-control
+      - time-control
+      - dbus-cogctl
   post-refresh:
-    plugs: [network, network-manager]
+    plugs:
+      - network
+      - network-bind
+      - network-control
+      - network-manager
+      - shutdown
+      - timezone-control
+      - timeserver-control
+      - time-control
+      - dbus-cogctl
   connect-plug-network-manager:
     plugs: [network-manager]
   # TODO: Maybe just move all plugs to a root-level plugs dict
