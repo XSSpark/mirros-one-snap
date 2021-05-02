@@ -44,12 +44,6 @@ envsubst '${SNAP} ${SNAP_NAME} ${SNAP_COMMON}' >"$SNAP_COMMON/nginx.conf" <"$SNA
 mkdir -p "$SNAP_COMMON/redis/db"
 
 # Rails app setup
-cp -r "$SNAP"/api/bundle_installed/* "$SNAP_DATA"/rails/.bundle
-cp -r "$SNAP"/api/vendor_installed/* "$SNAP_DATA"/rails/vendor
-cp -r "$SNAP"/api/db_installed/* "$SNAP_DATA"/rails/db
-cat "$SNAP"/api/Gemfile_installed >"$SNAP_DATA"/rails/Gemfile
-cat "$SNAP"/api/Gemfile.lock_installed >"$SNAP_DATA"/rails/Gemfile.lock
-
 cd "$SNAP/api"
 # Ensure that all commands are run in prod environment.
 export RAILS_ENV=production
@@ -58,9 +52,6 @@ export RAILS_ENV=production
 "$SNAP/wrapper" "$SNAP/api/bin/rails" secret >"$SNAP_DATA/secret"
 SECRET_KEY_BASE=$(cat "${SNAP_DATA}/secret")
 export SECRET_KEY_BASE
-
-"$SNAP/wrapper" "$SNAP/api/bin/rails" extensions:install_migrations
-"$SNAP/wrapper" "$SNAP/api/bin/rails" active_storage:install
 
 # Set up the API database.
 "$SNAP/wrapper" "$SNAP/api/bin/rails" db:create db:migrate db:seed

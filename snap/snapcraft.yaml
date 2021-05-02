@@ -145,16 +145,6 @@ layout:
     bind: $SNAP_DATA/rails/tmp
   $SNAP/api/log:
     bind: $SNAP_DATA/rails/log
-  $SNAP/api/db:
-    bind: $SNAP_DATA/rails/db
-  $SNAP/api/.bundle:
-    bind: $SNAP_DATA/rails/.bundle
-  $SNAP/api/vendor:
-    bind: $SNAP_DATA/rails/vendor
-  $SNAP/api/Gemfile:
-    bind-file: $SNAP_DATA/rails/Gemfile
-  $SNAP/api/Gemfile.lock:
-    bind-file: $SNAP_DATA/rails/Gemfile.lock
   /etc/ImageMagick-6:
     bind: $SNAP/etc/ImageMagick-6
   /usr/lib/$SNAPCRAFT_ARCH_TRIPLET/ImageMagick-6.8.9:
@@ -241,7 +231,7 @@ parts:
 
   mirros-api:
     after: [snap-meta]
-    source: https://gitlab.com/glancr/mirros_api/-/jobs/artifacts/1.9.1/download?job=zipfile
+    source: https://gitlab.com/glancr/mirros_api/-/jobs/1223280386/artifacts/download?file_type=archive
     source-type: zip
     plugin: ruby # dump
     ruby-version: "2.6.6"
@@ -272,13 +262,6 @@ parts:
       bin/bundle install --path vendor/bundle -j $(nproc) --without development test
       # TODO: ruby.bundle once using stage-snaps
 
-      # To allow installing new gems in the snap, they have to be in $SNAP_DATA.
-      # Layouts above maps a bind-mount.
-      mv .bundle bundle_installed
-      mv vendor vendor_installed
-      mv Gemfile Gemfile_installed
-      mv Gemfile.lock Gemfile.lock_installed
-      mv db db_installed
 
       # Ensure directories are removed because they'll be replaced with symlinks
       rm -rf $SNAPCRAFT_PART_INSTALL/api/tmp $SNAPCRAFT_PART_INSTALL/api/log
