@@ -79,7 +79,7 @@ apps:
       - network-bind
       #- network-observe
   backend:
-    command: wrapper $SNAP/bin/start-stack
+    command: wrapper $SNAP/bin/start-backend
     after: [mysql, nginx, redis]
     daemon: simple
     plugs:
@@ -296,8 +296,8 @@ parts:
       rm -rf ruby-${RUBYVERSION}
 
   # Scripts and wrappers
-  start-stack:
-    source: src/start-stack
+  scripts:
+    source: src/backend
     plugin: dump
   cli:
     source: src/cli
