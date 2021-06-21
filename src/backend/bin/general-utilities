@@ -1,0 +1,9 @@
+#!/bin/sh -e
+
+# Check if snap seeding is in progress. Used to abort service startup until we're seeded.
+abort_if_seeding() {
+    if snapctl system-mode | grep -q 'seed-loaded: true'; then
+        echo 'System has not finished seeding'
+        exit 1
+    fi
+}
