@@ -1,6 +1,10 @@
 #!/bin/sh
 # set -e
 
+# shellcheck source=src/backend/bin/general-utilities
+. "$SNAP/scripts/general-utilities"
+abort_if_seeding
+
 cd "$SNAP/api" || return
 
 SECRET_KEY_BASE=$(cat "$SNAP_DATA/secret")
