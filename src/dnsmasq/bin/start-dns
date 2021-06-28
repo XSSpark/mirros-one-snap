@@ -1,7 +1,3 @@
 #!/bin/sh -e
 
-# shellcheck source=src/backend/bin/general-utilities
-. "$SNAP/scripts/general-utilities"
-abort_if_seeding
-
 "$SNAP"/bin/dnsmasq -k -u root -g root -x "$SNAP_USER_DATA"/dnsmasq.pid -l "$SNAP_DATA"/dnsmasq.leases -C "$SNAP"/dnsmasq.conf

@@ -1,9 +1,4 @@
-#!/bin/sh
-# set -e
-
-# shellcheck source=src/backend/bin/general-utilities
-. "$SNAP/scripts/general-utilities"
-abort_if_seeding
+#!/bin/sh -e
 
 cd "$SNAP/api" || return
 
